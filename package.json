@@ -11,8 +11,8 @@
     "dev": "webpack --mode development",
     "build": "webpack --mode production",
     "prettier": "prettier --write src/**/*.js",
-    "lint": "eslint --debug src/",
-    "lint:write": "eslint --debug src/ --fix"
+    "lint": "eslint --fix src/",
+    "lint:write": "eslint --fix src/"
   },
   "babel": {
     "presets": [
