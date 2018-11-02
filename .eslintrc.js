@@ -24,7 +24,7 @@ module.exports = {
     'max-len': ['error', 100, 2, { ignoreUrls: true }], // airbnb is allowing some edge cases
     'no-console': 'off', // airbnb is using warn
     'no-alert': 'error', // airbnb is using warn
-
+    'no-nested-ternary': 'off',
     'no-param-reassign': 'off', // Not our taste?
     radix: 'off', // parseInt, parseFloat radix turned off. Not my taste.
 
