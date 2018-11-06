@@ -1,10 +1,21 @@
 import React from 'react';
-// import PropTypes from 'prop-types';
-// import cx from 'classnames';
+import AmountToPayContainer from '../containers/AmountToPayContainer';
+import UserSelectionContainer from '../containers/UserSelectionContainer';
+import SubmitCheckedUsersContainer from '../containers/SubmitCheckedUsersContainer';
 import '../../styles/components/NewRound.scss';
 
-function NewRound() {
-  return <div />;
+class NewRound extends React.Component {
+  render() {
+    return (
+      <main>
+        <AmountToPayContainer />
+        <section>
+          <UserSelectionContainer />
+        </section>
+        <SubmitCheckedUsersContainer />
+      </main>
+    );
+  }
 }
 
 export default NewRound;

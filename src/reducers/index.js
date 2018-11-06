@@ -1,3 +1,6 @@
 import { combineReducers } from 'redux';
+import newRoundReducer from './newRoundReducer';
 
-export default combineReducers({});
+export default combineReducers({
+  newRoundReducer,
+});
