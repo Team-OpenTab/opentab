@@ -27,7 +27,7 @@ function TitleBar({ title, previous, goBack }) {
 TitleBar.propTypes = {
   title: PropTypes.string.isRequired,
   previous: PropTypes.string.isRequired,
-  goBack: PropTypes.object.isRequired,
+  goBack: PropTypes.func.isRequired,
 };
 
 export default TitleBar;

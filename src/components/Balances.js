@@ -14,7 +14,7 @@ function Balances({ goBack }) {
 }
 
 Balances.propTypes = {
-  goBack: PropTypes.object.isRequired,
+  goBack: PropTypes.func.isRequired,
 };
 
 export default Balances;

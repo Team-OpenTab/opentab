@@ -1,10 +1,13 @@
 const express = require('express');
-// const http = require('http');
+const http = require('http');
+const socketIo = require('socket.io');
 const bodyParser = require('body-parser');
 const pgp = require('pg-promise')();
 require('dotenv').config();
 
 const app = express();
+const server = http.Server(app);
+const io = socketIo(server);
 
 const db = pgp({
   host: 'localhost',
@@ -72,7 +75,10 @@ app.post('/api/new-round', (req, res) => {
         }),
       ),
     )
-    .then(data => res.json(data));
+    .then(data => {
+      io.emit('refresh');
+      res.json(data);
+    });
 });
 
 app.get('/api/get-balances/:userId', (req, res) => {
@@ -110,10 +116,13 @@ app.post('/api/make-payment', (req, res) => {
         [receiverId, payerId, amount],
       ),
     )
-    .then(() => res.json({ Status: 'Status is okay' }))
+    .then(() => {
+      io.emit('refresh');
+      res.json({ Status: 'OK' });
+    })
     .catch(error => console.log(error));
 });
 
-app.listen(8080, () => {
+server.listen(8080, () => {
   console.log('Listening on port 8080');
 });

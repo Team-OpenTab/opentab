@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import io from 'socket.io-client';
 import BalancesContainer from '../containers/BalancesContainer';
 import NewRoundContainer from '../containers/NewRoundContainer';
 import '../../styles/components/App.scss';
@@ -22,6 +23,11 @@ class App extends React.Component {
       this.updateFromStore();
     });
     // store.dispatch(fetchCategories());
+    const socket = io('localhost:8080');
+    socket.on('refresh', () => {
+      // /api/get-balances
+      console.log('refresh received');
+    });
   }
 
   updateFromStore() {
