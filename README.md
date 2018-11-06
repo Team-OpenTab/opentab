@@ -4,7 +4,7 @@ OpenTab is a web application for tracking and settling rounds between friends.
 
 ## The Team:
 
-* Yetkin Urgun
+* Yetkin Ergun
 * David Gridley
 * Tony Batty
 * Luke Sikuade
