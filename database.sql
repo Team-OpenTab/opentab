@@ -16,6 +16,7 @@ FOREIGN KEY (user_id) REFERENCES "user" (id)
 );
 
 CREATE TABLE round_user (
+
 id SERIAL PRIMARY KEY,
 round_id INT NOT NULL,
 counterpart_id INT NOT NULL,
@@ -23,7 +24,6 @@ FOREIGN KEY (counterpart_id) REFERENCES "user" (id),
 FOREIGN KEY (round_id) REFERENCES round (id)
 );
 
-INSERT INTO "user" (username, password, email, phone) VALUES ('business', 'test', 'business@gmail.com', '01223444555');
 INSERT INTO "user" (username, password, email, phone) VALUES ('Yetkin', 'test', 'yetkin@gmail.com', '07998777666');
 INSERT INTO "user" (username, password, email, phone) VALUES ('Dave', 'test', 'dave@gmail.com', '07998555444');
 INSERT INTO "user" (username, password, email, phone) VALUES ('Dan', 'test', 'dan@gmail.com', '07998444333');
