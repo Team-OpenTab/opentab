@@ -18,3 +18,10 @@ export function storeInputtedAmount(amount) {
     amount,
   };
 }
+
+export function goBack(previousComponent) {
+  return {
+    type: 'GO_BACK',
+    previousComponent,
+  };
+}

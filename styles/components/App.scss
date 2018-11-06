@@ -1,3 +1,11 @@
-body {
-  background-color: red;
+@import '../main.scss';
+
+* {
+  box-sizing: border-box;
+  font-family: 'Montserrat', sans-serif;
+}
+
+html {
+  background-color: $background-color;
+  color: $text-color-dark;
 }

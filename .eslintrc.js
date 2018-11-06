@@ -20,6 +20,7 @@ module.exports = {
     'no-mixed-operators': 'off', // Incompatible with prettier
     'function-paren-newline': 'off', // Incompatible with prettier
     'space-before-function-paren': 0, // Incompatible with prettier
+    'implicit-arrow-linebreak': 'off',
 
     'max-len': ['error', 100, 2, { ignoreUrls: true }], // airbnb is allowing some edge cases
     'no-console': 'off', // airbnb is using warn
