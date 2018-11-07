@@ -5,6 +5,7 @@ import NewRound from '../components/NewRound';
 const mapStateToProps = state => ({
   amount: state.newRoundReducer.amount,
   checkedUsers: state.newRoundReducer.checkedUsers,
+  users: state.users,
 });
 
 const mapDispatchToProps = dispatch => ({

@@ -3,46 +3,29 @@ import PropTypes from 'prop-types';
 import '../../styles/components/NewRound.scss';
 
 function NewRound({
+  users,
   affectAmountPaid,
   amount,
   monitorCheckedUser,
-  submitCheckedUsers,
-  checkedUsers,
+  // submitCheckedUsers,
+  // checkedUsers,
 }) {
   return (
-    <main>
-      <input value={amount} onChange={event => affectAmountPaid(event.target.value)} />;
-      <section>
-        <ul className="user__selection">
-          <li>
-            <input onChange={() => monitorCheckedUser('Tony')} type="checkbox" />
-            Tony
-          </li>
-          <li>
-            <input onChange={() => monitorCheckedUser('Luke')} type="checkbox" />
-            Luke
-          </li>
-          <li>
-            <input onChange={() => monitorCheckedUser('Dan')} type="checkbox" />
-            Dan
-          </li>
-          <li>
-            <input onChange={() => monitorCheckedUser('Yetkin')} type="checkbox" />
-            Yetkin
-          </li>
-          <li>
-            <input onChange={() => monitorCheckedUser('David')} type="checkbox" />
-            David
-          </li>
-        </ul>
-      </section>
-      <button type="button" onClick={submitCheckedUsers(checkedUsers, amount)}>
-        Submit
-      </button>
-    </main>
+    <section>
+      <div className="new-round__title">New Round</div>
+      <div className="new-round__amount">
+        <input value={amount} onChange={event => affectAmountPaid(event.target.value)} />
+      </div>
+      <div className="new-round__users">
+        {users.map(user => (
+          <input onChange={() => monitorCheckedUser(user.id)} type="checkbox" checked />
+        ))}
+      </div>
+    </section>
   );
 }
 NewRound.propTypes = {
+  users: PropTypes.array.isRequired,
   affectAmountPaid: PropTypes.func,
   amount: PropTypes.number,
   monitorCheckedUser: PropTypes.func,
