@@ -1,19 +1,15 @@
 import { connect } from 'react-redux';
 import Balances from '../components/Balances';
-import { goBack, handleButtonClick } from '../actions';
+import { setStage } from '../actions';
 
 const mapStateToProps = state => ({
-  users: state.balance.users,
-  balances: state.balance.balances,
+  balances: state.balances,
 });
 
 const mapDispatchToProps = dispatch => ({
-  goBack: previousComponent => {
-    dispatch(goBack(previousComponent));
-  },
-  handleButtonClick: buttonLabel => {
-    dispatch(handleButtonClick(buttonLabel));
-  },
+  getStage: stage => dispatch(setStage(stage)),
+  // handleButtonClick: buttonLabel => {
+  //   dispatch(handleButtonClick(buttonLabel));
 });
 
 export default connect(

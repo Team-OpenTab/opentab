@@ -1,44 +1,40 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Button from './Button';
+// import Button from './Button';
 import '../../styles/components/NewRound.scss';
 
-function NewRound({
-  users,
-  affectAmountPaid,
-  amount,
-  monitorCheckedUser,
-  handleButtonClick,
-  // submitCheckedUsers,
-  // checkedUsers,
-}) {
+function NewRound({ counterparts, getAmount, totalAmount, getNewRound, getStage }) {
   return (
     <section>
-      <div className="new-round__title">New Round</div>
+      <div className="title-bar">
+        <p className="title-bar__back" onClick={() => getStage('balances')}>
+          Back
+        </p>
+        <h2 className="title-bar__title">New Round</h2>
+      </div>
       <div className="new-round__amount">
-        <input value={amount} onChange={event => affectAmountPaid(event.target.value)} />
+        <input value={totalAmount} onChange={event => getAmount(event.target.value)} />
       </div>
       <div className="new-round__users">
-        {users.map(user => (
-          <input onChange={() => monitorCheckedUser(user.id)} type="checkbox" checked />
+        {Object.keys(counterparts).map(key => (
+          <div key={key}>
+            <span>{key}:</span>
+            <input type="checkbox" checked />
+          </div>
         ))}
       </div>
-      <Button
-        buttonLabel="Add Round"
-        buttonDestination="balances"
-        handleButtonClick={handleButtonClick}
-      />
+      <button type="button" className="button" onClick={getNewRound}>
+        BUY ROUND{' '}
+      </button>
     </section>
   );
 }
 NewRound.propTypes = {
-  users: PropTypes.array.isRequired,
-  affectAmountPaid: PropTypes.func,
-  amount: PropTypes.number,
-  monitorCheckedUser: PropTypes.func,
-  submitCheckedUsers: PropTypes.func,
-  checkedUsers: PropTypes.array,
-  handleButtonClick: PropTypes.func,
+  counterparts: PropTypes.object,
+  getStage: PropTypes.func,
+  getAmount: PropTypes.func,
+  totalAmount: PropTypes.string,
+  getNewRound: PropTypes.func.isRequired,
 };
 
 export default NewRound;

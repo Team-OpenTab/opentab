@@ -1,10 +1,9 @@
-function stage(state = 'balances', action) {
+const initialState = 'balances';
+
+function stage(state = initialState, action) {
   switch (action.type) {
-    case 'GO_BACK':
-      return Object.assign({}, state, action.previousState);
-    case 'BUTTON_CHANGE_STAGE':
-      console.log(action.buttonLabel);
-      return action.buttonLabel;
+    case 'SET_STAGE':
+      return action.stage;
     default:
       return state;
   }

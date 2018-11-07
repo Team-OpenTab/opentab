@@ -10,7 +10,7 @@ class Content extends React.Component {
     fetchBalances(2);
     const socket = io('localhost:8080');
     socket.on('refresh', () => {
-      // /api/get-balances
+      fetchBalances(2);
       console.log('refresh received');
     });
   }

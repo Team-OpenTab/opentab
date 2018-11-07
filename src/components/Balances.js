@@ -1,29 +1,32 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import TitleBar from './TitleBar';
-import Button from './Button';
-import UserList from './UserList';
+// import CounterpartList from './CounterpartList';
 import '../../styles/components/TitleBar.scss';
 
-function Balances({ users, balances, goBack, handleButtonClick }) {
+function Balances({ balances, getStage }) {
   return (
     <div>
-      <TitleBar title="Balance:" previous="App" goBack={goBack} />
-      <UserList users={users} balances={balances} />
-      <Button
-        buttonLabel="New Round"
-        buttonDestination="newRound"
-        handleButtonClick={handleButtonClick}
-      />
+      <TitleBar title="Balance:" previous="App" />
+      {Object.keys(balances.counterpartBalances).map(key => (
+        <div key={key}>
+          <div>{key}</div>
+          <div>{balances.counterpartBalances[key]}</div>
+        </div>
+      ))}
+
+      {/* <CounterpartList users={users} balances={balances} /> */}
+      <button type="button" className="button" onClick={() => getStage('newRound')}>
+        NEW ROUND
+      </button>
     </div>
   );
 }
 
 Balances.propTypes = {
-  users: PropTypes.object.isRequired,
+  users: PropTypes.object,
   balances: PropTypes.object.isRequired,
-  goBack: PropTypes.func.isRequired,
-  handleButtonClick: PropTypes.func.isRequired,
+  getStage: PropTypes.func.isRequired,
 };
 
 export default Balances;

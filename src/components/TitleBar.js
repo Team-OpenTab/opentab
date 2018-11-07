@@ -1,10 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-function TitleBar({ title, previous, goBack }) {
+function TitleBar({ title, previous }) {
   function clickOnBack() {
     console.log('clicked on back: ', previous);
-    goBack('newRound');
   }
 
   function clickOnMenu() {
@@ -27,7 +26,6 @@ function TitleBar({ title, previous, goBack }) {
 TitleBar.propTypes = {
   title: PropTypes.string.isRequired,
   previous: PropTypes.string.isRequired,
-  goBack: PropTypes.func.isRequired,
 };
 
 export default TitleBar;

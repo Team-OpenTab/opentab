@@ -1,27 +1,26 @@
 import { connect } from 'react-redux';
 import {
-  storeInputtedAmount,
+  setAmount,
   monitorCheckedUser,
   storeCheckedUsersFinal,
-  goBack,
-  handleButtonClick,
+  setStage,
+  setNewRound,
 } from '../actions';
 import NewRound from '../components/NewRound';
 
 const mapStateToProps = state => ({
-  amount: state.newRoundReducer.amount,
-  checkedUsers: state.newRoundReducer.checkedUsers,
-  users: state.users,
+  totalAmount: state.round.totalAmount,
+  counterpartIds: state.round.checkedUsers,
+  counterparts: state.balances.counterpartBalances,
 });
 
 const mapDispatchToProps = dispatch => ({
-  goBack: previousComponent => {
-    dispatch(goBack(previousComponent));
+  getNewRound: () => {
+    dispatch(setStage('balances'));
+    dispatch(setNewRound());
   },
-  handleButtonClick: buttonLabel => {
-    dispatch(handleButtonClick(buttonLabel));
-  },
-  affectAmountPaid: amount => dispatch(storeInputtedAmount(amount)),
+  getStage: stage => dispatch(setStage(stage)),
+  getAmount: amount => dispatch(setAmount(amount)),
   monitorCheckedUser: user => dispatch(monitorCheckedUser(user)),
   submitCheckedUsers: (users, amount) => dispatch(storeCheckedUsersFinal(users, amount)),
 });
