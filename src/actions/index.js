@@ -71,6 +71,8 @@ export function fetchBalances(userId) {
         dispatch(receiveUserBalance(userBalance));
         dispatch(receiveCounterpartBalances(counterpartBalances));
       });
+  };
+}
 
 export function handleButtonClick(buttonLabel) {
   return {
