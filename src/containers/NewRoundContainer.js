@@ -1,7 +1,12 @@
 import { connect } from 'react-redux';
-import { storeInputtedAmount, monitorCheckedUser, storeCheckedUsersFinal } from '../actions';
+import {
+  storeInputtedAmount,
+  monitorCheckedUser,
+  storeCheckedUsersFinal,
+  goBack,
+  handleButtonClick,
+} from '../actions';
 import NewRound from '../components/NewRound';
-import { goBack, handleButtonClick } from '../actions';
 
 const mapStateToProps = state => ({
   amount: state.newRoundReducer.amount,

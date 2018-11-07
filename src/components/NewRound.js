@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import Button from './Button';
 import '../../styles/components/NewRound.scss';
 
 function NewRound({
@@ -7,6 +8,7 @@ function NewRound({
   affectAmountPaid,
   amount,
   monitorCheckedUser,
+  handleButtonClick,
   // submitCheckedUsers,
   // checkedUsers,
 }) {
@@ -36,11 +38,7 @@ NewRound.propTypes = {
   monitorCheckedUser: PropTypes.func,
   submitCheckedUsers: PropTypes.func,
   checkedUsers: PropTypes.array,
-};
-
-NewRound.propTypes = {
-  goBack: PropTypes.func.isRequired,
-  handleButtonClick: PropTypes.func.isRequired,
+  handleButtonClick: PropTypes.func,
 };
 
 export default NewRound;

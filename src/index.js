@@ -24,6 +24,15 @@ const initialState = {
       5: 'Luke',
       6: 'Dan',
     },
+    balances: {
+      userBalance: { 2: 5.0 },
+      counterpartBalances: {
+        3: 0.0,
+        4: -5.0,
+        5: -5.0,
+        6: -5.0,
+      },
+    },
   },
 };
 

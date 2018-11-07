@@ -3,6 +3,7 @@ import Balances from '../components/Balances';
 import { goBack, handleButtonClick } from '../actions';
 
 const mapStateToProps = state => ({
+  users: state.balance.users,
   balances: state.balance.balances,
 });
 

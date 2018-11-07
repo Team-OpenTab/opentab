@@ -2,13 +2,14 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import TitleBar from './TitleBar';
 import Button from './Button';
+import UserList from './UserList';
 import '../../styles/components/TitleBar.scss';
 
-function Balances({ goBack, handleButtonClick }) {
+function Balances({ users, balances, goBack, handleButtonClick }) {
   return (
     <div>
       <TitleBar title="Balance:" previous="App" goBack={goBack} />
-      <UserList />
+      <UserList users={users} balances={balances} />
       <Button
         buttonLabel="New Round"
         buttonDestination="newRound"
@@ -19,6 +20,8 @@ function Balances({ goBack, handleButtonClick }) {
 }
 
 Balances.propTypes = {
+  users: PropTypes.object.isRequired,
+  balances: PropTypes.object.isRequired,
   goBack: PropTypes.func.isRequired,
   handleButtonClick: PropTypes.func.isRequired,
 };
