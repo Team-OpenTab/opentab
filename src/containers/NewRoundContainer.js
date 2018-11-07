@@ -6,6 +6,7 @@ import { goBack, handleButtonClick } from '../actions';
 const mapStateToProps = state => ({
   amount: state.newRoundReducer.amount,
   checkedUsers: state.newRoundReducer.checkedUsers,
+  users: state.users,
 });
 
 const mapDispatchToProps = dispatch => ({
