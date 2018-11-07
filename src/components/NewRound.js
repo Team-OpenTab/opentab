@@ -21,6 +21,11 @@ function NewRound({
           <input onChange={() => monitorCheckedUser(user.id)} type="checkbox" checked />
         ))}
       </div>
+      <Button
+        buttonLabel="Add Round"
+        buttonDestination="balances"
+        handleButtonClick={handleButtonClick}
+      />
     </section>
   );
 }
@@ -31,6 +36,11 @@ NewRound.propTypes = {
   monitorCheckedUser: PropTypes.func,
   submitCheckedUsers: PropTypes.func,
   checkedUsers: PropTypes.array,
+};
+
+NewRound.propTypes = {
+  goBack: PropTypes.func.isRequired,
+  handleButtonClick: PropTypes.func.isRequired,
 };
 
 export default NewRound;
