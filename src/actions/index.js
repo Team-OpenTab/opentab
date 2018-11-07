@@ -41,3 +41,36 @@ export function goBack(previousComponent) {
     previousComponent,
   };
 }
+export function receiveCounterpartBalances(balances) {
+  return {
+    type: 'RECEIVE_COUNTERPART_BALANCES',
+    balances,
+  };
+}
+
+export function receiveUserBalance(balance) {
+  return {
+    type: 'RECEIVE_USER_BALANCE',
+    balance,
+  };
+}
+
+export function fetchBalances(userId) {
+  return dispatch => {
+    fetch(`/api/get-balances/${userId}`)
+      .then(response => response.json())
+      .then(data => {
+        const userBalance = Object.assign({}, { [userId]: data.balances[userId] });
+        console.log(userBalance);
+        const userIds = Object.keys(data.balances);
+        const counterpartIds = userIds.filter(key => parseInt(key) !== userId);
+        const counterpartBalances = {};
+        counterpartIds.map(key =>
+          Object.assign(counterpartBalances, { [key]: data.balances[key] }),
+        );
+        console.log(counterpartBalances);
+        dispatch(receiveUserBalance(userBalance));
+        dispatch(receiveCounterpartBalances(counterpartBalances));
+      });
+  };
+}
