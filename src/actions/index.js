@@ -28,17 +28,17 @@ export function storeCheckedUsersFinal(users) {
   };
 }
 
-export function storeInputtedAmount(amount) {
+export function setAmount(totalAmount) {
   return {
-    type: 'STORE_INPUTTED_AMOUNT',
-    amount,
+    type: 'SET_AMOUNT',
+    totalAmount,
   };
 }
 
-export function goBack(previousComponent) {
+export function setStage(stage) {
   return {
-    type: 'GO_BACK',
-    previousComponent,
+    type: 'SET_STAGE',
+    stage,
   };
 }
 
@@ -53,6 +53,21 @@ export function receiveUserBalance(balance) {
   return {
     type: 'RECEIVE_USER_BALANCE',
     balance,
+  };
+}
+
+export function setNewRound() {
+  return (dispatch, getState) => {
+    const { round } = getState();
+    fetch('/api/new-round', {
+      method: 'POST',
+      body: JSON.stringify(round),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+      .then(response => response.json())
+      .catch(error => error.log(error));
   };
 }
 
@@ -71,12 +86,5 @@ export function fetchBalances(userId) {
         dispatch(receiveUserBalance(userBalance));
         dispatch(receiveCounterpartBalances(counterpartBalances));
       });
-  };
-}
-
-export function handleButtonClick(buttonLabel) {
-  return {
-    type: 'BUTTON_CHANGE_STAGE',
-    buttonLabel,
   };
 }

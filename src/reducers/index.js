@@ -1,6 +1,7 @@
 import { combineReducers } from 'redux';
-import newRoundReducer from './newRoundReducer';
-import balance from './balance';
+import round from './round';
+import balances from './balances';
 import stage from './stage';
+import user from './user';
 
-export default combineReducers({ balance, stage, newRoundReducer });
+export default combineReducers({ balances, stage, round, user });
