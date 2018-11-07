@@ -41,6 +41,7 @@ export function goBack(previousComponent) {
     previousComponent,
   };
 }
+
 export function receiveCounterpartBalances(balances) {
   return {
     type: 'RECEIVE_COUNTERPART_BALANCES',
@@ -70,5 +71,10 @@ export function fetchBalances(userId) {
         dispatch(receiveUserBalance(userBalance));
         dispatch(receiveCounterpartBalances(counterpartBalances));
       });
+
+export function handleButtonClick(buttonLabel) {
+  return {
+    type: 'BUTTON_CHANGE_STAGE',
+    buttonLabel,
   };
 }

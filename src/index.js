@@ -9,6 +9,7 @@ import rootReducer from './reducers';
 
 const composeEnhancers = composeWithDevTools({});
 
+// TODO: Remove dummy data from initial state when data can be retrieved from server
 const initialState = {
   balance: {
     newRound: {
