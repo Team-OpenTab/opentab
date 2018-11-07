@@ -1,7 +1,23 @@
-export function addRemoveCheckedUser(user) {
+export function addCheckedUser(user) {
   return {
-    type: 'ADD_REMOVE_CHECKED_USER',
+    type: 'ADD_CHECKED_USER',
     user,
+  };
+}
+
+export function removeCheckedUser(user) {
+  return {
+    type: 'REMOVE_CHECKED_USER',
+    user,
+  };
+}
+
+export function monitorCheckedUser(user) {
+  return (dispatch, getState) => {
+    const { checkedUsers } = getState();
+    return checkedUsers.includes(user)
+      ? dispatch(removeCheckedUser(user))
+      : dispatch(addCheckedUser(user));
   };
 }
 
