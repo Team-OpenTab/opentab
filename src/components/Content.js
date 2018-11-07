@@ -6,7 +6,8 @@ import NewRoundContainer from '../containers/NewRoundContainer';
 
 class Content extends React.Component {
   componentDidMount() {
-    // store.dispatch(fetchCategories());
+    const { fetchBalances } = this.props;
+    fetchBalances(2);
     const socket = io('localhost:8080');
     socket.on('refresh', () => {
       // /api/get-balances
@@ -28,6 +29,7 @@ class Content extends React.Component {
 // stage/display to be object in future
 Content.propTypes = {
   stage: PropTypes.string,
+  fetchBalances: PropTypes.func,
 };
 
 export default Content;

@@ -2,7 +2,9 @@ import { connect } from 'react-redux';
 import Balances from '../components/Balances';
 import { goBack, handleButtonClick } from '../actions';
 
-const mapStateToProps = () => ({});
+const mapStateToProps = state => ({
+  balances: state.balance.balances,
+});
 
 const mapDispatchToProps = dispatch => ({
   goBack: previousComponent => {
