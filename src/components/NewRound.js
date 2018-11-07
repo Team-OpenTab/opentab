@@ -36,9 +36,12 @@ function NewRound({
           </li>
         </ul>
       </section>
-      <button type="button" onClick={submitCheckedUsers(checkedUsers, amount)}>
-        Submit
-      </button>
+      <SubmitCheckedUsersContainer />
+      <Button
+        buttonLabel="Add Round"
+        buttonDestination="balances"
+        handleButtonClick={handleButtonClick}
+      />
     </main>
   );
 }
@@ -48,6 +51,11 @@ NewRound.propTypes = {
   monitorCheckedUser: PropTypes.func,
   submitCheckedUsers: PropTypes.func,
   checkedUsers: PropTypes.array,
+};
+
+NewRound.propTypes = {
+  goBack: PropTypes.func.isRequired,
+  handleButtonClick: PropTypes.func.isRequired,
 };
 
 export default NewRound;

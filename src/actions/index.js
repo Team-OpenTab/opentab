@@ -41,3 +41,10 @@ export function goBack(previousComponent) {
     previousComponent,
   };
 }
+
+export function handleButtonClick(buttonLabel) {
+  return {
+    type: 'BUTTON_CHANGE_STAGE',
+    buttonLabel,
+  };
+}
