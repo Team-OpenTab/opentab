@@ -3,6 +3,7 @@ const http = require('http');
 const socketIo = require('socket.io');
 const bodyParser = require('body-parser');
 const pgp = require('pg-promise')();
+const bcrypt = require('bcrypt');
 require('dotenv').config();
 
 const app = express();
@@ -17,12 +18,52 @@ const db = pgp({
   password: process.env.DB_PASSWORD,
 });
 
+const saltRounds = 10;
 app.use(bodyParser.json());
 app.use('/static', express.static('static'));
 app.set('view engine', 'hbs');
 
+// TODO: Error handling in responses
+
 app.get('/', (req, res) => {
   res.render('index');
+});
+
+app.post('/api/new-user', (req, res) => {
+  const { username, password, email, phone } = req.body;
+  bcrypt.hash(password, saltRounds, (err, hash) => {
+    db.one(
+      `INSERT INTO "user" (username, password, email, phone) 
+        VALUES ($1, $2, $3, $4) 
+        RETURNING id, username`,
+      [username, hash, email, phone],
+    )
+      .then(data => {
+        res.json({ status: 'OK', id: data.id, name: data.username });
+      })
+      .catch(error => console.log(error));
+  });
+});
+
+// TODO: change username to email on login page
+app.post('/api/login', (req, res) => {
+  const { username, password } = req.body;
+  db.one('SELECT * FROM "user" WHERE username = $1', [username])
+    .then(user => {
+      if (!user) {
+        console.log('User does not exist!');
+      } else {
+        bcrypt.compare(password, user.password, (err, result) => {
+          if (result) {
+            res.json({ status: 'OK', id: user.id, username: user.username });
+          } else {
+            res.json('Incorrect Password');
+            console.log('Incorrect Password');
+          }
+        });
+      }
+    })
+    .catch(error => console.log(error));
 });
 
 // {
@@ -75,9 +116,9 @@ app.post('/api/new-round', (req, res) => {
         }),
       ),
     )
-    .then(data => {
+    .then(() => {
       io.emit('refresh');
-      res.json(data);
+      res.json({ status: 'OK' });
     });
 });
 
@@ -94,7 +135,7 @@ app.get('/api/get-balances/:userId', (req, res) => {
       data.map(ledgerLine =>
         Object.assign(balances, { [ledgerLine.counterpart_id]: ledgerLine.sum }),
       );
-      res.json(balances);
+      res.json({ status: 'OK', balances });
     })
     .catch(error => console.log(error));
 });
@@ -118,7 +159,7 @@ app.post('/api/make-payment', (req, res) => {
     )
     .then(() => {
       io.emit('refresh');
-      res.json({ Status: 'OK' });
+      res.json({ status: 'OK' });
     })
     .catch(error => console.log(error));
 });
