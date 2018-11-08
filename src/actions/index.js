@@ -76,7 +76,14 @@ export function fetchBalances(userId) {
     fetch(`/api/get-balances/${userId}`)
       .then(response => response.json())
       .then(data => {
-        const userBalance = Object.assign({}, { [userId]: data.balances[userId] });
+        const userBalance = Object.assign(
+          {},
+          {
+            [userId]: Object.values(data.balances)
+              .reduce((a, b) => parseInt(a) + parseInt(b))
+              .toFixed(2),
+          },
+        );
         const userIds = Object.keys(data.balances);
         const counterpartIds = userIds.filter(key => parseInt(key) !== userId);
         const counterpartBalances = {};
