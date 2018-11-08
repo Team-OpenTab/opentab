@@ -35,11 +35,11 @@ app.post('/api/new-user', (req, res) => {
     db.one(
       `INSERT INTO "user" (username, password, email, phone) 
         VALUES ($1, $2, $3, $4) 
-        RETURNING id, username`,
+        RETURNING id`,
       [username, hash, email, phone],
     )
       .then(data => {
-        res.json({ status: 'OK', id: data.id, name: data.username });
+        res.json({ status: 'OK', id: data.id });
       })
       .catch(error => console.log(error));
   });
