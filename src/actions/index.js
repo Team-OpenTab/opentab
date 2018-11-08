@@ -96,3 +96,54 @@ export function fetchBalances(userId) {
       });
   };
 }
+
+export function setEmail(email) {
+  return {
+    type: 'SET_EMAIL',
+    email,
+  };
+}
+
+export function setPassword(password) {
+  return {
+    type: 'SET_PASSWORD',
+    password,
+  };
+}
+
+export function setUserId(id) {
+  return {
+    type: 'SET_USER_ID',
+    id,
+  };
+}
+
+export function setUsername(username) {
+  return {
+    type: 'SET_USERNAME',
+    username,
+  };
+}
+
+export function loginUser() {
+  return (dispatch, getState) => {
+    const { email, password } = getState().user;
+    fetch('/api/login', {
+      method: 'POST',
+      body: JSON.stringify({ email, password }),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+      .then(response => response.json())
+      .then(data => {
+        if (data.status === 'OK') {
+          dispatch(setUserId(data.id));
+          dispatch(setUsername(data.username));
+        } else {
+          console.log(data);
+        }
+      })
+      .catch(error => console.log(error));
+  };
+}

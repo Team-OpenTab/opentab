@@ -47,8 +47,8 @@ app.post('/api/new-user', (req, res) => {
 
 // TODO: change username to email on login page
 app.post('/api/login', (req, res) => {
-  const { username, password } = req.body;
-  db.one('SELECT * FROM "user" WHERE username = $1', [username])
+  const { email, password } = req.body;
+  db.one('SELECT * FROM "user" WHERE email = $1', [email])
     .then(user => {
       if (!user) {
         console.log('User does not exist!');
