@@ -7,10 +7,10 @@ import NewRoundContainer from '../containers/NewRoundContainer';
 class Content extends React.Component {
   componentDidMount() {
     const { fetchBalances } = this.props;
-    fetchBalances(2);
+    fetchBalances(1);
     const socket = io('localhost:8080');
     socket.on('refresh', () => {
-      fetchBalances(2);
+      fetchBalances(1);
       console.log('refresh received');
     });
   }

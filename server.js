@@ -115,10 +115,12 @@ app.post('/api/new-round', (req, res) => {
 
 app.get('/api/get-balances/:userId', (req, res) => {
   const userId = parseInt(req.params.userId);
+
   db.any(
-    `SELECT user_id, SUM(amount) 
+    `SELECT counterpart_id, SUM(amount) 
       FROM transaction
-      GROUP BY user_id
+      WHERE user_id = $1
+      GROUP BY counterpart_id;
       `,
     [userId],
   )

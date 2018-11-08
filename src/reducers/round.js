@@ -1,4 +1,4 @@
-const initialState = { userId: 2, counterpartIds: [2, 3, 4, 5, 6], totalAmount: 0 };
+const initialState = { userId: 1, counterpartIds: [1, 2, 3, 4, 5], totalAmount: 0 };
 function round(state = initialState, action) {
   switch (action.type) {
     case 'ADD_CHECKED_USER':
