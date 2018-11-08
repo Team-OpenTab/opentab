@@ -95,3 +95,11 @@ export function fetchBalances(userId) {
       });
   };
 }
+
+export function showPayment(payment, counterpartId) {
+  return {
+    type: 'SHOW_PAYMENT',
+    payment,
+    counterpartId,
+  };
+}
