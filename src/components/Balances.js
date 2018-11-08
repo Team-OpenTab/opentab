@@ -10,8 +10,9 @@ function Balances({ balances, getStage }) {
       <TitleBar title="Balance:" previous="App" />
       {Object.keys(balances.counterpartBalances).map(key => (
         <div key={key}>
-          <div>{key}</div>
-          <div>{balances.counterpartBalances[key]}</div>
+          <div>User {key}</div>
+          <div>Owes £{balances.counterpartBalances[key]}</div>
+          <button type="button">Pay</button>
         </div>
       ))}
 
