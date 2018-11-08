@@ -3,7 +3,14 @@ import PropTypes from 'prop-types';
 // import Button from './Button';
 import '../../styles/components/NewRound.scss';
 
-function NewRound({ counterparts, getAmount, totalAmount, getNewRound, getStage }) {
+function NewRound({
+  counterparts,
+  getAmount,
+  totalAmount,
+  getNewRound,
+  getStage,
+  handleRoundCounterparts,
+}) {
   return (
     <section>
       <div className="title-bar">
@@ -17,10 +24,9 @@ function NewRound({ counterparts, getAmount, totalAmount, getNewRound, getStage 
       </div>
       <div className="new-round__users">
         {Object.keys(counterparts).map(key => (
-          <div key={key}>
-            <span>{key}:</span>
-            <input type="checkbox" checked />
-          </div>
+          <button type="button" onClick={handleRoundCounterparts} value={key} key={key}>
+            {key}
+          </button>
         ))}
       </div>
       <button type="button" className="button" onClick={getNewRound}>
@@ -35,6 +41,7 @@ NewRound.propTypes = {
   getAmount: PropTypes.func,
   totalAmount: PropTypes.string,
   getNewRound: PropTypes.func.isRequired,
+  handleRoundCounterparts: PropTypes.func.isRequired,
 };
 
 export default NewRound;
