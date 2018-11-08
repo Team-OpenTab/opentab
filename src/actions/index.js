@@ -1,30 +1,31 @@
-export function addCheckedUser(user) {
+export function addCheckedUser(counterpart) {
   return {
     type: 'ADD_CHECKED_USER',
-    user,
+    counterpart,
   };
 }
 
-export function removeCheckedUser(user) {
+export function removeCheckedUser(counterpart) {
   return {
     type: 'REMOVE_CHECKED_USER',
-    user,
+    counterpart,
   };
 }
 
-export function monitorCheckedUser(user) {
-  return (dispatch, getState) => {
-    const { checkedUsers } = getState();
-    return checkedUsers.includes(user)
-      ? dispatch(removeCheckedUser(user))
-      : dispatch(addCheckedUser(user));
-  };
-}
-
-export function storeCheckedUsersFinal(users) {
+export function resetRound() {
   return {
-    type: 'STORE_USERS_FINAL',
-    users,
+    type: 'RESET_ROUND',
+  };
+}
+
+export function handleRoundCounterparts(counterpart) {
+  return (dispatch, getState) => {
+    const roundCounterparts = getState().round.counterpartIds;
+    if (!roundCounterparts.includes(counterpart)) {
+      dispatch(addCheckedUser(counterpart));
+    } else {
+      dispatch(removeCheckedUser(counterpart));
+    }
   };
 }
 
