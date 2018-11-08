@@ -30,52 +30,15 @@ INSERT INTO "user" (username, password, email, phone) VALUES ('Dan', 'test', 'da
 INSERT INTO "user" (username, password, email, phone) VALUES ('Tony', 'test', 'tony@gmail.com', '07998333222');
 INSERT INTO "user" (username, password, email, phone) VALUES ('Luke', 'test', 'luke@gmail.com', '07998222111');
 
-CREATE TABLE ledger_2 (
+CREATE TABLE transaction (
 id SERIAL PRIMARY KEY,
 user_id INT NOT NULL,
 counterpart_id INT NOT NULL,
+round_id INT,
 amount NUMERIC(6,2) NOT NULL,
 type TEXT NOT NULL,
+time TIMESTAMP WITH TIME ZONE NOT NULL,
 FOREIGN KEY (user_id) REFERENCES "user" (id),
-FOREIGN KEY (counterpart_id) REFERENCES "user" (id)
-);
-
-CREATE TABLE ledger_3 (
-id SERIAL PRIMARY KEY,
-user_id INT NOT NULL,
-counterpart_id INT NOT NULL,
-amount NUMERIC(6,2) NOT NULL,
-type TEXT NOT NULL,
-FOREIGN KEY (user_id) REFERENCES "user" (id),
-FOREIGN KEY (counterpart_id) REFERENCES "user" (id)
-);
-
-CREATE TABLE ledger_4 (
-id SERIAL PRIMARY KEY,
-user_id INT NOT NULL,
-counterpart_id INT NOT NULL,
-amount NUMERIC(6,2) NOT NULL,
-type TEXT NOT NULL,
-FOREIGN KEY (user_id) REFERENCES "user" (id),
-FOREIGN KEY (counterpart_id) REFERENCES "user" (id)
-);
-
-CREATE TABLE ledger_5 (
-id SERIAL PRIMARY KEY,
-user_id INT NOT NULL,
-counterpart_id INT NOT NULL,
-amount NUMERIC(6,2) NOT NULL,
-type TEXT NOT NULL,
-FOREIGN KEY (user_id) REFERENCES "user" (id),
-FOREIGN KEY (counterpart_id) REFERENCES "user" (id)
-);
-
-CREATE TABLE ledger_6 (
-id SERIAL PRIMARY KEY,
-user_id INT NOT NULL,
-counterpart_id INT NOT NULL,
-amount NUMERIC(6,2) NOT NULL,
-type TEXT NOT NULL,
-FOREIGN KEY (user_id) REFERENCES "user" (id),
-FOREIGN KEY (counterpart_id) REFERENCES "user" (id)
+FOREIGN KEY (counterpart_id) REFERENCES "user" (id),
+FOREIGN KEY (round_id) REFERENCES round (id)
 );
