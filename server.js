@@ -83,51 +83,43 @@ app.post('/api/new-round', (req, res) => {
   )
     .then(data =>
       Promise.all(
-        counterpartIds.map(counterpartId =>
-          db.one(
-            `INSERT INTO round_user (round_id, counterpart_id) 
-              VALUES ($1, $2) 
-              RETURNING id`,
-            [data.id, counterpartId],
-          ),
-        ),
-      ),
-    )
-    .then(() =>
-      counterpartIds.map(counterpartId =>
-        db.one(
-          `INSERT INTO ledger_$1 (user_id, counterpart_id, amount, type, time)
-            VALUES ($1, $2, $3, 'round', now())
-            RETURNING id`,
-          [userId, counterpartId, -amount],
-        ),
-      ),
-    )
-    .then(() =>
-      Promise.all(
-        counterpartIds.map(counterpartId => {
-          const type = userId === counterpartId ? 'self' : 'round';
-          return db.one(
-            `INSERT INTO ledger_$1 (user_id, counterpart_id, amount, type, time)
-              VALUES ($1, $2, $3, $4, now())
-              RETURNING id`,
-            [counterpartId, userId, amount, type],
-          );
-        }),
+        counterpartIds
+          .map(counterpartId => [
+            db.one(
+              `INSERT INTO transaction (user_id, counterpart_id, round_id, amount, type, time)
+                  VALUES ($1, $2, $3, $4, 'round', now())
+                  RETURNING id`,
+              [userId, counterpartId, data.id, -amount],
+            ),
+            db.one(
+              `INSERT INTO transaction (user_id, counterpart_id, round_id, amount, type, time)
+                VALUES ($1, $2, $3, $4, 'round', now())
+                RETURNING id`,
+              [counterpartId, userId, data.id, amount],
+            ),
+            db.none(
+              `INSERT INTO round_user (round_id, counterpart_id) 
+                  VALUES ($1, $2)`,
+              [data.id, counterpartId],
+            ),
+          ])
+          .reduce((a, b) => a.concat(b)),
       ),
     )
     .then(() => {
       io.emit('refresh');
       res.json({ status: 'OK' });
-    });
+    })
+    .catch(error => console.log(error));
 });
 
 app.get('/api/get-balances/:userId', (req, res) => {
   const userId = parseInt(req.params.userId);
   db.any(
-    `SELECT counterpart_id, SUM(amount) 
-      FROM ledger_$1 
-      GROUP BY counterpart_id`,
+    `SELECT user_id, SUM(amount) 
+      FROM transaction
+      GROUP BY user_id
+      `,
     [userId],
   )
     .then(data => {
@@ -146,13 +138,13 @@ app.post('/api/make-payment', (req, res) => {
   const amount = parseInt(req.body.amount).toFixed(2);
   const negativeAmount = amount - amount * 2;
   db.none(
-    `INSERT INTO ledger_$1 (user_id, counterpart_id, amount, type, time) 
+    `INSERT INTO transaction (user_id, counterpart_id, amount, type, time) 
       VALUES ($1, $2, $3, 'payment', now())`,
     [payerId, receiverId, negativeAmount],
   )
     .then(() =>
       db.none(
-        `INSERT INTO ledger_$1 (user_id, counterpart_id, amount, type, time) 
+        `INSERT INTO transaction (user_id, counterpart_id, amount, type, time) 
           VALUES ($1, $2, $3, 'payment', now())`,
         [receiverId, payerId, amount],
       ),
