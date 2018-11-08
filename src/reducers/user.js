@@ -3,6 +3,7 @@ const initialState = {
   username: '',
   email: '',
   password: '',
+  validationPassword: '',
   phone: '',
   userType: 'existingUser',
 };
@@ -21,6 +22,8 @@ function user(state = initialState, action) {
       return Object.assign({}, state, { phone: action.phone });
     case 'SET_USER_TYPE':
       return Object.assign({}, state, { userType: action.userType });
+    case 'SET_VALIDATION_PASSWORD':
+      return Object.assign({}, state, { validationPassword: action.validationPassword });
     default:
       return state;
   }

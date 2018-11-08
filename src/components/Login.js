@@ -7,6 +7,7 @@ function Login({
   phone,
   username,
   userType,
+  validationPassword,
   getLogin,
   getEmail,
   getPassword,
@@ -14,6 +15,7 @@ function Login({
   getUsername,
   getPhone,
   getUserType,
+  getValidationPassword,
 }) {
   return (
     <div>
@@ -86,15 +88,31 @@ function Login({
             </label>
             <label>
               {' '}
-              Password:
+              Password (4 characters minimum):
               <input
+                minLength="4"
                 type="password"
                 value={password}
                 onChange={event => getPassword(event.target.value)}
                 placeholder="Password"
               />
             </label>
-            <button type="submit">Create account</button>
+            <label>
+              {' '}
+              Re-enter Password:
+              <input
+                type="password"
+                value={validationPassword}
+                onChange={event => getValidationPassword(event.target.value)}
+                placeholder="Password"
+              />
+            </label>
+            <button
+              disabled={password !== validationPassword || !password || !validationPassword}
+              type="submit"
+            >
+              Create account
+            </button>
           </form>
           <div>
             <div>Already have an account?</div>
@@ -114,6 +132,7 @@ Login.propTypes = {
   phone: PropTypes.string.isRequired,
   username: PropTypes.string.isRequired,
   userType: PropTypes.string.isRequired,
+  validationPassword: PropTypes.string.isRequired,
   getLogin: PropTypes.func.isRequired,
   getEmail: PropTypes.func.isRequired,
   getPassword: PropTypes.func.isRequired,
@@ -121,6 +140,7 @@ Login.propTypes = {
   getUsername: PropTypes.func.isRequired,
   getPhone: PropTypes.func.isRequired,
   getUserType: PropTypes.func.isRequired,
+  getValidationPassword: PropTypes.func.isRequired,
 };
 
 export default Login;

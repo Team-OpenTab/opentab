@@ -57,6 +57,13 @@ export function receiveUserBalance(balance) {
   };
 }
 
+export function setValidationPassword(validationPassword) {
+  return {
+    type: 'SET_VALIDATION_PASSWORD',
+    validationPassword,
+  };
+}
+
 export function setNewRound() {
   return (dispatch, getState) => {
     const { round } = getState();
