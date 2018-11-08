@@ -8,6 +8,7 @@ import {
   setUsername,
   setPhone,
   setUserType,
+  setValidationPassword,
 } from '../actions';
 
 const mapStateToProps = state => ({
@@ -16,6 +17,7 @@ const mapStateToProps = state => ({
   username: state.user.username,
   phone: state.user.phone,
   userType: state.user.userType,
+  validationPassword: state.user.validationPassword,
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -32,6 +34,7 @@ const mapDispatchToProps = dispatch => ({
   getUsername: username => dispatch(setUsername(username)),
   getPhone: phone => dispatch(setPhone(phone)),
   getUserType: userType => dispatch(setUserType(userType)),
+  getValidationPassword: validationPassword => dispatch(setValidationPassword(validationPassword)),
 });
 
 export default connect(
