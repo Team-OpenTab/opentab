@@ -125,6 +125,20 @@ export function setUsername(username) {
   };
 }
 
+export function setPhone(phone) {
+  return {
+    type: 'SET_PHONE',
+    phone,
+  };
+}
+
+export function setUserType(userType) {
+  return {
+    type: 'SET_USER_TYPE',
+    userType,
+  };
+}
+
 export function loginUser() {
   return (dispatch, getState) => {
     const { email, password } = getState().user;
@@ -140,8 +154,29 @@ export function loginUser() {
         if (data.status === 'OK') {
           dispatch(setUserId(data.id));
           dispatch(setUsername(data.username));
-        } else {
-          console.log(data);
+          dispatch(setStage('balances'));
+        }
+      })
+      .catch(error => console.log(error));
+  };
+}
+
+export function createNewUser() {
+  return (dispatch, getState) => {
+    console.log('create new user fired');
+    const { email, password, username, phone } = getState().user;
+    fetch('/api/new-user', {
+      method: 'POST',
+      body: JSON.stringify({ email, password, username, phone }),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+      .then(response => response.json())
+      .then(data => {
+        if (data.status === 'OK') {
+          dispatch(setUserId(data.id));
+          dispatch(setStage('balances'));
         }
       })
       .catch(error => console.log(error));
