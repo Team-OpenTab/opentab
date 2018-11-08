@@ -2,7 +2,7 @@ import { connect } from 'react-redux';
 import { setAmount, setStage, setNewRound, handleRoundCounterparts, resetRound } from '../actions';
 import NewRound from '../components/NewRound';
 
-const mapStateToProps = state => ({
+export const mapStateToProps = state => ({
   totalAmount: state.round.totalAmount,
   roundCounterparts: state.round.counterpartIds,
   counterparts: state.balances.counterpartBalances,
