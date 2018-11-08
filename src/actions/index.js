@@ -97,6 +97,12 @@ export function fetchBalances(userId) {
   };
 }
 
+export function showPayment(payment, counterpartId) {
+  return {
+    type: 'SHOW_PAYMENT',
+    payment,
+    counterpartId,
+
 export function setEmail(email) {
   return {
     type: 'SET_EMAIL',

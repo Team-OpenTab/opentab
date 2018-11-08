@@ -131,7 +131,10 @@ app.get('/api/get-balances/:userId', (req, res) => {
       );
       res.json({ status: 'OK', balances });
     })
-    .catch(error => console.log(error));
+    .catch(error => {
+      console.log(error);
+      res.json(error);
+    });
 });
 
 app.post('/api/make-payment', (req, res) => {
