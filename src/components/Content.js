@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import io from 'socket.io-client';
 import BalancesContainer from '../containers/BalancesContainer';
 import NewRoundContainer from '../containers/NewRoundContainer';
+import LoginContainer from '../containers/LoginContainer';
 
 class Content extends React.Component {
   componentDidMount() {
@@ -19,6 +20,7 @@ class Content extends React.Component {
     const { stage } = this.props;
     return (
       <div className="app">
+        {stage === 'login' && <LoginContainer />}
         {stage === 'balances' && <BalancesContainer />}
         {stage === 'newRound' && <NewRoundContainer />}
       </div>

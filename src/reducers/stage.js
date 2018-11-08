@@ -1,4 +1,4 @@
-const initialState = 'balances';
+const initialState = 'login';
 
 function stage(state = initialState, action) {
   switch (action.type) {

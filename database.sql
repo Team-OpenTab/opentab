@@ -24,11 +24,11 @@ FOREIGN KEY (counterpart_id) REFERENCES "user" (id),
 FOREIGN KEY (round_id) REFERENCES round (id)
 );
 
-INSERT INTO "user" (username, password, email, phone) VALUES ('Yetkin', 'test', 'yetkin@gmail.com', '07998777666');
-INSERT INTO "user" (username, password, email, phone) VALUES ('Dave', 'test', 'dave@gmail.com', '07998555444');
-INSERT INTO "user" (username, password, email, phone) VALUES ('Dan', 'test', 'dan@gmail.com', '07998444333');
-INSERT INTO "user" (username, password, email, phone) VALUES ('Tony', 'test', 'tony@gmail.com', '07998333222');
-INSERT INTO "user" (username, password, email, phone) VALUES ('Luke', 'test', 'luke@gmail.com', '07998222111');
+INSERT INTO "user" (username, password, email, phone) VALUES ('Yetkin', '$2y$10$00mfVUwPB8oeO2RRrBfJ1eYceGYnpW/5Dd6qv343MlySx5dTIvg7a', 'yetkin@gmail.com', '07998777666');
+INSERT INTO "user" (username, password, email, phone) VALUES ('Dave', '$2y$10$00mfVUwPB8oeO2RRrBfJ1eYceGYnpW/5Dd6qv343MlySx5dTIvg7a', 'dave@gmail.com', '07998555444');
+INSERT INTO "user" (username, password, email, phone) VALUES ('Dan', '$2y$10$00mfVUwPB8oeO2RRrBfJ1eYceGYnpW/5Dd6qv343MlySx5dTIvg7a', 'dan@gmail.com', '07998444333');
+INSERT INTO "user" (username, password, email, phone) VALUES ('Tony', '$2y$10$00mfVUwPB8oeO2RRrBfJ1eYceGYnpW/5Dd6qv343MlySx5dTIvg7a', 'tony@gmail.com', '07998333222');
+INSERT INTO "user" (username, password, email, phone) VALUES ('Luke', '$2y$10$00mfVUwPB8oeO2RRrBfJ1eYceGYnpW/5Dd6qv343MlySx5dTIvg7a', 'luke@gmail.com', '07998222111');
 
 CREATE TABLE transaction (
 id SERIAL PRIMARY KEY,
