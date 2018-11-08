@@ -102,6 +102,8 @@ export function showPayment(payment, counterpartId) {
     type: 'SHOW_PAYMENT',
     payment,
     counterpartId,
+  };
+}
 
 export function setEmail(email) {
   return {
