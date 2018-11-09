@@ -5,6 +5,20 @@ export function addCheckedUser(counterpart) {
   };
 }
 
+export function setRoundBuyer(userId) {
+  return {
+    type: 'SET_ROUND_BUYER',
+    userId,
+  };
+}
+
+export function getRoundBuyer() {
+  return (dispatch, getState) => {
+    const userId = getState().user.id;
+    dispatch(setRoundBuyer(userId));
+  };
+}
+
 export function removeCheckedUser(counterpart) {
   return {
     type: 'REMOVE_CHECKED_USER',
@@ -88,7 +102,7 @@ export function fetchBalances(userId) {
           {},
           {
             [userId]: Object.values(data.balances)
-              .reduce((a, b) => parseInt(a) + parseInt(b))
+              .reduce((a, b) => parseInt(a) + parseInt(b), 0)
               .toFixed(2),
           },
         );
@@ -104,11 +118,34 @@ export function fetchBalances(userId) {
   };
 }
 
-export function showPayment(payment, counterpartId) {
+// TODO: use values from state instead of hard coded values. Test with newest database version
+export function settleBalance() {
+  return (dispatch, getState) => {
+    // const payerId = getState().user.id;
+    // const receiverId = getState().payment.receiverId;
+    const amount = Number(getState().balances.counterpartBalances[getState().payment.receiverId]);
+    const pay = { payerId: 1, receiverId: 2, amount };
+
+    fetch('/api/make-payment', {
+      method: 'POST',
+      body: JSON.stringify(pay),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+      .then(response => {
+        console.log('response: ', response);
+        response.json();
+      })
+      .catch(error => console.log(error));
+  };
+}
+
+export function showPayment(payment, receiverId) {
   return {
     type: 'SHOW_PAYMENT',
     payment,
-    counterpartId,
+    receiverId,
   };
 }
 
