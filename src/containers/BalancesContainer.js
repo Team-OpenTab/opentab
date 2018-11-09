@@ -11,10 +11,8 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   getStage: stage => dispatch(setStage(stage)),
   showPayment: (payment, receiverId) => dispatch(showPayment(payment, receiverId)),
-  settleBalance: () => dispatch(settleBalance()),]
-  showPayment: (payment, counterpartId) => dispatch(showPayment(payment, counterpartId)),
-  fetchBalances: userId => dispatch(fetchBalances(userId)),
   settleBalance: () => dispatch(settleBalance()),
+  fetchBalances: userId => dispatch(fetchBalances(userId)),
   // handleButtonClick: buttonLabel => {
   //   dispatch(handleButtonClick(buttonLabel));
 });

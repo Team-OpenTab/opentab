@@ -5,7 +5,6 @@ import io from 'socket.io-client';
 import TitleBar from './TitleBar';
 import '../../styles/components/Balances.scss';
 // import CounterpartList from './CounterpartList';
-import '../../styles/components/TitleBar.scss';
 
 class Balances extends React.Component {
   componentDidMount() {
@@ -48,18 +47,6 @@ class Balances extends React.Component {
       <div>
         <TitleBar title="Balance:" previous="App" />
 
-      <div className="counterpart-list">
-        {Object.keys(balances.counterpartBalances).map(key => (
-          <div className="counterpart" key={key}>
-            <div className="counterpart__name">User {key}</div>
-            <div className="counterpart__balance">£{balances.counterpartBalances[key]}</div>
-            <button
-              className="counterpart__btn"
-              id={key}
-              type="button"
-              onClick={() => showPayment(true, Number(key))}
-            >
-              Pay
         <div className="counterpart-list">
           {Object.keys(this.props.balances.counterpartBalances).map(key => (
             <div className="counterpart" key={key}>
