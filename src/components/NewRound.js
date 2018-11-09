@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 // import Button from './Button';
+import NewRoundCounterpart from './NewRoundCounterpart';
 import '../../styles/components/NewRound.scss';
 
 function NewRound({
@@ -23,10 +24,16 @@ function NewRound({
         <input value={totalAmount} onChange={event => getAmount(event.target.value)} />
       </div>
       <div className="new-round__users">
-        {Object.keys(counterparts).map(key => (
+        {Object.values(counterparts).map(counterpart => (
           <div>
-            <button type="button" onClick={handleRoundCounterparts} value={key} key={key}>
-              {key}
+            <NewRoundCounterpart counterpart={counterpart} />
+            <button
+              type="button"
+              onClick={handleRoundCounterparts}
+              value={counterpart.counterpartId}
+              key={counterpart.counterpartId}
+            >
+              {counterpart.username}
             </button>
           </div>
         ))}
