@@ -88,7 +88,7 @@ export function fetchBalances(userId) {
           {},
           {
             [userId]: Object.values(data.balances)
-              .reduce((a, b) => parseInt(a) + parseInt(b))
+              .reduce((a, b) => parseInt(a) + parseInt(b), 0)
               .toFixed(2),
           },
         );
