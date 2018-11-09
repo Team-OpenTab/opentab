@@ -13,6 +13,7 @@ export const mapStateToProps = state => ({
   totalAmount: state.round.totalAmount,
   roundCounterparts: state.round.counterpartIds,
   counterparts: state.balances.counterpartBalances,
+  userId: state.user.id,
 });
 
 const mapDispatchToProps = dispatch => ({

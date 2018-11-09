@@ -11,8 +11,8 @@ function NewRound({
   getNewRound,
   getStage,
   handleRoundCounterparts,
+  userId,
 }) {
-  console.log(roundCounterparts);
   return (
     <section>
       <div className="title-bar">
@@ -25,8 +25,12 @@ function NewRound({
         <input value={totalAmount} onChange={event => getAmount(event.target.value)} />
       </div>
       <div className="new-round__users">
+        <h3>Yourself</h3>
+        <button type="button" onClick={handleRoundCounterparts} value={userId} key={userId}>
+          {!roundCounterparts.includes(userId.toString()) ? 'Add' : 'Remove'}
+        </button>
         {Object.values(counterparts).map(counterpart => (
-          <div>
+          <React.Fragment>
             <h3>{counterpart.username}</h3>
             <button
               type="button"
@@ -38,7 +42,7 @@ function NewRound({
                 ? 'Add'
                 : 'Remove'}
             </button>
-          </div>
+          </React.Fragment>
         ))}
       </div>
       <button type="button" className="button" onClick={getNewRound}>
@@ -55,6 +59,7 @@ NewRound.propTypes = {
   totalAmount: PropTypes.string,
   getNewRound: PropTypes.func.isRequired,
   handleRoundCounterparts: PropTypes.func.isRequired,
+  userId: PropTypes.number,
 };
 
 export default NewRound;
