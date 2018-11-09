@@ -104,11 +104,33 @@ export function fetchBalances(userId) {
   };
 }
 
-export function showPayment(payment, counterpartId) {
+export function settleBalance() {
+  return (dispatch, getState) => {
+    // const payerId = getState().user.id;
+    // const receiverId = getState().payment.receiverId;
+    const amount = Number(getState().balances.counterpartBalances[getState().payment.receiverId]);
+    const pay = { payerId: 1, receiverId: 2, amount };
+
+    fetch('/api/make-payment', {
+      method: 'POST',
+      body: JSON.stringify(pay),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+      .then(response => {
+        console.log('response: ', response);
+        response.json();
+      })
+      .catch(error => console.log(error));
+  };
+}
+
+export function showPayment(payment, receiverId) {
   return {
     type: 'SHOW_PAYMENT',
     payment,
-    counterpartId,
+    receiverId,
   };
 }
 

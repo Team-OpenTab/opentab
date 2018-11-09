@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import Balances from '../components/Balances';
-import { setStage, showPayment } from '../actions';
+import { setStage, showPayment, settleBalance } from '../actions';
 
 const mapStateToProps = state => ({
   balances: state.balances,
@@ -9,7 +9,8 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   getStage: stage => dispatch(setStage(stage)),
-  showPayment: (payment, counterpartId) => dispatch(showPayment(payment, counterpartId)),
+  showPayment: (payment, receiverId) => dispatch(showPayment(payment, receiverId)),
+  settleBalance: () => dispatch(settleBalance()),
   // handleButtonClick: buttonLabel => {
   //   dispatch(handleButtonClick(buttonLabel));
 });

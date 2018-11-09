@@ -1,6 +1,6 @@
 const initialState = {
   payment: false,
-  counterpartId: 0,
+  receiverId: 0,
 };
 
 function payment(state = initialState, action) {
@@ -8,7 +8,7 @@ function payment(state = initialState, action) {
     case 'SHOW_PAYMENT':
       return {
         payment: action.payment,
-        counterpartId: action.counterpartId,
+        receiverId: action.receiverId,
       };
     default:
       return state;

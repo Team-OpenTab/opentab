@@ -6,7 +6,7 @@ import '../../styles/components/Balances.scss';
 // import CounterpartList from './CounterpartList';
 import '../../styles/components/TitleBar.scss';
 
-function Balances({ balances, getStage, showPayment, payment }) {
+function Balances({ balances, getStage, showPayment, payment, settleBalance }) {
   function paymentClassName(close) {
     return cx('payment', {
       'payment--closed': payment.payment || close,
@@ -22,12 +22,15 @@ function Balances({ balances, getStage, showPayment, payment }) {
 
   // TODO: Send post request to clear balances.
   function markPaid() {
-    console.log('mark paid, ', 'counterpartId: ', payment.counterpartId);
+    console.log('mark paid, ', 'receiverId: ', payment.receiverId);
+
+    settleBalance();
+    showPayment(false, null);
   }
 
   // TODO: show payment options for example Paypal link or sms notification
   function requestPayment() {
-    console.log('request payment, ', 'counterpartId: ', payment.counterpartId);
+    console.log('request payment, ', 'receiverId: ', payment.receiverId);
   }
 
   // Can payment modal be seperated into a new component?
@@ -44,7 +47,7 @@ function Balances({ balances, getStage, showPayment, payment }) {
               className="counterpart__btn"
               id={key}
               type="button"
-              onClick={() => showPayment(true, key)}
+              onClick={() => showPayment(true, Number(key))}
             >
               Pay
             </button>
@@ -78,6 +81,7 @@ Balances.propTypes = {
   getStage: PropTypes.func.isRequired,
   showPayment: PropTypes.func.isRequired,
   payment: PropTypes.object.isRequired,
+  settleBalance: PropTypes.object.isRequired,
 };
 
 export default Balances;
