@@ -36,6 +36,7 @@ module.exports = {
     'react/no-unused-prop-types': 'off', // Is still buggy
     'react/jsx-one-expression-per-line': 'off',
     'react/prefer-stateless-function': 'off',
+    'react/destructuring-assignment': 'off',
 
     'jsx-a11y/anchor-is-valid': ['error', { components: ['Link'], specialLink: ['to'] }],
     'jsx-a11y/click-events-have-key-events': 'off',
