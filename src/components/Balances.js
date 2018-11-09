@@ -32,6 +32,8 @@ class Balances extends React.Component {
 
   // TODO: Send post request to clear balances.
   markPaid() {
+    this.props.settleBalance();
+    this.props.showPayment(false, null);
     console.log('mark paid, ', 'counterpartId: ', this.props.payment.counterpartId);
   }
 
@@ -46,6 +48,18 @@ class Balances extends React.Component {
       <div>
         <TitleBar title="Balance:" previous="App" />
 
+      <div className="counterpart-list">
+        {Object.keys(balances.counterpartBalances).map(key => (
+          <div className="counterpart" key={key}>
+            <div className="counterpart__name">User {key}</div>
+            <div className="counterpart__balance">£{balances.counterpartBalances[key]}</div>
+            <button
+              className="counterpart__btn"
+              id={key}
+              type="button"
+              onClick={() => showPayment(true, Number(key))}
+            >
+              Pay
         <div className="counterpart-list">
           {Object.keys(this.props.balances.counterpartBalances).map(key => (
             <div className="counterpart" key={key}>
@@ -59,7 +73,7 @@ class Balances extends React.Component {
                 className="counterpart__btn"
                 id={key}
                 type="button"
-                onClick={() => this.props.showPayment(true, key)}
+                onClick={() => this.props.showPayment(true, Number(key))}
               >
                 Pay
               </button>
@@ -99,6 +113,7 @@ Balances.propTypes = {
   getStage: PropTypes.func.isRequired,
   showPayment: PropTypes.func.isRequired,
   payment: PropTypes.object.isRequired,
+  settleBalance: PropTypes.object.isRequired,
   fetchBalances: PropTypes.func.isRequired,
 };
 
