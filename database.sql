@@ -42,3 +42,37 @@ FOREIGN KEY (user_id) REFERENCES "user" (id),
 FOREIGN KEY (counterpart_id) REFERENCES "user" (id),
 FOREIGN KEY (round_id) REFERENCES round (id)
 );
+
+CREATE TABLE contact_user(
+  id SERIAL PRIMARY KEY,
+  user_id INT NOT NULL,
+  contact_id INT NOT NULL,
+  FOREIGN KEY(user_id) REFERENCES "user" (id),
+  FOREIGN KEY(contact_id) REFERENCES "user" (id)
+  );
+
+  /* dummy */
+INSERT INTO contact_user(user_id, contact_id) VALUES (1, 2);
+INSERT INTO contact_user(user_id, contact_id) VALUES (1, 3);
+INSERT INTO contact_user(user_id, contact_id) VALUES (1, 4);
+INSERT INTO contact_user(user_id, contact_id) VALUES (1, 5);
+
+INSERT INTO contact_user(user_id, contact_id) VALUES (2, 1);
+INSERT INTO contact_user(user_id, contact_id) VALUES (2, 3);
+INSERT INTO contact_user(user_id, contact_id) VALUES (2, 4);
+INSERT INTO contact_user(user_id, contact_id) VALUES (2, 5);
+
+INSERT INTO contact_user(user_id, contact_id) VALUES (3, 1);
+INSERT INTO contact_user(user_id, contact_id) VALUES (3, 2);
+INSERT INTO contact_user(user_id, contact_id) VALUES (3, 4);
+INSERT INTO contact_user(user_id, contact_id) VALUES (3, 5);
+
+INSERT INTO contact_user(user_id, contact_id) VALUES (4, 1);
+INSERT INTO contact_user(user_id, contact_id) VALUES (4, 2);
+INSERT INTO contact_user(user_id, contact_id) VALUES (4, 3);
+INSERT INTO contact_user(user_id, contact_id) VALUES (4, 5);
+
+INSERT INTO contact_user(user_id, contact_id) VALUES (5, 1);
+INSERT INTO contact_user(user_id, contact_id) VALUES (5, 2);
+INSERT INTO contact_user(user_id, contact_id) VALUES (5, 3);
+INSERT INTO contact_user(user_id, contact_id) VALUES (5, 4);

@@ -24,9 +24,11 @@ function NewRound({
       </div>
       <div className="new-round__users">
         {Object.keys(counterparts).map(key => (
-          <button type="button" onClick={handleRoundCounterparts} value={key} key={key}>
-            {key}
-          </button>
+          <div>
+            <button type="button" onClick={handleRoundCounterparts} value={key} key={key}>
+              {key}
+            </button>
+          </div>
         ))}
       </div>
       <button type="button" className="button" onClick={getNewRound}>
