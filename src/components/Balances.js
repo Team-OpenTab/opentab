@@ -101,7 +101,7 @@ Balances.propTypes = {
   getStage: PropTypes.func.isRequired,
   showPayment: PropTypes.func.isRequired,
   payment: PropTypes.object.isRequired,
-  settleBalance: PropTypes.object.isRequired,
+  settleBalance: PropTypes.func.isRequired,
   fetchBalances: PropTypes.func.isRequired,
 };
 
