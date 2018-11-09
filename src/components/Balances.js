@@ -20,10 +20,7 @@ function Balances({ balances, getStage, showPayment, payment, settleBalance }) {
     }
   }
 
-  // TODO: Send post request to clear balances.
   function markPaid() {
-    console.log('mark paid, ', 'receiverId: ', payment.receiverId);
-
     settleBalance();
     showPayment(false, null);
   }

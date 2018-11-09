@@ -104,6 +104,7 @@ export function fetchBalances(userId) {
   };
 }
 
+// TODO: use values from state instead of hard coded values. Test with newest database version
 export function settleBalance() {
   return (dispatch, getState) => {
     // const payerId = getState().user.id;
