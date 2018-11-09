@@ -149,6 +149,47 @@ app.get('/api/get-balances/:userId', (req, res) => {
     });
 });
 
+app.get('/api/get-contact/:username', (req, res) => {
+  const username = `${req.params.username.toLowerCase()}%`;
+  db.any(
+    `
+  SELECT id, username
+  FROM "user"
+  WHERE lower(username) LIKE $1;
+  `,
+    [username],
+  )
+    .then(data => {
+      res.json({ status: 'OK', data });
+    })
+    .catch(error => res.json(error));
+});
+
+app.post('/api/add-contact', (req, res) => {
+  const { userId, contactId } = req.body;
+  Promise.all([
+    db.none(
+      `
+    INSERT INTO contact_user (user_id, contact_id)
+    VALUES ($1, $2)
+  `,
+      [userId, contactId],
+    ),
+    db.none(
+      `
+    INSERT INTO contact_user (user_id, contact_id)
+    VALUES ($1, $2)
+  `,
+      [contactId, userId],
+    ),
+  ])
+    .then(() => {
+      io.emit('refresh');
+      res.json({ status: 'OK' });
+    })
+    .catch(error => res.json(error));
+});
+
 app.post('/api/make-payment', (req, res) => {
   const payerId = parseInt(req.body.payerId);
   const receiverId = parseInt(req.body.receiverId);
