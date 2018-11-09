@@ -33,8 +33,8 @@ app.post('/api/new-user', (req, res) => {
   const { username, password, email, phone } = req.body;
   bcrypt.hash(password, saltRounds, (err, hash) => {
     db.one(
-      `INSERT INTO "user" (username, password, email, phone) 
-        VALUES ($1, $2, $3, $4) 
+      `INSERT INTO "user" (username, password, email, phone)
+        VALUES ($1, $2, $3, $4)
         RETURNING id`,
       [username, hash, email, phone],
     )
@@ -76,8 +76,8 @@ app.post('/api/new-round', (req, res) => {
   const amount = totalAmount / counterpartIds.length;
 
   db.one(
-    `INSERT INTO round (user_id, time) 
-      VALUES ($1, now()) 
+    `INSERT INTO round (user_id, time)
+      VALUES ($1, now())
       RETURNING id`,
     [userId],
   )
@@ -98,7 +98,7 @@ app.post('/api/new-round', (req, res) => {
               [counterpartId, userId, data.id, amount],
             ),
             db.none(
-              `INSERT INTO round_user (round_id, counterpart_id) 
+              `INSERT INTO round_user (round_id, counterpart_id)
                   VALUES ($1, $2)`,
               [data.id, counterpartId],
             ),
@@ -117,18 +117,30 @@ app.get('/api/get-balances/:userId', (req, res) => {
   const userId = parseInt(req.params.userId);
 
   db.any(
-    `SELECT counterpart_id, SUM(amount) 
-      FROM transaction
-      WHERE user_id = $1
-      GROUP BY counterpart_id;
+    `(SELECT "user".username, counterpart_id, SUM(amount)
+          FROM transaction, "user"
+          WHERE user_id = $1
+          AND transaction.counterpart_id = "user".id
+          GROUP BY counterpart_id, "user".username)
+    UNION ALL
+    (SELECT "user".username, contact_id, 0.00 as sum
+      FROM contact_user, "user"
+      WHERE contact_user.user_id = $1
+      AND contact_user.contact_id = "user".id
+      AND contact_user.contact_id NOT IN (
+        SELECT DISTINCT counterpart_id FROM transaction
+        WHERE transaction.user_id = contact_user.user_id
+      )
+    )
+
       `,
     [userId],
   )
     .then(data => {
+      console.log(data);
       const balances = {};
-      data.map(ledgerLine =>
-        Object.assign(balances, { [ledgerLine.counterpart_id]: ledgerLine.sum }),
-      );
+      data.map(ledgerLine => Object.assign(balances, { [ledgerLine.counterpart_id]: ledgerLine }));
+      console.log(balances);
       res.json({ status: 'OK', balances });
     })
     .catch(error => {
@@ -137,19 +149,60 @@ app.get('/api/get-balances/:userId', (req, res) => {
     });
 });
 
+app.get('/api/get-contact/:username', (req, res) => {
+  const username = `${req.params.username.toLowerCase()}%`;
+  db.any(
+    `
+  SELECT id, username
+  FROM "user"
+  WHERE lower(username) LIKE $1;
+  `,
+    [username],
+  )
+    .then(data => {
+      res.json({ status: 'OK', data });
+    })
+    .catch(error => res.json(error));
+});
+
+app.post('/api/add-contact', (req, res) => {
+  const { userId, contactId } = req.body;
+  Promise.all([
+    db.none(
+      `
+    INSERT INTO contact_user (user_id, contact_id)
+    VALUES ($1, $2)
+  `,
+      [userId, contactId],
+    ),
+    db.none(
+      `
+    INSERT INTO contact_user (user_id, contact_id)
+    VALUES ($1, $2)
+  `,
+      [contactId, userId],
+    ),
+  ])
+    .then(() => {
+      io.emit('refresh');
+      res.json({ status: 'OK' });
+    })
+    .catch(error => res.json(error));
+});
+
 app.post('/api/make-payment', (req, res) => {
   const payerId = parseInt(req.body.payerId);
   const receiverId = parseInt(req.body.receiverId);
   const amount = parseInt(req.body.amount).toFixed(2);
   const negativeAmount = amount - amount * 2;
   db.none(
-    `INSERT INTO transaction (user_id, counterpart_id, amount, type, time) 
+    `INSERT INTO transaction (user_id, counterpart_id, amount, type, time)
       VALUES ($1, $2, $3, 'payment', now())`,
     [payerId, receiverId, negativeAmount],
   )
     .then(() =>
       db.none(
-        `INSERT INTO transaction (user_id, counterpart_id, amount, type, time) 
+        `INSERT INTO transaction (user_id, counterpart_id, amount, type, time)
           VALUES ($1, $2, $3, 'payment', now())`,
         [receiverId, payerId, amount],
       ),

@@ -1,21 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import io from 'socket.io-client';
+
 import BalancesContainer from '../containers/BalancesContainer';
 import NewRoundContainer from '../containers/NewRoundContainer';
 import LoginContainer from '../containers/LoginContainer';
 
 class Content extends React.Component {
-  componentDidMount() {
-    const { fetchBalances } = this.props;
-    fetchBalances(1);
-    const socket = io('localhost:8080');
-    socket.on('refresh', () => {
-      fetchBalances(1);
-      console.log('refresh received');
-    });
-  }
-
   render() {
     const { stage } = this.props;
     return (
