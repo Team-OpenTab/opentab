@@ -5,14 +5,12 @@ import '../../styles/components/NewRound.scss';
 
 function NewRound({
   counterparts,
-  roundCounterparts,
   getAmount,
   totalAmount,
   getNewRound,
   getStage,
   handleRoundCounterparts,
 }) {
-  console.log(roundCounterparts);
   return (
     <section>
       <div className="title-bar">
@@ -25,18 +23,10 @@ function NewRound({
         <input value={totalAmount} onChange={event => getAmount(event.target.value)} />
       </div>
       <div className="new-round__users">
-        {Object.values(counterparts).map(counterpart => (
+        {Object.keys(counterparts).map(key => (
           <div>
-            <h3>{counterpart.username}</h3>
-            <button
-              type="button"
-              onClick={handleRoundCounterparts}
-              value={counterpart.counterpart_id}
-              key={counterpart.counterpart_id}
-            >
-              {!roundCounterparts.includes(counterpart.counterpart_id.toString())
-                ? 'Add'
-                : 'Remove'}
+            <button type="button" onClick={handleRoundCounterparts} value={key} key={key}>
+              {key}
             </button>
           </div>
         ))}
@@ -49,7 +39,6 @@ function NewRound({
 }
 NewRound.propTypes = {
   counterparts: PropTypes.object,
-  roundCounterparts: PropTypes.array,
   getStage: PropTypes.func,
   getAmount: PropTypes.func,
   totalAmount: PropTypes.string,

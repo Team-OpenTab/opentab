@@ -1,12 +1,5 @@
 import { connect } from 'react-redux';
-import {
-  setAmount,
-  setStage,
-  setNewRound,
-  handleRoundCounterparts,
-  resetRound,
-  getRoundBuyer,
-} from '../actions';
+import { setAmount, setStage, setNewRound, handleRoundCounterparts, resetRound } from '../actions';
 import NewRound from '../components/NewRound';
 
 export const mapStateToProps = state => ({
@@ -17,7 +10,6 @@ export const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   getNewRound: () => {
-    dispatch(getRoundBuyer());
     dispatch(setStage('balances'));
     dispatch(setNewRound());
     dispatch(resetRound());

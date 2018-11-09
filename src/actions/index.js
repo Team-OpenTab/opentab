@@ -5,20 +5,6 @@ export function addCheckedUser(counterpart) {
   };
 }
 
-export function setRoundBuyer(userId) {
-  return {
-    type: 'SET_ROUND_BUYER',
-    userId,
-  };
-}
-
-export function getRoundBuyer() {
-  return (dispatch, getState) => {
-    const userId = getState().user.id;
-    dispatch(setRoundBuyer(userId));
-  };
-}
-
 export function removeCheckedUser(counterpart) {
   return {
     type: 'REMOVE_CHECKED_USER',
