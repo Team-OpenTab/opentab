@@ -52,7 +52,7 @@ CREATE TABLE contact_user(
   );
 
   /* dummy */
-  INSERT INTO contact_user(user_id, contact_id) VALUES (1, 2);
+INSERT INTO contact_user(user_id, contact_id) VALUES (1, 2);
 INSERT INTO contact_user(user_id, contact_id) VALUES (1, 3);
 INSERT INTO contact_user(user_id, contact_id) VALUES (1, 4);
 INSERT INTO contact_user(user_id, contact_id) VALUES (1, 5);
