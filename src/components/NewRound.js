@@ -1,17 +1,18 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 // import Button from './Button';
-import NewRoundCounterpart from './NewRoundCounterpart';
 import '../../styles/components/NewRound.scss';
 
 function NewRound({
   counterparts,
+  roundCounterparts,
   getAmount,
   totalAmount,
   getNewRound,
   getStage,
   handleRoundCounterparts,
 }) {
+  console.log(roundCounterparts);
   return (
     <section>
       <div className="title-bar">
@@ -26,14 +27,16 @@ function NewRound({
       <div className="new-round__users">
         {Object.values(counterparts).map(counterpart => (
           <div>
-            <NewRoundCounterpart counterpart={counterpart} />
+            <h3>{counterpart.username}</h3>
             <button
               type="button"
               onClick={handleRoundCounterparts}
-              value={counterpart.counterpartId}
-              key={counterpart.counterpartId}
+              value={counterpart.counterpart_id}
+              key={counterpart.counterpart_id}
             >
-              {counterpart.username}
+              {!roundCounterparts.includes(counterpart.counterpart_id.toString())
+                ? 'Add'
+                : 'Remove'}
             </button>
           </div>
         ))}
@@ -46,6 +49,7 @@ function NewRound({
 }
 NewRound.propTypes = {
   counterparts: PropTypes.object,
+  roundCounterparts: PropTypes.array,
   getStage: PropTypes.func,
   getAmount: PropTypes.func,
   totalAmount: PropTypes.string,
