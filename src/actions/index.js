@@ -222,11 +222,12 @@ export function fetchBalances(userId) {
 // TODO: use values from state instead of hard coded values. Test with newest database version
 export function settleBalance() {
   return (dispatch, getState) => {
-    // const payerId = getState().user.id;
-    // const receiverId = getState().payment.receiverId;
-    const amount = Number(getState().balances.counterpartBalances[getState().payment.receiverId]);
-    const pay = { payerId: 1, receiverId: 2, amount };
-
+    const payerId = getState().user.id;
+    const { receiverId } = getState().payment;
+    const amount = Number(
+      getState().balances.counterpartBalances[getState().payment.receiverId].sum,
+    );
+    const pay = { payerId, receiverId, amount };
     fetch('/api/make-payment', {
       method: 'POST',
       body: JSON.stringify(pay),
