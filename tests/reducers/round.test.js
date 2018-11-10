@@ -63,7 +63,7 @@ describe('round reducer', () => {
       type: 'RESET_ROUND',
     };
 
-    const expectedState = { userId: null, counterpartIds: [], totalAmount: '0' };
+    const expectedState = { userId: '', roundId: '', counterpartIds: [], totalAmount: '0' };
 
     const outputState = round(initialState, action);
 
