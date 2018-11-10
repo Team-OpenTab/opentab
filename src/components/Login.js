@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import '../../styles/components/Login.scss';
 
 function Login({
   email,
@@ -20,12 +21,13 @@ function Login({
   return (
     <div>
       {userType === 'existingUser' && (
-        <div>
-          <form onSubmit={getLogin}>
+        <div className="container">
+          <form className="form" onSubmit={getLogin}>
             <label>
               {' '}
               Email:
               <input
+                className="form__field"
                 type="text"
                 value={email}
                 onChange={event => getEmail(event.target.value)}
@@ -36,13 +38,16 @@ function Login({
               {' '}
               Password:
               <input
+                className="form__field"
                 type="password"
                 value={password}
                 onChange={event => getPassword(event.target.value)}
                 placeholder="Password"
               />
             </label>
-            <button type="submit">Login</button>
+            <button className="form__field" type="submit">
+              Login
+            </button>
           </form>
           <div>
             <div>No account?</div>
@@ -114,7 +119,7 @@ function Login({
               Create account
             </button>
           </form>
-          <div>
+          <div className="sign-up">
             <div>Already have an account?</div>
             <button type="button" onClick={() => getUserType('existingUser')}>
               Sign In

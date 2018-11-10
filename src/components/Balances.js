@@ -5,7 +5,6 @@ import io from 'socket.io-client';
 import TitleBar from './TitleBar';
 import '../../styles/components/Balances.scss';
 // import CounterpartList from './CounterpartList';
-import '../../styles/components/TitleBar.scss';
 
 class Balances extends React.Component {
   componentDidMount() {
