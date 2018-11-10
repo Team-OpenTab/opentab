@@ -1,18 +1,16 @@
 const initialState = {
-  userBalance: {},
+  userBalance: 0,
   counterpartBalances: {},
 };
 
 function balances(state = initialState, action) {
   switch (action.type) {
-    // case 'GO_BACK':
-    //   return Object.assign({}, state, action.previous);
-    case 'RECEIVE_COUNTERPART_BALANCES':
+    case 'SET_COUNTERPART_BALANCES':
       return {
         userBalance: state.userBalance,
         counterpartBalances: action.balances,
       };
-    case 'RECEIVE_USER_BALANCE':
+    case 'SET_USER_BALANCE':
       return {
         userBalance: action.balance,
         counterpartBalances: state.counterpartBalances,

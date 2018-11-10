@@ -45,7 +45,10 @@ class Balances extends React.Component {
   render() {
     return (
       <div>
-        <TitleBar title="Balance:" previous="App" />
+        <TitleBar
+          title={`Balance: £${this.props.balances.userBalance.toFixed(2)}`}
+          previous="App"
+        />
 
         <div className="counterpart-list">
           {Object.keys(this.props.balances.counterpartBalances).map(key => (
