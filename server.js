@@ -226,7 +226,7 @@ app.post('/api/add-contact', (req, res) => {
 app.post('/api/make-payment', (req, res) => {
   const payerId = parseInt(req.body.payerId);
   const receiverId = parseInt(req.body.receiverId);
-  const amount = parseInt(req.body.amount).toFixed(2);
+  const amount = Number(req.body.amount).toFixed(2);
   Promise.all([
     db.none(
       `INSERT INTO transaction (user_id, counterpart_id, amount, type, time)
