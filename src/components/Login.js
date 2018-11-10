@@ -19,9 +19,9 @@ function Login({
   getValidationPassword,
 }) {
   return (
-    <div>
+    <div className="login">
       {userType === 'existingUser' && (
-        <div className="container">
+        <div className="container login--existing-user">
           <form className="form" onSubmit={getLogin}>
             <label>
               {' '}
@@ -51,7 +51,11 @@ function Login({
           </form>
           <div>
             <div>No account?</div>
-            <button type="button" onClick={() => getUserType('newUser')}>
+            <button
+              className="new-user-button"
+              type="button"
+              onClick={() => getUserType('newUser')}
+            >
               Sign Up
             </button>
           </div>
@@ -59,7 +63,7 @@ function Login({
       )}
 
       {userType === 'newUser' && (
-        <div>
+        <div className="login--new-user">
           <form onSubmit={getNewUser}>
             <label>
               {' '}
@@ -121,7 +125,11 @@ function Login({
           </form>
           <div className="sign-up">
             <div>Already have an account?</div>
-            <button type="button" onClick={() => getUserType('existingUser')}>
+            <button
+              className="existing-user-button"
+              type="button"
+              onClick={() => getUserType('existingUser')}
+            >
               Sign In
             </button>
           </div>
