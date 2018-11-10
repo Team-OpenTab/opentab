@@ -30,13 +30,12 @@ function NewRound({
           {!roundCounterparts.includes(userId.toString()) ? 'Add' : 'Remove'}
         </button>
         {Object.values(counterparts).map(counterpart => (
-          <React.Fragment>
+          <React.Fragment key={counterpart.counterpart_id}>
             <h3>{counterpart.username}</h3>
             <button
               type="button"
               onClick={handleRoundCounterparts}
               value={counterpart.counterpart_id}
-              key={counterpart.counterpart_id}
             >
               {!roundCounterparts.includes(counterpart.counterpart_id.toString())
                 ? 'Add'

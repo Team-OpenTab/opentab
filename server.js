@@ -23,8 +23,6 @@ app.use(bodyParser.json());
 app.use('/static', express.static('static'));
 app.set('view engine', 'hbs');
 
-// TODO: Error handling in responses
-
 app.get('/', (req, res) => {
   res.render('index');
 });
@@ -33,97 +31,116 @@ app.post('/api/new-user', (req, res) => {
   const { username, password, email, phone } = req.body;
   bcrypt.hash(password, saltRounds, (err, hash) => {
     db.one(
-      `INSERT INTO "user" (username, password, email, phone)
-        VALUES ($1, $2, $3, $4)
-        RETURNING id`,
+      `
+      INSERT INTO "user" (username, password, email, phone)
+      VALUES ($1, $2, $3, $4)
+      RETURNING id
+      `,
       [username, hash, email, phone],
-    )
-      .then(data => {
-        res.json({ status: 'OK', id: data.id });
-      })
-      .catch(error => console.log(error));
+    ).then(userId => {
+      res.json({
+        status: 200,
+        data: userId,
+      });
+    });
   });
 });
 
-// TODO: change username to email on login page
 app.post('/api/login', (req, res) => {
   const { email, password } = req.body;
-  db.one('SELECT * FROM "user" WHERE email = $1', [email])
-    .then(user => {
-      if (!user) {
-        console.log('User does not exist!');
-      } else {
-        bcrypt.compare(password, user.password, (err, result) => {
-          if (result) {
-            res.json({ status: 'OK', id: user.id, username: user.username });
-          } else {
-            res.json('Incorrect Password');
-            console.log('Incorrect Password');
-          }
-        });
-      }
-    })
-    .catch(error => console.log(error));
+  db.oneOrNone('SELECT * FROM "user" WHERE email = $1', [email]).then(user => {
+    if (!user) {
+      res.status(404).json({
+        status: 404,
+        message: 'User does not exist',
+      });
+    } else {
+      bcrypt.compare(password, user.password, (err, result) => {
+        if (result) {
+          res.json({
+            status: 200,
+            data: { id: user.id, username: user.username },
+          });
+        } else {
+          res.status(401).json({
+            status: 401,
+            message: 'Incorrect password',
+            details: err,
+          });
+        }
+      });
+    }
+  });
 });
 
-// {
-// "userId": 2,
-// "counterpartIds": [2,3,4,5,6],
-// "totalAmount": 25
-// }
 app.post('/api/new-round', (req, res) => {
   const { userId, counterpartIds, totalAmount } = req.body;
   const amount = totalAmount / counterpartIds.length;
 
   db.one(
-    `INSERT INTO round (user_id, time)
-      VALUES ($1, now())
-      RETURNING id`,
+    `
+    INSERT INTO round (user_id, time)
+    VALUES ($1, now())
+    RETURNING id
+    `,
     [userId],
   )
-    .then(data =>
-      Promise.all(
+    .then(data => {
+      const roundId = data.id;
+      return Promise.all(
         counterpartIds
           .map(counterpartId => [
             db.one(
-              `INSERT INTO transaction (user_id, counterpart_id, round_id, amount, type, time)
-                  VALUES ($1, $2, $3, $4, 'round', now())
-                  RETURNING id`,
-              [userId, counterpartId, data.id, -amount],
+              `
+              INSERT INTO transaction (user_id, counterpart_id, round_id, amount, type, time)
+              VALUES ($1, $2, $3, $4, 'round', now())
+              RETURNING round_id
+              `,
+              [userId, counterpartId, roundId, -amount],
             ),
             db.one(
-              `INSERT INTO transaction (user_id, counterpart_id, round_id, amount, type, time)
-                VALUES ($1, $2, $3, $4, $5, now())
-                RETURNING id`,
-              [counterpartId, userId, data.id, amount, userId === counterpartId ? 'self' : 'round'],
+              `
+              INSERT INTO transaction (user_id, counterpart_id, round_id, amount, type, time)
+              VALUES ($1, $2, $3, $4, $5, now())
+              RETURNING round_id
+              `,
+              [counterpartId, userId, roundId, amount, userId === counterpartId ? 'self' : 'round'],
             ),
-            db.none(
-              `INSERT INTO round_user (round_id, counterpart_id)
-                  VALUES ($1, $2)`,
-              [data.id, counterpartId],
+            db.one(
+              `
+              INSERT INTO round_user (round_id, counterpart_id)
+              VALUES ($1, $2)
+              RETURNING round_id
+              `,
+              [roundId, counterpartId],
             ),
           ])
           .reduce((a, b) => a.concat(b)),
-      ),
-    )
-    .then(() => {
-      io.emit('refresh');
-      res.json({ status: 'OK' });
+      );
     })
-    .catch(error => console.log(error));
+    .then(data => {
+      const roundId = data[0].round_id;
+      io.emit('refresh');
+      res.json({
+        status: 200,
+        data: { roundId },
+      });
+    });
 });
 
 app.get('/api/get-balances/:userId', (req, res) => {
   const userId = parseInt(req.params.userId);
-
   db.any(
-    `(SELECT "user".username, counterpart_id, SUM(amount)
-          FROM transaction, "user"
-          WHERE user_id = $1
-          AND transaction.counterpart_id = "user".id
-          GROUP BY counterpart_id, "user".username)
+    `
+    (
+      SELECT "user".username, counterpart_id, SUM(amount)
+      FROM transaction, "user"
+      WHERE user_id = $1
+      AND transaction.counterpart_id = "user".id
+      GROUP BY counterpart_id, "user".username)
     UNION ALL
-    (SELECT "user".username, contact_id, 0.00 as sum
+    (
+      SELECT "user".username, contact_id, 0.00 as sum
       FROM contact_user, "user"
       WHERE contact_user.user_id = $1
       AND contact_user.contact_id = "user".id
@@ -132,37 +149,47 @@ app.get('/api/get-balances/:userId', (req, res) => {
         WHERE transaction.user_id = contact_user.user_id
       )
     )
-
-      `,
+    `,
     [userId],
-  )
-    .then(data => {
-      console.log(data);
+  ).then(data => {
+    if (!data.length) {
+      res.status(404).json({
+        status: 404,
+        message: 'No data available',
+      });
+    } else {
       const balances = {};
-      data.map(ledgerLine => Object.assign(balances, { [ledgerLine.counterpart_id]: ledgerLine }));
-      console.log(balances);
-      res.json({ status: 'OK', balances });
-    })
-    .catch(error => {
-      console.log(error);
-      res.json(error);
-    });
+      data.map(balance => Object.assign(balances, { [balance.counterpart_id]: balance }));
+      res.json({
+        status: 200,
+        data: { balances },
+      });
+    }
+  });
 });
 
 app.get('/api/get-contact/:username', (req, res) => {
   const username = `${req.params.username.toLowerCase()}%`;
   db.any(
     `
-  SELECT id, username
-  FROM "user"
-  WHERE lower(username) LIKE $1;
-  `,
+    SELECT id, username
+    FROM "user"
+    WHERE lower(username) LIKE $1;
+    `,
     [username],
-  )
-    .then(data => {
-      res.json({ status: 'OK', data });
-    })
-    .catch(error => res.json(error));
+  ).then(user => {
+    if (!user.length) {
+      res.status(404).json({
+        status: 404,
+        message: 'User not found',
+      });
+    } else {
+      res.json({
+        status: 200,
+        data: { user },
+      });
+    }
+  });
 });
 
 app.post('/api/add-contact', (req, res) => {
@@ -170,62 +197,75 @@ app.post('/api/add-contact', (req, res) => {
   Promise.all([
     db.none(
       `
-    INSERT INTO contact_user (user_id, contact_id)
-    VALUES ($1, $2)
-  `,
+      INSERT INTO contact_user (user_id, contact_id)
+      VALUES ($1, $2)
+      `,
       [userId, contactId],
     ),
     db.none(
       `
-    INSERT INTO contact_user (user_id, contact_id)
-    VALUES ($1, $2)
-  `,
+      INSERT INTO contact_user (user_id, contact_id)
+      VALUES ($1, $2)
+      `,
       [contactId, userId],
     ),
   ])
     .then(() => {
       io.emit('refresh');
-      res.json({ status: 'OK' });
+      res.json({ status: 200 });
     })
-    .catch(error => res.json(error));
+    .catch(error =>
+      res.status(400).json({
+        status: 400,
+        message: 'Error while adding user to contacts',
+        details: error,
+      }),
+    );
 });
 
 app.post('/api/make-payment', (req, res) => {
   const payerId = parseInt(req.body.payerId);
   const receiverId = parseInt(req.body.receiverId);
   const amount = parseInt(req.body.amount).toFixed(2);
-  const negativeAmount = amount - amount * 2;
-  db.none(
-    `INSERT INTO transaction (user_id, counterpart_id, amount, type, time)
-      VALUES ($1, $2, $3, 'payment', now())`,
-    [payerId, receiverId, negativeAmount],
-  )
-    .then(() =>
-      db.none(
-        `INSERT INTO transaction (user_id, counterpart_id, amount, type, time)
-          VALUES ($1, $2, $3, 'payment', now())`,
-        [receiverId, payerId, amount],
-      ),
-    )
+  Promise.all([
+    db.none(
+      `INSERT INTO transaction (user_id, counterpart_id, amount, type, time)
+        VALUES ($1, $2, $3, 'payment', now())`,
+      [payerId, receiverId, -amount],
+    ),
+    db.none(
+      `INSERT INTO transaction (user_id, counterpart_id, amount, type, time)
+        VALUES ($1, $2, $3, 'payment', now())`,
+      [receiverId, payerId, amount],
+    ),
+  ])
     .then(() => {
       io.emit('refresh');
-      res.json({ status: 'OK' });
+      res.json({ status: 200 });
     })
-    .catch(error => console.log(error));
+    .catch(error =>
+      res.status(400).json({
+        status: 400,
+        message: 'Error while making payment',
+        details: error,
+      }),
+    );
 });
 
 app.get('/api/get-rounds/:userId', (req, res) => {
   const userId = parseInt(req.params.userId);
   db.any(
-    `SELECT transaction.round_id, round.user_id, 
-    transaction.counterpart_id, transaction.time, transaction.amount
+    `
+    SELECT transaction.round_id, round.user_id, 
+      transaction.counterpart_id, transaction.time, transaction.amount
     FROM transaction, round 
     WHERE round.user_id = $1
     AND round.user_id = transaction.user_id
     AND type = 'round'
     AND transaction.amount < 0
     GROUP BY transaction.round_id, round.user_id, 
-    transaction.counterpart_id, transaction.amount, transaction.time`,
+      transaction.counterpart_id, transaction.amount, transaction.time
+    `,
     [userId],
   ).then(response => {
     const groupedRounds = response.reduce((acc, curr) => {

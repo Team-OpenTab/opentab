@@ -1,6 +1,14 @@
-const initialState = { userId: null, counterpartIds: [], totalAmount: '0' };
+const initialState = {
+  roundId: '',
+  userId: '',
+  counterpartIds: [],
+  totalAmount: '0',
+};
+
 function round(state = initialState, action) {
   switch (action.type) {
+    case 'SET_ROUND_ID':
+      return Object.assign({}, state, { roundId: action.roundId });
     case 'SET_ROUND_BUYER':
       return Object.assign({}, state, { userId: action.userId });
     case 'ADD_CHECKED_USER':
