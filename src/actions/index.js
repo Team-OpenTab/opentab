@@ -180,16 +180,16 @@ export function setAmount(totalAmount) {
 
 // BALANCES ACTIONS
 
-export function receiveCounterpartBalances(balances) {
+export function setCounterpartBalances(balances) {
   return {
-    type: 'RECEIVE_COUNTERPART_BALANCES',
+    type: 'SET_COUNTERPART_BALANCES',
     balances,
   };
 }
 
-export function receiveUserBalance(balance) {
+export function setUserBalance(balance) {
   return {
-    type: 'RECEIVE_USER_BALANCE',
+    type: 'SET_USER_BALANCE',
     balance,
   };
 }
@@ -199,22 +199,17 @@ export function fetchBalances(userId) {
     fetch(`/api/get-balances/${userId}`)
       .then(res => res.json())
       .then(response => {
-        const userBalance = Object.assign(
-          {},
-          {
-            [userId]: Object.values(response.data.balances)
-              .reduce((a, b) => parseInt(a.sum) + parseInt(b.sum), 0)
-              .toFixed(2),
-          },
-        );
+        const userBalance = Object.values(response.data.balances)
+          .map(item => parseInt(item.sum))
+          .reduce((a, b) => a + b);
         const userIds = Object.keys(response.data.balances);
         const counterpartIds = userIds.filter(key => parseInt(key) !== userId);
         const counterpartBalances = {};
         counterpartIds.map(key =>
           Object.assign(counterpartBalances, { [key]: response.data.balances[key] }),
         );
-        dispatch(receiveUserBalance(userBalance));
-        dispatch(receiveCounterpartBalances(counterpartBalances));
+        dispatch(setUserBalance(userBalance));
+        dispatch(setCounterpartBalances(counterpartBalances));
       });
   };
 }
