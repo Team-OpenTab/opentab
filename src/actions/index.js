@@ -1,3 +1,131 @@
+export function setStage(stage) {
+  return {
+    type: 'SET_STAGE',
+    stage,
+  };
+}
+
+// USER ACTIONS
+
+export function setUserId(id) {
+  return {
+    type: 'SET_USER_ID',
+    id,
+  };
+}
+
+export function setUsername(username) {
+  return {
+    type: 'SET_USERNAME',
+    username,
+  };
+}
+
+export function setEmail(email) {
+  return {
+    type: 'SET_EMAIL',
+    email,
+  };
+}
+
+export function setPassword(password) {
+  return {
+    type: 'SET_PASSWORD',
+    password,
+  };
+}
+
+export function setValidationPassword(validationPassword) {
+  return {
+    type: 'SET_VALIDATION_PASSWORD',
+    validationPassword,
+  };
+}
+
+export function setPhone(phone) {
+  return {
+    type: 'SET_PHONE',
+    phone,
+  };
+}
+
+export function setUserType(userType) {
+  return {
+    type: 'SET_USER_TYPE',
+    userType,
+  };
+}
+
+export function loginUser() {
+  return (dispatch, getState) => {
+    const { email, password } = getState().user;
+    fetch('/api/login', {
+      method: 'POST',
+      body: JSON.stringify({ email, password }),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+      .then(res => res.json())
+      .then(response => {
+        if (response.status === 200) {
+          dispatch(setUserId(response.data.id));
+          dispatch(setUsername(response.data.username));
+          dispatch(setStage('balances'));
+        }
+      })
+      .catch(error => console.log(error));
+  };
+}
+
+export function createNewUser() {
+  return (dispatch, getState) => {
+    const { email, password, username, phone } = getState().user;
+    fetch('/api/new-user', {
+      method: 'POST',
+      body: JSON.stringify({ email, password, username, phone }),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+      .then(res => res.json())
+      .then(response => {
+        if (response.status === 200) {
+          dispatch(setUserId(response.data.id));
+          dispatch(setStage('balances'));
+        }
+      })
+      .catch(error => console.log(error));
+  };
+}
+
+// ROUND ACTIONS
+
+export function setRoundId(roundId) {
+  return {
+    type: 'SET_ROUND_ID',
+    roundId,
+  };
+}
+
+export function setNewRound() {
+  return (dispatch, getState) => {
+    const { round } = getState();
+    fetch('/api/new-round', {
+      method: 'POST',
+      body: JSON.stringify(round),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+      .then(res => res.json())
+      .then(response => {
+        dispatch(setRoundId(response.data.roundId));
+      })
+      .catch(error => error.log(error));
+  };
+}
+
 export function addCheckedUser(counterpart) {
   return {
     type: 'ADD_CHECKED_USER',
@@ -50,12 +178,7 @@ export function setAmount(totalAmount) {
   };
 }
 
-export function setStage(stage) {
-  return {
-    type: 'SET_STAGE',
-    stage,
-  };
-}
+// BALANCES ACTIONS
 
 export function receiveCounterpartBalances(balances) {
   return {
@@ -71,46 +194,24 @@ export function receiveUserBalance(balance) {
   };
 }
 
-export function setValidationPassword(validationPassword) {
-  return {
-    type: 'SET_VALIDATION_PASSWORD',
-    validationPassword,
-  };
-}
-
-export function setNewRound() {
-  return (dispatch, getState) => {
-    const { round } = getState();
-    fetch('/api/new-round', {
-      method: 'POST',
-      body: JSON.stringify(round),
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    })
-      .then(response => response.json())
-      .catch(error => error.log(error));
-  };
-}
-
 export function fetchBalances(userId) {
   return dispatch => {
     fetch(`/api/get-balances/${userId}`)
-      .then(response => response.json())
-      .then(data => {
+      .then(res => res.json())
+      .then(response => {
         const userBalance = Object.assign(
           {},
           {
-            [userId]: Object.values(data.balances)
-              .reduce((a, b) => parseInt(a) + parseInt(b), 0)
+            [userId]: Object.values(response.data.balances)
+              .reduce((a, b) => parseInt(a.sum) + parseInt(b.sum), 0)
               .toFixed(2),
           },
         );
-        const userIds = Object.keys(data.balances);
+        const userIds = Object.keys(response.data.balances);
         const counterpartIds = userIds.filter(key => parseInt(key) !== userId);
         const counterpartBalances = {};
         counterpartIds.map(key =>
-          Object.assign(counterpartBalances, { [key]: data.balances[key] }),
+          Object.assign(counterpartBalances, { [key]: response.data.balances[key] }),
         );
         dispatch(receiveUserBalance(userBalance));
         dispatch(receiveCounterpartBalances(counterpartBalances));
@@ -133,10 +234,7 @@ export function settleBalance() {
         'Content-Type': 'application/json',
       },
     })
-      .then(response => {
-        console.log('response: ', response);
-        response.json();
-      })
+      .then(res => res.json())
       .catch(error => console.log(error));
   };
 }
@@ -146,91 +244,5 @@ export function showPayment(payment, receiverId) {
     type: 'SHOW_PAYMENT',
     payment,
     receiverId,
-  };
-}
-
-export function setEmail(email) {
-  return {
-    type: 'SET_EMAIL',
-    email,
-  };
-}
-
-export function setPassword(password) {
-  return {
-    type: 'SET_PASSWORD',
-    password,
-  };
-}
-
-export function setUserId(id) {
-  return {
-    type: 'SET_USER_ID',
-    id,
-  };
-}
-
-export function setUsername(username) {
-  return {
-    type: 'SET_USERNAME',
-    username,
-  };
-}
-
-export function setPhone(phone) {
-  return {
-    type: 'SET_PHONE',
-    phone,
-  };
-}
-
-export function setUserType(userType) {
-  return {
-    type: 'SET_USER_TYPE',
-    userType,
-  };
-}
-
-export function loginUser() {
-  return (dispatch, getState) => {
-    const { email, password } = getState().user;
-    fetch('/api/login', {
-      method: 'POST',
-      body: JSON.stringify({ email, password }),
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    })
-      .then(response => response.json())
-      .then(data => {
-        if (data.status === 'OK') {
-          dispatch(setUserId(data.id));
-          dispatch(setUsername(data.username));
-          dispatch(setStage('balances'));
-        }
-      })
-      .catch(error => console.log(error));
-  };
-}
-
-export function createNewUser() {
-  return (dispatch, getState) => {
-    console.log('create new user fired');
-    const { email, password, username, phone } = getState().user;
-    fetch('/api/new-user', {
-      method: 'POST',
-      body: JSON.stringify({ email, password, username, phone }),
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    })
-      .then(response => response.json())
-      .then(data => {
-        if (data.status === 'OK') {
-          dispatch(setUserId(data.id));
-          dispatch(setStage('balances'));
-        }
-      })
-      .catch(error => console.log(error));
   };
 }
