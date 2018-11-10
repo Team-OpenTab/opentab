@@ -1,6 +1,19 @@
 import round from '../../src/reducers/round';
 
 describe('round reducer', () => {
+  it('sets round buyer with provided userId', () => {
+    const initialState = { userId: null, counterpartIds: [], totalAmount: 0 };
+
+    const action = {
+      type: 'SET_ROUND_BUYER',
+      userId: 1,
+    };
+
+    const expectedState = { userId: 1, counterpartIds: [], totalAmount: 0 };
+
+    const outputState = round(initialState, action);
+    expect(outputState).toEqual(expectedState);
+  });
   it('adds totalAmount to store', () => {
     const initialState = { userId: 1, counterpartIds: [], totalAmount: 0 };
 
@@ -50,7 +63,7 @@ describe('round reducer', () => {
       type: 'RESET_ROUND',
     };
 
-    const expectedState = { userId: 1, counterpartIds: [], totalAmount: 0 };
+    const expectedState = { userId: '', roundId: '', counterpartIds: [], totalAmount: '0' };
 
     const outputState = round(initialState, action);
 
