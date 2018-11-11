@@ -1,27 +1,26 @@
 const initialState = {
-  roundId: '',
   buyerId: '',
-  counterpartIds: [],
+  recipients: {},
   totalAmount: 0,
   splitType: '',
 };
 
 function round(state = initialState, action) {
   switch (action.type) {
-    case 'SET_ROUND_ID':
-      return Object.assign({}, state, { roundId: action.roundId });
     case 'SET_ROUND_BUYER':
       return Object.assign({}, state, { buyerId: action.buyerId });
-    case 'ADD_CHECKED_USER':
-      return Object.assign({}, state, {
-        counterpartIds: state.counterpartIds.concat(action.counterpart),
-      });
-    case 'REMOVE_CHECKED_USER':
-      return Object.assign({}, state, {
-        counterpartIds: state.counterpartIds.filter(
-          counterpart => counterpart !== action.counterpart,
-        ),
-      });
+    case 'ADD_RECIPIENT': {
+      const newRecipients = Object.assign({}, state.recipients);
+      newRecipients[action.recipient] = {};
+      return Object.assign({}, state, { recipients: newRecipients });
+    }
+    case 'REMOVE_RECIPIENT': {
+      const newRecipients = Object.assign({}, state.recipients);
+      delete newRecipients[action.recipient];
+      return Object.assign({}, state, { recipients: newRecipients });
+    }
+    case 'SET_RECIPIENT_AMOUNT':
+      return Object.assign({}, state, { recipients: action.recipients });
     case 'RESET_ROUND':
       return Object.assign({}, initialState);
     case 'SET_AMOUNT':
