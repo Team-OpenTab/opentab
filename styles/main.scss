@@ -1,2 +1,6 @@
-@import '../styles/base/color.scss';
-@import '../styles/components/TitleBar.scss';
+@import '../styles/base/color';
+@import '../styles/base/typography';
+@import '../styles/base/normalize.scss';
+
+@import '../styles/partials/titleBar';
+@import '../styles/partials/button';

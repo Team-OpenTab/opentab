@@ -1,29 +1,101 @@
-@import '../main.scss';
-
-html {
-  height: 100%;
-}
+@import '../main';
 
 .container {
-  height: 100vh;
-  background-color: $background-color;
   display: flex;
   flex-direction: column;
+  justify-content: flex-end;
   align-items: center;
+  height: 100vh;
+}
+
+.login--existing-user {
+  background-color: $primary-color;
+
+  & button {
+    color: $primary-color;
+  }
+}
+
+.login--new-user {
+  background-color: $secondary-color;
+
+  & button {
+    color: $secondary-color;
+  }
+}
+
+.logo {
+  flex: 3;
+  display: flex;
+  width: 100vw;
   justify-content: center;
+  align-items: center;
+  max-width: 274px;
+
+  &__container {
+    width: 60vw;
+
+    &__img {
+      width: 100%;
+      height: auto;
+      object-fit: cover;
+    }
+  }
 }
 
 .form {
   display: flex;
-  width: 50vw;
+  justify-content: flex-end;
+  width: 100%;
   flex-direction: column;
-  background-color: rgb(201, 193, 193);
+  padding: 0 2rem;
 
   &__field {
-    background-color: rgb(133, 133, 133);
-    display: flex;
     width: 100%;
-    padding: 1rem;
-    margin: 10px 0;
+    padding: 0.5rem;
+    margin-top: 0.5rem;
+    border: 1px solid $input-border-color;
+  }
+}
+
+.button {
+  color: $primary-color;
+  margin-top: 2rem;
+  border: 1px solid $input-border-color;
+  text-align: center;
+  background-color: $button-color-light;
+}
+
+.sign-up {
+  flex: 3;
+  color: $text-color-light;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 3;
+  max-height: calc(100vh / 3);
+
+  & p {
+    cursor: pointer;
+  }
+}
+
+@media screen and (min-width: 768px) {
+  .form {
+    width: 50%;
+  }
+
+  .logo__container {
+    width: 40vw;
+  }
+}
+
+@media screen and (min-width: 960px) {
+  .form {
+    width: 50%;
+  }
+
+  .logo__container {
+    width: 30vw;
   }
 }
