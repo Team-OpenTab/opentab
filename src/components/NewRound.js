@@ -34,7 +34,7 @@ function NewRound({
         </button>
       </div>
       <div className="new-round__users">
-        <h3>Yourself</h3>
+        <h3>You</h3>
         <button type="button" onClick={handleRoundCounterparts} value={userId}>
           {!Object.keys(recipients).includes(userId.toString()) ? 'Add' : 'Remove'}
         </button>
