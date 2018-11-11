@@ -13,8 +13,8 @@ const mapStateToProps = state => ({
   balances: state.balances,
   payment: state.payment,
   userId: state.user.id,
-  contactSearchResults: state.contacts.searchResults,
-  contactSearchString: state.contacts.searchString,
+  contactSearchResults: state.contacts.search.searchResults,
+  contactSearchString: state.contacts.search.searchString,
 });
 
 const mapDispatchToProps = dispatch => ({
