@@ -74,7 +74,7 @@ app.post('/api/login', (req, res) => {
 });
 
 app.post('/api/new-round', (req, res) => {
-  const { userId, counterpartIds, totalAmount } = req.body;
+  const { buyerId, counterpartIds, totalAmount } = req.body;
   const amount = totalAmount / counterpartIds.length;
 
   db.one(
@@ -83,7 +83,7 @@ app.post('/api/new-round', (req, res) => {
     VALUES ($1, now())
     RETURNING id
     `,
-    [userId],
+    [buyerId],
   )
     .then(data => {
       const roundId = data.id;
@@ -96,7 +96,7 @@ app.post('/api/new-round', (req, res) => {
               VALUES ($1, $2, $3, $4, 'round', now())
               RETURNING round_id
               `,
-              [userId, counterpartId, roundId, -amount],
+              [buyerId, counterpartId, roundId, -amount],
             ),
             db.one(
               `
@@ -104,7 +104,13 @@ app.post('/api/new-round', (req, res) => {
               VALUES ($1, $2, $3, $4, $5, now())
               RETURNING round_id
               `,
-              [counterpartId, userId, roundId, amount, userId === counterpartId ? 'self' : 'round'],
+              [
+                counterpartId,
+                buyerId,
+                roundId,
+                amount,
+                buyerId === counterpartId ? 'self' : 'round',
+              ],
             ),
             db.one(
               `
