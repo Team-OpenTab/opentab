@@ -9,11 +9,15 @@ function setup() {
       userBalance: 0,
       counterpartBalances: {},
     },
+    contactSearchResults: [],
+    contactSearchString: '',
     getStage: jest.fn(),
     showPayment: jest.fn(),
     payment: {},
     settleBalance: jest.fn(),
     fetchBalances: jest.fn(),
+    handleContactSearch: jest.fn(),
+    addContact: jest.fn(),
   };
 
   const wrapper = shallow(<Balances {...props} />);
