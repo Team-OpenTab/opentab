@@ -6,6 +6,7 @@ import {
   handleRoundCounterparts,
   resetRound,
   getRoundBuyer,
+  setSplitType,
 } from '../actions';
 import NewRound from '../components/NewRound';
 
@@ -26,6 +27,7 @@ const mapDispatchToProps = dispatch => ({
   getStage: stage => dispatch(setStage(stage)),
   getAmount: amount => dispatch(setAmount(amount)),
   handleRoundCounterparts: event => dispatch(handleRoundCounterparts(event.target.value)),
+  getSplitType: splitType => dispatch(setSplitType(splitType)),
 });
 
 export default connect(

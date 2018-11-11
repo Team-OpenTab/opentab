@@ -133,17 +133,17 @@ export function addCheckedUser(counterpart) {
   };
 }
 
-export function setRoundBuyer(userId) {
+export function setRoundBuyer(buyerId) {
   return {
     type: 'SET_ROUND_BUYER',
-    userId,
+    buyerId,
   };
 }
 
 export function getRoundBuyer() {
   return (dispatch, getState) => {
-    const userId = getState().user.id;
-    dispatch(setRoundBuyer(userId));
+    const buyerId = getState().user.id;
+    dispatch(setRoundBuyer(buyerId));
   };
 }
 
@@ -175,6 +175,13 @@ export function setAmount(totalAmount) {
   return {
     type: 'SET_AMOUNT',
     totalAmount,
+  };
+}
+
+export function setSplitType(splitType) {
+  return {
+    type: 'SET_SPLIT_TYPE',
+    splitType,
   };
 }
 
