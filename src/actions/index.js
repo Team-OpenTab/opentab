@@ -121,7 +121,7 @@ export function setNewRound() {
       },
     })
       .then(res => res.json())
-      .catch(error => error.log(error));
+      .catch(error => console.log(error));
   };
 }
 
@@ -250,5 +250,72 @@ export function showPayment(payment, receiverId) {
     type: 'SHOW_PAYMENT',
     payment,
     receiverId,
+  };
+}
+
+// CONTACTS ACTIONS
+
+export function resetContactSearch() {
+  return {
+    type: 'RESET_CONTACT_SEARCH',
+  };
+}
+
+export function setContactSearchString(text) {
+  return {
+    type: 'SET_CONTACT_SEARCH_STRING',
+    text,
+  };
+}
+
+export function setContactSearchResults(results) {
+  return {
+    type: 'SET_CONTACT_SEARCH_RESULTS',
+    results,
+  };
+}
+
+export function resetContactSearchResults() {
+  return {
+    type: 'RESET_CONTACT_SEARCH_RESULTS',
+  };
+}
+
+export function handleContactSearch(text) {
+  return dispatch => {
+    dispatch(setContactSearchString(text));
+    if (text.length > 2) {
+      fetch(`/api/get-contact/${text}`)
+        .then(res => res.json())
+        .then(response => {
+          if (response.status === 200) {
+            dispatch(setContactSearchResults(response.data.user));
+          } else {
+            dispatch(resetContactSearchResults());
+          }
+        });
+    } else {
+      dispatch(resetContactSearchResults());
+    }
+  };
+}
+
+export function addContact(contactId) {
+  return (dispatch, getState) => {
+    const userId = getState().user.id;
+    fetch('/api/add-contact', {
+      method: 'POST',
+      body: JSON.stringify({ userId, contactId }),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+      .then(res => res.json())
+      .then(response => {
+        if (response.status === 200) {
+          dispatch(fetchBalances(userId));
+          dispatch(resetContactSearch());
+        }
+      });
   };
 }

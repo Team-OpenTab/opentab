@@ -48,7 +48,24 @@ class Balances extends React.Component {
           title={`Balance: £${this.props.balances.userBalance.toFixed(2)}`}
           previous="App"
         />
-
+        <div className="balances__add-contact">
+          <input
+            type="text"
+            placeholder="Search for contacts..."
+            onChange={this.props.handleContactSearch}
+            value={this.props.contactSearchString}
+          />
+          <ul>
+            {this.props.contactSearchResults.map(result => (
+              <div key={result.id}>
+                <li>{result.username}</li>
+                <button type="button" onClick={() => this.props.addContact(result.id)}>
+                  Add to contacts
+                </button>
+              </div>
+            ))}
+          </ul>
+        </div>
         <div className="counterpart-list">
           {Object.keys(this.props.balances.counterpartBalances).map(key => (
             <div className="counterpart" key={key}>
@@ -104,6 +121,10 @@ Balances.propTypes = {
   payment: PropTypes.object.isRequired,
   settleBalance: PropTypes.func.isRequired,
   fetchBalances: PropTypes.func.isRequired,
+  handleContactSearch: PropTypes.func.isRequired,
+  contactSearchResults: PropTypes.array.isRequired,
+  addContact: PropTypes.func.isRequired,
+  contactSearchString: PropTypes.string.isRequired,
 };
 
 export default Balances;
