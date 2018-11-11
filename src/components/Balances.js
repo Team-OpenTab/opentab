@@ -93,13 +93,13 @@ class Balances extends React.Component {
           onClick={event => this.showModal(event)}
         >
           <div className="payment__content">
-            <button type="button" onClick={() => this.markPaid()}>
+            <button className="payment-btn" type="button" onClick={() => this.markPaid()}>
               Mark Paid
             </button>
-            <button type="button" onClick={() => this.requestPayment()}>
+            <button className="payment-btn" type="button" onClick={() => this.requestPayment()}>
               Request Payment
             </button>
-            <p onClick={() => this.props.showPayment(false, null)}>Close</p>
+            <p onClick={() => this.props.showPayment(false, null)}>CLOSE</p>
           </div>
         </div>
 

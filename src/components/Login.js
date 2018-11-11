@@ -67,7 +67,6 @@ function Login({
               value={email}
               onChange={event => getEmail(event.target.value)}
               placeholder="Email"
-              required="required"
             />
             <input
               className="form__field"
