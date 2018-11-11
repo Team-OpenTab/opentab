@@ -7,6 +7,7 @@ function NewRound({
   counterparts,
   roundCounterparts,
   getAmount,
+  getSplitType,
   totalAmount,
   getNewRound,
   getStage,
@@ -22,13 +23,27 @@ function NewRound({
         <h2 className="title-bar__title">New Round</h2>
       </div>
       <div className="new-round__amount">
+        <h3>Round Amount</h3>
         <input value={totalAmount} onChange={event => getAmount(event.target.value)} />
+        <button type="button" onClick={() => getSplitType('even')}>
+          Split Evenly
+        </button>
+        <button type="button" onClick={() => getSplitType('manual')}>
+          Split Manually
+        </button>
       </div>
       <div className="new-round__users">
         <h3>Yourself</h3>
-        <button type="button" onClick={handleRoundCounterparts} value={userId} key={userId}>
+        <button type="button" onClick={handleRoundCounterparts} value={userId}>
           {!roundCounterparts.includes(userId.toString()) ? 'Add' : 'Remove'}
         </button>
+        <input
+          value={
+            roundCounterparts.includes(userId.toString())
+              ? `£${(totalAmount / roundCounterparts.length || 0).toFixed(2)}`
+              : '£0.00'
+          }
+        />
         {Object.values(counterparts).map(counterpart => (
           <React.Fragment key={counterpart.counterpart_id}>
             <h3>{counterpart.username}</h3>
@@ -41,6 +56,13 @@ function NewRound({
                 ? 'Add'
                 : 'Remove'}
             </button>
+            <input
+              value={
+                roundCounterparts.includes(counterpart.counterpart_id.toString())
+                  ? `£${(totalAmount / roundCounterparts.length || 0).toFixed(2)}`
+                  : '£0.00'
+              }
+            />
           </React.Fragment>
         ))}
       </div>
@@ -55,7 +77,8 @@ NewRound.propTypes = {
   roundCounterparts: PropTypes.array,
   getStage: PropTypes.func,
   getAmount: PropTypes.func,
-  totalAmount: PropTypes.string,
+  totalAmount: PropTypes.number,
+  getSplitType: PropTypes.func.isRequired,
   getNewRound: PropTypes.func.isRequired,
   handleRoundCounterparts: PropTypes.func.isRequired,
   userId: PropTypes.number,
