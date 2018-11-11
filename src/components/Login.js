@@ -22,116 +22,98 @@ function Login({
     <div className="login">
       {userType === 'existingUser' && (
         <div className="container login--existing-user">
+          <div className="logo">
+            <div className="logo__container">
+              <img
+                className="logo__container__img"
+                src="../static/images/logoPlaceholder.png"
+                alt="Open Tab"
+              />
+            </div>
+          </div>
           <form className="form" onSubmit={getLogin}>
-            <label>
-              {' '}
-              Email:
-              <input
-                className="form__field"
-                type="text"
-                value={email}
-                onChange={event => getEmail(event.target.value)}
-                placeholder="Email"
-              />
-            </label>
-            <label>
-              {' '}
-              Password:
-              <input
-                className="form__field"
-                type="password"
-                value={password}
-                onChange={event => getPassword(event.target.value)}
-                placeholder="Password"
-              />
-            </label>
-            <button className="form__field" type="submit">
-              Login
+            <input
+              className="form__field"
+              type="text"
+              value={email}
+              onChange={event => getEmail(event.target.value)}
+              placeholder="Email"
+            />
+            <input
+              className="form__field"
+              type="password"
+              value={password}
+              onChange={event => getPassword(event.target.value)}
+              placeholder="Password"
+            />
+            <button className="form__field button" type="submit">
+              LOGIN
             </button>
           </form>
-          <div>
-            <div>No account?</div>
-            <button
-              className="new-user-button"
-              type="button"
-              onClick={() => getUserType('newUser')}
-            >
-              Sign Up
-            </button>
+          <div className="sign-up">
+            <p className="new-user-button" type="button" onClick={() => getUserType('newUser')}>
+              No account? Sign up now.
+            </p>
           </div>
         </div>
       )}
 
       {userType === 'newUser' && (
-        <div className="login--new-user">
-          <form onSubmit={getNewUser}>
-            <label>
-              {' '}
-              Email:
-              <input
-                type="text"
-                value={email}
-                onChange={event => getEmail(event.target.value)}
-                placeholder="Email"
-              />
-            </label>
-            <label>
-              {' '}
-              Username:
-              <input
-                type="text"
-                value={username}
-                onChange={event => getUsername(event.target.value)}
-                placeholder="Username"
-              />
-            </label>
-            <label>
-              {' '}
-              Phone:
-              <input
-                type="text"
-                value={phone}
-                onChange={event => getPhone(event.target.value)}
-                placeholder="Phone"
-              />
-            </label>
-            <label>
-              {' '}
-              Password (4 characters minimum):
-              <input
-                minLength="4"
-                type="password"
-                value={password}
-                onChange={event => getPassword(event.target.value)}
-                placeholder="Password"
-              />
-            </label>
-            <label>
-              {' '}
-              Re-enter Password:
-              <input
-                type="password"
-                value={validationPassword}
-                onChange={event => getValidationPassword(event.target.value)}
-                placeholder="Password"
-              />
-            </label>
+        <div className="container login--new-user">
+          <form className="form" onSubmit={getNewUser}>
+            <input
+              className="form__field"
+              type="text"
+              value={email}
+              onChange={event => getEmail(event.target.value)}
+              placeholder="Email"
+              required="required"
+            />
+            <input
+              className="form__field"
+              type="text"
+              value={username}
+              onChange={event => getUsername(event.target.value)}
+              placeholder="Username"
+            />
+            <input
+              className="form__field"
+              type="text"
+              value={phone}
+              onChange={event => getPhone(event.target.value)}
+              placeholder="Phone"
+            />
+            <input
+              className="form__field"
+              minLength="4"
+              type="password"
+              value={password}
+              onChange={event => getPassword(event.target.value)}
+              placeholder="Password"
+            />
+            <input
+              className="form__field"
+              type="password"
+              value={validationPassword}
+              onChange={event => getValidationPassword(event.target.value)}
+              placeholder="Password"
+            />
             <button
+              className="form__field button"
               disabled={password !== validationPassword || !password || !validationPassword}
               type="submit"
             >
-              Create account
+              CREATE ACCOUNT
             </button>
           </form>
           <div className="sign-up">
-            <div>Already have an account?</div>
-            <button
+            <p
               className="existing-user-button"
               type="button"
               onClick={() => getUserType('existingUser')}
             >
-              Sign In
-            </button>
+              Already have an account? Sign in.
+            </p>
           </div>
         </div>
       )}
