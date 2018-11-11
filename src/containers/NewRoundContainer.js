@@ -5,29 +5,29 @@ import {
   setNewRound,
   handleRoundCounterparts,
   resetRound,
-  getRoundBuyer,
   setSplitType,
+  setRecipientAmount,
 } from '../actions';
 import NewRound from '../components/NewRound';
 
 export const mapStateToProps = state => ({
   totalAmount: state.round.totalAmount,
-  roundCounterparts: state.round.counterpartIds,
+  recipients: state.round.recipients,
   counterparts: state.balances.counterpartBalances,
   userId: state.user.id,
 });
 
 const mapDispatchToProps = dispatch => ({
   getNewRound: () => {
-    dispatch(getRoundBuyer());
-    dispatch(setStage('balances'));
     dispatch(setNewRound());
+    dispatch(setStage('balances'));
     dispatch(resetRound());
   },
   getStage: stage => dispatch(setStage(stage)),
   getAmount: amount => dispatch(setAmount(amount)),
   handleRoundCounterparts: event => dispatch(handleRoundCounterparts(event.target.value)),
   getSplitType: splitType => dispatch(setSplitType(splitType)),
+  getRecipientAmount: (id, amount) => dispatch(setRecipientAmount(id, amount)),
 });
 
 export default connect(

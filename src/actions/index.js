@@ -101,15 +101,17 @@ export function createNewUser() {
 
 // ROUND ACTIONS
 
-export function setRoundId(roundId) {
+export function setRoundBuyer(buyerId) {
   return {
-    type: 'SET_ROUND_ID',
-    roundId,
+    type: 'SET_ROUND_BUYER',
+    buyerId,
   };
 }
 
 export function setNewRound() {
   return (dispatch, getState) => {
+    const buyerId = getState().user.id;
+    dispatch(setRoundBuyer(buyerId));
     const { round } = getState();
     fetch('/api/new-round', {
       method: 'POST',
@@ -119,38 +121,21 @@ export function setNewRound() {
       },
     })
       .then(res => res.json())
-      .then(response => {
-        dispatch(setRoundId(response.data.roundId));
-      })
       .catch(error => error.log(error));
   };
 }
 
-export function addCheckedUser(counterpart) {
+export function addRecipient(recipient) {
   return {
-    type: 'ADD_CHECKED_USER',
-    counterpart,
+    type: 'ADD_RECIPIENT',
+    recipient,
   };
 }
 
-export function setRoundBuyer(buyerId) {
+export function removeRecipient(recipient) {
   return {
-    type: 'SET_ROUND_BUYER',
-    buyerId,
-  };
-}
-
-export function getRoundBuyer() {
-  return (dispatch, getState) => {
-    const buyerId = getState().user.id;
-    dispatch(setRoundBuyer(buyerId));
-  };
-}
-
-export function removeCheckedUser(counterpart) {
-  return {
-    type: 'REMOVE_CHECKED_USER',
-    counterpart,
+    type: 'REMOVE_RECIPIENT',
+    recipient,
   };
 }
 
@@ -160,13 +145,13 @@ export function resetRound() {
   };
 }
 
-export function handleRoundCounterparts(counterpart) {
+export function handleRoundCounterparts(recipient) {
   return (dispatch, getState) => {
-    const roundCounterparts = getState().round.counterpartIds;
-    if (!roundCounterparts.includes(counterpart)) {
-      dispatch(addCheckedUser(counterpart));
+    const { recipients } = getState().round;
+    if (!Object.keys(recipients).includes(recipient)) {
+      dispatch(addRecipient(recipient));
     } else {
-      dispatch(removeCheckedUser(counterpart));
+      dispatch(removeRecipient(recipient));
     }
   };
 }
@@ -182,6 +167,24 @@ export function setSplitType(splitType) {
   return {
     type: 'SET_SPLIT_TYPE',
     splitType,
+  };
+}
+
+export function setRecipients(recipients) {
+  return {
+    type: 'SET_RECIPIENT_AMOUNT',
+    recipients,
+  };
+}
+
+export function setRecipientAmount(id, amount) {
+  return (dispatch, getState) => {
+    const { recipients } = getState().round;
+    const newRecipients = Object.assign({}, recipients);
+    newRecipients[id] = parseInt(amount);
+    const totalAmount = Object.values(newRecipients).reduce((a, b) => a + b);
+    dispatch(setAmount(totalAmount));
+    dispatch(setRecipients(newRecipients));
   };
 }
 

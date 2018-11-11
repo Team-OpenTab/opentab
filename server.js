@@ -74,9 +74,7 @@ app.post('/api/login', (req, res) => {
 });
 
 app.post('/api/new-round', (req, res) => {
-  const { buyerId, counterpartIds, totalAmount } = req.body;
-  const amount = totalAmount / counterpartIds.length;
-
+  const { buyerId, recipients } = req.body;
   db.one(
     `
     INSERT INTO round (user_id, time)
@@ -88,15 +86,15 @@ app.post('/api/new-round', (req, res) => {
     .then(data => {
       const roundId = data.id;
       return Promise.all(
-        counterpartIds
-          .map(counterpartId => [
+        Object.keys(recipients)
+          .map(recipientId => [
             db.one(
               `
               INSERT INTO transaction (user_id, counterpart_id, round_id, amount, type, time)
               VALUES ($1, $2, $3, $4, 'round', now())
               RETURNING round_id
               `,
-              [buyerId, counterpartId, roundId, -amount],
+              [buyerId, recipientId, roundId, -recipients[recipientId]],
             ),
             db.one(
               `
@@ -105,11 +103,11 @@ app.post('/api/new-round', (req, res) => {
               RETURNING round_id
               `,
               [
-                counterpartId,
+                recipientId,
                 buyerId,
                 roundId,
-                amount,
-                buyerId === counterpartId ? 'self' : 'round',
+                recipients[recipientId],
+                buyerId === parseInt(recipientId) ? 'self' : 'round',
               ],
             ),
             db.one(
@@ -118,7 +116,7 @@ app.post('/api/new-round', (req, res) => {
               VALUES ($1, $2)
               RETURNING round_id
               `,
-              [roundId, counterpartId],
+              [roundId, recipientId],
             ),
           ])
           .reduce((a, b) => a.concat(b)),

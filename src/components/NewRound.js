@@ -5,12 +5,13 @@ import '../../styles/components/NewRound.scss';
 
 function NewRound({
   counterparts,
-  roundCounterparts,
+  recipients,
   getAmount,
   getSplitType,
   totalAmount,
   getNewRound,
   getStage,
+  getRecipientAmount,
   handleRoundCounterparts,
   userId,
 }) {
@@ -35,15 +36,9 @@ function NewRound({
       <div className="new-round__users">
         <h3>Yourself</h3>
         <button type="button" onClick={handleRoundCounterparts} value={userId}>
-          {!roundCounterparts.includes(userId.toString()) ? 'Add' : 'Remove'}
+          {!Object.keys(recipients).includes(userId.toString()) ? 'Add' : 'Remove'}
         </button>
-        <input
-          value={
-            roundCounterparts.includes(userId.toString())
-              ? `£${(totalAmount / roundCounterparts.length || 0).toFixed(2)}`
-              : '£0.00'
-          }
-        />
+        <input onChange={event => getRecipientAmount(userId, event.target.value)} />
         {Object.values(counterparts).map(counterpart => (
           <React.Fragment key={counterpart.counterpart_id}>
             <h3>{counterpart.username}</h3>
@@ -52,16 +47,12 @@ function NewRound({
               onClick={handleRoundCounterparts}
               value={counterpart.counterpart_id}
             >
-              {!roundCounterparts.includes(counterpart.counterpart_id.toString())
+              {!Object.keys(recipients).includes(counterpart.counterpart_id.toString())
                 ? 'Add'
                 : 'Remove'}
             </button>
             <input
-              value={
-                roundCounterparts.includes(counterpart.counterpart_id.toString())
-                  ? `£${(totalAmount / roundCounterparts.length || 0).toFixed(2)}`
-                  : '£0.00'
-              }
+              onChange={event => getRecipientAmount(counterpart.counterpart_id, event.target.value)}
             />
           </React.Fragment>
         ))}
@@ -74,12 +65,13 @@ function NewRound({
 }
 NewRound.propTypes = {
   counterparts: PropTypes.object,
-  roundCounterparts: PropTypes.array,
+  recipients: PropTypes.object.isRequired,
   getStage: PropTypes.func,
   getAmount: PropTypes.func,
   totalAmount: PropTypes.number,
   getSplitType: PropTypes.func.isRequired,
   getNewRound: PropTypes.func.isRequired,
+  getRecipientAmount: PropTypes.func.isRequired,
   handleRoundCounterparts: PropTypes.func.isRequired,
   userId: PropTypes.number,
 };
