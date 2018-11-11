@@ -8,7 +8,7 @@ describe('balances reducer', () => {
     };
 
     const action = {
-      type: 'RECEIVE_USER_BALANCE',
+      type: 'SET_USER_BALANCE',
       balance: { 1: '50.0' },
     };
     const expectedState = {
@@ -27,7 +27,7 @@ describe('balances reducer', () => {
     };
 
     const action = {
-      type: 'RECEIVE_COUNTERPART_BALANCES',
+      type: 'SET_COUNTERPART_BALANCES',
       balances: { 2: 10.0, 3: 10.0 },
     };
 

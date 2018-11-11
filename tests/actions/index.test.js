@@ -1,27 +1,21 @@
-import {
-  addCheckedUser,
-  removeCheckedUser,
-  resetRound,
-  // handleRoundCounterparts,
-  setAmount,
-} from '../../src/actions/index';
+import { addRecipient, removeRecipient, resetRound, setAmount } from '../../src/actions/index';
 
 describe('round actions', () => {
-  it('addCheckedUser returns expected action', () => {
-    const action = addCheckedUser(3);
+  it('addRecipient returns expected action', () => {
+    const action = addRecipient(3);
 
     const expectedAction = {
-      type: 'ADD_CHECKED_USER',
-      counterpart: 3,
+      type: 'ADD_RECIPIENT',
+      recipient: 3,
     };
     expect(action).toEqual(expectedAction);
   });
-  it('removeCheckedUser returns expected action', () => {
-    const action = removeCheckedUser(3);
+  it('removeRecipient returns expected action', () => {
+    const action = removeRecipient(3);
 
     const expectedAction = {
-      type: 'REMOVE_CHECKED_USER',
-      counterpart: 3,
+      type: 'REMOVE_RECIPIENT',
+      recipient: 3,
     };
 
     expect(action).toEqual(expectedAction);

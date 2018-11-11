@@ -104,7 +104,11 @@ class Balances extends React.Component {
         </div>
 
         {/* <CounterpartList users={users} balances={balances} /> */}
-        <button type="button" className="button" onClick={() => this.props.getStage('newRound')}>
+        <button
+          type="button"
+          className="button new-round-btn"
+          onClick={() => this.props.getStage('newRound')}
+        >
           NEW ROUND
         </button>
       </div>

@@ -40,9 +40,10 @@ function NewRound({
         </button>
         <input onChange={event => getRecipientAmount(userId, event.target.value)} />
         {Object.values(counterparts).map(counterpart => (
-          <React.Fragment key={counterpart.counterpart_id}>
-            <h3>{counterpart.username}</h3>
+          <div className="new-round__counterpart" key={counterpart.counterpart_id}>
+            <h3 className="new-round__counterpart-name">{counterpart.username}</h3>
             <button
+              className="new-round__add-remove-counterpart-button"
               type="button"
               onClick={handleRoundCounterparts}
               value={counterpart.counterpart_id}
@@ -54,7 +55,7 @@ function NewRound({
             <input
               onChange={event => getRecipientAmount(counterpart.counterpart_id, event.target.value)}
             />
-          </React.Fragment>
+          </div>
         ))}
       </div>
       <button type="button" className="button" onClick={getNewRound}>

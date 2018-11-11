@@ -1,72 +1,69 @@
 import round from '../../src/reducers/round';
 
 describe('round reducer', () => {
+  let initialState;
+  beforeEach(() => {
+    initialState = {
+      buyerId: '',
+      recipients: {},
+      totalAmount: 0,
+      splitType: '',
+    };
+  });
   it('sets round buyer with provided userId', () => {
-    const initialState = { userId: null, counterpartIds: [], totalAmount: 0 };
-
     const action = {
       type: 'SET_ROUND_BUYER',
-      userId: 1,
+      buyerId: 1,
     };
-
-    const expectedState = { userId: 1, counterpartIds: [], totalAmount: 0 };
+    const expectedState = { buyerId: 1 };
 
     const outputState = round(initialState, action);
-    expect(outputState).toEqual(expectedState);
+    expect(outputState.buyerId).toEqual(expectedState.buyerId);
   });
   it('adds totalAmount to store', () => {
-    const initialState = { userId: 1, counterpartIds: [], totalAmount: 0 };
-
     const action = {
       type: 'SET_AMOUNT',
       totalAmount: 50,
     };
-    const expectedState = { userId: 1, counterpartIds: [], totalAmount: 50 };
+    const expectedState = { totalAmount: 50 };
 
     const outputState = round(initialState, action);
 
-    expect(outputState).toEqual(expectedState);
+    expect(outputState.totalAmount).toEqual(expectedState.totalAmount);
   });
   it('adds a user to array', () => {
-    const initialState = { userId: 1, counterpartIds: [], totalAmount: 0 };
-
     const action = {
-      type: 'ADD_CHECKED_USER',
-      counterpart: 2,
+      type: 'ADD_RECIPIENT',
+      recipient: 2,
     };
 
-    const expectedState = { userId: 1, counterpartIds: [2], totalAmount: 0 };
+    const expectedState = { recipients: { 2: {} } };
 
     const outputState = round(initialState, action);
 
-    expect(outputState).toEqual(expectedState);
+    expect(outputState.recipients).toEqual(expectedState.recipients);
   });
 
   it('removes a user from array', () => {
-    const initialState = { userId: 1, counterpartIds: [2], totalAmount: 0 };
-
+    const initialStateWithCounterpart = Object.assign({}, initialState, { recipients: { 2: {} } });
     const action = {
-      type: 'REMOVE_CHECKED_USER',
-      counterpart: 2,
+      type: 'REMOVE_RECIPIENT',
+      recipient: 2,
     };
 
-    const expectedState = { userId: 1, counterpartIds: [], totalAmount: 0 };
+    const expectedState = { recipients: {} };
 
-    const outputState = round(initialState, action);
+    const outputState = round(initialStateWithCounterpart, action);
 
-    expect(outputState).toEqual(expectedState);
+    expect(outputState.recipients).toEqual(expectedState.recipients);
   });
   it('resets round to initial object', () => {
-    const initialState = { userId: 1, counterpartIds: [2, 3], totalAmount: 200 };
-
     const action = {
       type: 'RESET_ROUND',
     };
 
-    const expectedState = { userId: '', roundId: '', counterpartIds: [], totalAmount: '0' };
-
     const outputState = round(initialState, action);
 
-    expect(outputState).toEqual(expectedState);
+    expect(outputState).toEqual(initialState);
   });
 });
