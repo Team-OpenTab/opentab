@@ -8,6 +8,8 @@ const initialState = {
 
 function contacts(state = initialState, action) {
   switch (action.type) {
+    case 'SET_CONTACT_LIST':
+      return Object.assign({}, state, { contactList: action.contactList });
     case 'SET_CONTACT_SEARCH_STRING':
       return Object.assign({}, state, {
         search: Object.assign({}, state.search, { searchString: action.text }),

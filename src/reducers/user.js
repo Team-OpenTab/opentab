@@ -18,7 +18,7 @@ function user(state = initialState, action) {
       return Object.assign({}, state, { id: action.id });
     case 'SET_USERNAME':
       return Object.assign({}, state, { username: action.username });
-    case 'SET_PHONE':
+    case 'SET_USER_PHONE':
       return Object.assign({}, state, { phone: action.phone });
     case 'SET_USER_TYPE':
       return Object.assign({}, state, { userType: action.userType });

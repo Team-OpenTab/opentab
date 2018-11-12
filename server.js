@@ -59,7 +59,7 @@ app.post('/api/login', (req, res) => {
         if (result) {
           res.json({
             status: 200,
-            data: { id: user.id, username: user.username },
+            data: { id: user.id, username: user.username, phone: user.phone },
           });
         } else {
           res.status(401).json({
@@ -167,6 +167,31 @@ app.get('/api/get-balances/:userId', (req, res) => {
       res.json({
         status: 200,
         data: { balances },
+      });
+    }
+  });
+});
+
+app.get('/api/get-contacts/:userId', (req, res) => {
+  const { userId } = req.params;
+  db.any(
+    `
+    SELECT contact_id, username, email, phone 
+    FROM contact_user, "user" 
+    WHERE contact_id = "user".id 
+    AND contact_id != $1;
+    `,
+    [userId],
+  ).then(data => {
+    if (!data.length) {
+      res.status(404).json({
+        status: 404,
+        message: 'No data available',
+      });
+    } else {
+      res.json({
+        status: 200,
+        data,
       });
     }
   });
