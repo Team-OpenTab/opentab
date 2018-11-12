@@ -348,14 +348,20 @@ export function resetContactSearchResults() {
 }
 
 export function handleContactSearch(text) {
-  return dispatch => {
+  return (dispatch, getState) => {
     dispatch(setContactSearchString(text));
     if (text.length > 2) {
       fetch(`/api/get-contact/${text}`)
         .then(res => res.json())
         .then(response => {
           if (response.status === 200) {
-            dispatch(setContactSearchResults(response.data.user));
+            const contactList = getState().contacts.contactList.map(contact => contact.contact_id);
+            const userId = getState().user.id;
+            const searchResults = response.data.user;
+            const filteredSearchResults = searchResults.filter(
+              result => result.id !== userId && !contactList.includes(result.id),
+            );
+            dispatch(setContactSearchResults(filteredSearchResults));
           } else {
             dispatch(resetContactSearchResults());
           }
