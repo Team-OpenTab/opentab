@@ -3,13 +3,7 @@ import PropTypes from 'prop-types';
 import '../../styles/components/Login.scss';
 
 function Login({
-  email,
-  password,
-  phone,
-  username,
-  userType,
-  avatar,
-  validationPassword,
+  user,
   getLogin,
   getEmail,
   getPassword,
@@ -20,6 +14,17 @@ function Login({
   getValidationPassword,
   getAvatar,
 }) {
+  const {
+    username,
+    email,
+    password,
+    validationPassword,
+    phone,
+    avatar,
+    userType,
+    loginError,
+  } = user;
+
   return (
     <div className="login">
       {userType === 'existingUser' && (
@@ -48,6 +53,7 @@ function Login({
               onChange={event => getPassword(event.target.value)}
               placeholder="Password"
             />
+            <div>{loginError}</div>
             <button className="form__field button" type="submit">
               LOGIN
             </button>
@@ -130,12 +136,7 @@ function Login({
 }
 
 Login.propTypes = {
-  email: PropTypes.string.isRequired,
-  password: PropTypes.string.isRequired,
-  phone: PropTypes.string.isRequired,
-  username: PropTypes.string.isRequired,
-  userType: PropTypes.string.isRequired,
-  validationPassword: PropTypes.string.isRequired,
+  user: PropTypes.object.isRequired,
   getLogin: PropTypes.func.isRequired,
   getEmail: PropTypes.func.isRequired,
   getPassword: PropTypes.func.isRequired,
@@ -144,7 +145,6 @@ Login.propTypes = {
   getPhone: PropTypes.func.isRequired,
   getUserType: PropTypes.func.isRequired,
   getValidationPassword: PropTypes.func.isRequired,
-  avatar: PropTypes.string.isRequired,
   getAvatar: PropTypes.func.isRequired,
 };
 
