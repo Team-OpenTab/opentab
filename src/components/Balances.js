@@ -66,6 +66,9 @@ class Balances extends React.Component {
             ))}
           </ul>
         </div>
+        {!Object.keys(this.props.balances.counterpartBalances).length && (
+          <div>It feels lonely in here... Add your friends by searching above!</div>
+        )}
         <div className="counterpart-list">
           {Object.keys(this.props.balances.counterpartBalances).map(key => (
             <div className="counterpart" key={key}>

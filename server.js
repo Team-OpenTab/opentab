@@ -184,10 +184,10 @@ app.get('/api/get-contacts/:userId', (req, res) => {
   const { userId } = req.params;
   db.any(
     `
-    SELECT DISTINCT contact_id, username, email, phone, avatar
+    SELECT contact_id, username, email, phone, avatar
     FROM contact_user, "user"
     WHERE contact_id = "user".id
-    AND contact_id != $1;
+    AND user_id = $1;
     `,
     [userId],
   ).then(data => {
@@ -288,51 +288,6 @@ app.post('/api/make-payment', (req, res) => {
       }),
     );
 });
-
-// app.get('/api/get-rounds/:userId', (req, res) => {
-//   const userId = parseInt(req.params.userId);
-//   db.any(
-//     `
-//     SELECT transaction.round_id, round.user_id,
-//       transaction.counterpart_id, transaction.time, transaction.amount
-//     FROM transaction, round
-//     WHERE round.user_id = $1
-//     AND round.user_id = transaction.user_id
-//     AND type = 'round'
-//     AND transaction.amount < 0
-//     GROUP BY transaction.round_id, round.user_id,
-//       transaction.counterpart_id, transaction.amount, transaction.time
-//     `,
-//     [userId],
-//   ).then(response => {
-//     const groupedRounds = response.reduce((acc, curr) => {
-//       if (!acc[curr.round_id]) {
-//         acc[curr.round_id] = [];
-//       }
-//       acc[curr.round_id].push(curr);
-//       return acc;
-//     }, {});
-//     const refinedRoundObjects = Object.keys(groupedRounds).map(key =>
-//       groupedRounds[key].reduce((acc, curr) => {
-//         const counterparts = !acc.counterparts ?
-// { [curr.user_id]: curr.amount } : acc.counterparts;
-
-//         acc = {
-//           roundId: key,
-//           userId: curr.user_id,
-//           counterparts: Object.assign({}, counterparts, { [curr.counterpart_id]: curr.amount }),
-//           roundTotal: Object.values(counterparts).reduce(
-//             (agg, val) => parseInt(agg) + parseInt(val),
-//             Object.values(counterparts)[0],
-//           ),
-//           roundTime: curr.time,
-//         };
-//         return acc;
-//       }, {}),
-//     );
-//     res.json(refinedRoundObjects);
-//   });
-// });
 
 app.get('/api/get-rounds/:userId', (req, res) => {
   const { userId } = req.params;
