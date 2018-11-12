@@ -1,1 +1,15 @@
 @import '../main';
+
+.new-round__counterpart-name {
+  margin: 0;
+}
+.new-round__counterpart {
+  padding: 1.25rem 0;
+  display: flex;
+  justify-content: space-between;
+}
+
+.added-recipient {
+  padding: 1.25rem 0;
+  background-color: rgb(177, 177, 177);
+}
