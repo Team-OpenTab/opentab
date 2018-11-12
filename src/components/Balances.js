@@ -74,14 +74,16 @@ class Balances extends React.Component {
               <div className="counterpart__balance">
                 £{this.props.balances.counterpartBalances[key].sum}
               </div>
-              <button
-                className="counterpart__btn"
-                id={key}
-                type="button"
-                onClick={() => this.props.showPayment(true, Number(key))}
-              >
-                Pay
-              </button>
+              {this.props.balances.counterpartBalances[key].sum !== '0.00' && (
+                <button
+                  className="counterpart__btn"
+                  id={key}
+                  type="button"
+                  onClick={() => this.props.showPayment(true, Number(key))}
+                >
+                  Pay
+                </button>
+              )}
             </div>
           ))}
         </div>

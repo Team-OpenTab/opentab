@@ -7,6 +7,7 @@ import {
   resetRound,
   setSplitType,
   setRecipientAmount,
+  refreshRecipientAmounts,
 } from '../actions';
 import NewRound from '../components/NewRound';
 
@@ -25,9 +26,18 @@ const mapDispatchToProps = dispatch => ({
     dispatch(resetRound());
   },
   getStage: stage => dispatch(setStage(stage)),
-  getAmount: amount => dispatch(setAmount(amount)),
-  handleRoundCounterparts: event => dispatch(handleRoundCounterparts(event.target.value)),
-  getSplitType: splitType => dispatch(setSplitType(splitType)),
+  getAmount: amount => {
+    dispatch(setAmount(amount));
+    dispatch(refreshRecipientAmounts());
+  },
+  handleRoundCounterparts: event => {
+    dispatch(handleRoundCounterparts(event.target.value));
+    dispatch(refreshRecipientAmounts());
+  },
+  getSplitType: splitType => {
+    dispatch(setSplitType(splitType));
+    dispatch(refreshRecipientAmounts());
+  },
   getRecipientAmount: (id, amount) => dispatch(setRecipientAmount(id, amount)),
 });
 
