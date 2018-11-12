@@ -69,7 +69,9 @@ function NewRound({
                 onChange={event => getRecipientAmount(recipient, event.target.value)}
               />
             ) : (
-              <p>£0.00</p>
+              <p className="new-round__even-amount">
+                {(totalAmount / Object.keys(recipients).length).toFixed(2)}
+              </p>
             )}
           </div>
         ))}
