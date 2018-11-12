@@ -42,9 +42,9 @@ export function setValidationPassword(validationPassword) {
   };
 }
 
-export function setPhone(phone) {
+export function setUserPhone(phone) {
   return {
-    type: 'SET_PHONE',
+    type: 'SET_USER_PHONE',
     phone,
   };
 }
@@ -53,6 +53,27 @@ export function setUserType(userType) {
   return {
     type: 'SET_USER_TYPE',
     userType,
+  };
+}
+
+export function setContactList(contactList) {
+  return {
+    type: 'SET_CONTACT_LIST',
+    contactList,
+  };
+}
+
+export function getContactList(userId) {
+  return dispatch => {
+    fetch(`/api/get-contacts/${userId}`)
+      .then(res => res.json())
+      .then(response => {
+        if (response.status === 200) {
+          console.log(response.data);
+          dispatch(setContactList(response.data));
+        }
+      })
+      .catch(error => console.log(error));
   };
 }
 
@@ -71,6 +92,8 @@ export function loginUser() {
         if (response.status === 200) {
           dispatch(setUserId(response.data.id));
           dispatch(setUsername(response.data.username));
+          dispatch(setUserPhone(response.data.phone));
+          dispatch(getContactList(response.data.id));
           dispatch(setStage('balances'));
         }
       })

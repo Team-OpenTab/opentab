@@ -6,7 +6,7 @@ import {
   setPassword,
   createNewUser,
   setUsername,
-  setPhone,
+  setUserPhone,
   setUserType,
   setValidationPassword,
 } from '../actions';
@@ -32,7 +32,7 @@ const mapDispatchToProps = dispatch => ({
     dispatch(createNewUser());
   },
   getUsername: username => dispatch(setUsername(username)),
-  getPhone: phone => dispatch(setPhone(phone)),
+  getPhone: phone => dispatch(setUserPhone(phone)),
   getUserType: userType => dispatch(setUserType(userType)),
   getValidationPassword: validationPassword => dispatch(setValidationPassword(validationPassword)),
 });
