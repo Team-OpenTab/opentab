@@ -118,24 +118,45 @@ export function loginUser() {
   };
 }
 
+export function setNewUserError(newUserError) {
+  return {
+    type: 'SET_NEW_USER_ERROR',
+    newUserError,
+  };
+}
+
 export function createNewUser() {
   return (dispatch, getState) => {
-    const { email, password, username, phone } = getState().user;
-    fetch('/api/new-user', {
-      method: 'POST',
-      body: JSON.stringify({ email, password, username, phone }),
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    })
-      .then(res => res.json())
-      .then(response => {
-        if (response.status === 200) {
-          dispatch(setUserId(response.data.id));
-          dispatch(setStage('balances'));
-        }
+    const { email, password, validationPassword, username, phone, avatar } = getState().user;
+    if (!email.length || !username.length || !password.length || !validationPassword.length) {
+      dispatch(setNewUserError('Please fill in all required fields'));
+    } else if (!['@', '.'].some(char => email.includes(char))) {
+      dispatch(setNewUserError('Incorrect e-mail address'));
+    } else if (Number.isNaN(phone)) {
+      dispatch(setNewUserError('Phone number should only consist of numbers'));
+    } else if (password !== validationPassword) {
+      dispatch(setNewUserError('Passwords do not match'));
+    } else if (password.length < 4) {
+      dispatch(setNewUserError('Password should be at least 4 characters long'));
+    } else {
+      fetch('/api/new-user', {
+        method: 'POST',
+        body: JSON.stringify({ email, password, username, phone, avatar }),
+        headers: {
+          'Content-Type': 'application/json',
+        },
       })
-      .catch(error => console.log(error));
+        .then(res => res.json())
+        .then(response => {
+          if (response.status === 200) {
+            dispatch(setUserId(response.data.id));
+            dispatch(setStage('balances'));
+          } else if (response.status === 401) {
+            dispatch(setNewUserError(response.message));
+          }
+        })
+        .catch(error => console.log(error));
+    }
   };
 }
 
@@ -249,17 +270,22 @@ export function fetchBalances(userId) {
     fetch(`/api/get-balances/${userId}`)
       .then(res => res.json())
       .then(response => {
-        const userBalance = Object.values(response.data.balances)
-          .map(item => parseInt(item.sum))
-          .reduce((a, b) => a + b);
-        const userIds = Object.keys(response.data.balances);
-        const counterpartIds = userIds.filter(key => parseInt(key) !== userId);
-        const counterpartBalances = {};
-        counterpartIds.map(key =>
-          Object.assign(counterpartBalances, { [key]: response.data.balances[key] }),
-        );
-        dispatch(setUserBalance(userBalance));
-        dispatch(setCounterpartBalances(counterpartBalances));
+        if (response.status === 200) {
+          const userBalance = Object.values(response.data.balances)
+            .map(item => parseInt(item.sum))
+            .reduce((a, b) => a + b);
+          const userIds = Object.keys(response.data.balances);
+          const counterpartIds = userIds.filter(key => parseInt(key) !== userId);
+          const counterpartBalances = {};
+          counterpartIds.map(key =>
+            Object.assign(counterpartBalances, { [key]: response.data.balances[key] }),
+          );
+          dispatch(setUserBalance(userBalance));
+          dispatch(setCounterpartBalances(counterpartBalances));
+        } else if (response.status === 404) {
+          dispatch(setUserBalance(0));
+          dispatch(setCounterpartBalances({}));
+        }
       });
   };
 }

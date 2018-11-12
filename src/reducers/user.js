@@ -8,6 +8,7 @@ const initialState = {
   avatar: '',
   userType: 'existingUser',
   loginError: '',
+  newUserError: '',
 };
 
 function user(state = initialState, action) {
@@ -30,6 +31,8 @@ function user(state = initialState, action) {
       return Object.assign({}, state, { validationPassword: action.validationPassword });
     case 'SET_LOGIN_ERROR':
       return Object.assign({}, state, { loginError: action.loginError });
+    case 'SET_NEW_USER_ERROR':
+      return Object.assign({}, state, { newUserError: action.newUserError });
     default:
       return state;
   }

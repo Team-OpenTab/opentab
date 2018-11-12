@@ -23,6 +23,7 @@ function Login({
     avatar,
     userType,
     loginError,
+    newUserError,
   } = user;
 
   return (
@@ -74,14 +75,14 @@ function Login({
               type="text"
               value={email}
               onChange={event => getEmail(event.target.value)}
-              placeholder="Email"
+              placeholder="Email*"
             />
             <input
               className="form__field"
               type="text"
               value={username}
               onChange={event => getUsername(event.target.value)}
-              placeholder="Username"
+              placeholder="Username*"
             />
             <input
               className="form__field"
@@ -99,24 +100,20 @@ function Login({
             />
             <input
               className="form__field"
-              minLength="4"
               type="password"
               value={password}
               onChange={event => getPassword(event.target.value)}
-              placeholder="Password"
+              placeholder="Password*"
             />
             <input
               className="form__field"
               type="password"
               value={validationPassword}
               onChange={event => getValidationPassword(event.target.value)}
-              placeholder="Password"
+              placeholder="Re-enter Password*"
             />
-            <button
-              className="form__field button"
-              disabled={password !== validationPassword || !password || !validationPassword}
-              type="submit"
-            >
+            <div>{newUserError}</div>
+            <button className="form__field button" type="submit">
               CREATE ACCOUNT
             </button>
           </form>
