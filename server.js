@@ -176,7 +176,7 @@ app.get('/api/get-contacts/:userId', (req, res) => {
   const { userId } = req.params;
   db.any(
     `
-    SELECT contact_id, username, email, phone 
+    SELECT DISTINCT contact_id, username, email, phone 
     FROM contact_user, "user" 
     WHERE contact_id = "user".id 
     AND contact_id != $1;
