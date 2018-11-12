@@ -4,7 +4,7 @@ CREATE TABLE "user" (
   id SERIAL PRIMARY KEY,
   username varchar(30) NOT NULL,
   password text NOT NULL,
-  email varchar(50) UNIQUE,
+  email varchar(50) UNIQUE NOT NULL,
   phone varchar(20),
   avatar text
 );

@@ -28,21 +28,29 @@ app.get('/', (req, res) => {
 });
 
 app.post('/api/new-user', (req, res) => {
-  const { username, password, email, phone } = req.body;
+  const { username, password, email, phone, avatar } = req.body;
   bcrypt.hash(password, saltRounds, (err, hash) => {
     db.one(
       `
-      INSERT INTO "user" (username, password, email, phone)
-      VALUES ($1, $2, $3, $4)
+      INSERT INTO "user" (username, password, email, phone, avatar)
+      VALUES ($1, $2, $3, $4, $5)
       RETURNING id
       `,
-      [username, hash, email, phone],
-    ).then(userId => {
-      res.json({
-        status: 200,
-        data: userId,
+      [username, hash, email, phone, avatar],
+    )
+      .then(userId => {
+        res.json({
+          status: 200,
+          data: userId,
+        });
+      })
+      .catch(error => {
+        res.status(401).json({
+          status: 401,
+          message: 'E-mail address already registered to another user',
+          details: error,
+        });
       });
-    });
   });
 });
 
