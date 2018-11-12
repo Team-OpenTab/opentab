@@ -64,7 +64,7 @@ function NewRound({
             </button>
             <input
               className="new-round__input"
-              vonChange={event => getRecipientAmount(recipient, event.target.value)}
+              onChange={event => getRecipientAmount(recipient, event.target.value)}
             />
           </div>
         ))}

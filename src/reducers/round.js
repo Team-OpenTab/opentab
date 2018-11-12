@@ -3,6 +3,7 @@ const initialState = {
   recipients: {},
   totalAmount: 0,
   splitType: '',
+  roundHistory: {},
 };
 
 function round(state = initialState, action) {
@@ -27,6 +28,8 @@ function round(state = initialState, action) {
       return Object.assign({}, state, { totalAmount: parseInt(action.totalAmount) });
     case 'SET_SPLIT_TYPE':
       return Object.assign({}, state, { splitType: action.splitType });
+    case 'SET_ROUND_HISTORY':
+      return Object.assign({}, state, { roundHistory: action.roundHistory });
     default:
       return state;
   }
