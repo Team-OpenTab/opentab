@@ -23,6 +23,7 @@ function NewRound({
         </p>
         <h2 className="title-bar__title">New Round</h2>
       </div>
+
       <div className="new-round__amount">
         <h3>Round Amount</h3>
         <input value={totalAmount} onChange={event => getAmount(event.target.value)} />
@@ -34,11 +35,21 @@ function NewRound({
         </button>
       </div>
       <div className="new-round__users">
-        <h3>You</h3>
-        <button type="button" onClick={handleRoundCounterparts} value={userId}>
-          {!Object.keys(recipients).includes(userId.toString()) ? 'Add' : 'Remove'}
-        </button>
-        <input onChange={event => getRecipientAmount(userId, event.target.value)} />
+        <div className="new-round__counterpart">
+          <h3 className="new-round__counterpart-name">You</h3>
+          <button
+            className="new-round__add-remove-counterpart-button"
+            type="button"
+            onClick={handleRoundCounterparts}
+            value={userId}
+          >
+            {!Object.keys(recipients).includes(userId.toString()) ? 'Add' : 'Remove'}
+          </button>
+          <input
+            className="new-round__input"
+            onChange={event => getRecipientAmount(userId, event.target.value)}
+          />
+        </div>
 
         {Object.keys(recipients).map(recipient => (
           <div className="new-round__counterpart added-recipient" key={recipient}>
@@ -51,7 +62,10 @@ function NewRound({
             >
               {!Object.keys(recipients).includes(recipient.toString()) ? 'Add' : 'Remove'}
             </button>
-            <input onChange={event => getRecipientAmount(recipient, event.target.value)} />
+            <input
+              className="new-round__input"
+              vonChange={event => getRecipientAmount(recipient, event.target.value)}
+            />
           </div>
         ))}
 
@@ -71,6 +85,7 @@ function NewRound({
                     : 'Remove'}
                 </button>
                 <input
+                  className="new-round__input"
                   onChange={event =>
                     getRecipientAmount(counterpart.counterpart_id, event.target.value)
                   }

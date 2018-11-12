@@ -1,8 +1,18 @@
 @import '../main';
 
 .new-round__counterpart-name {
+  flex: 3;
   margin: 0;
 }
+
+.new-round__input {
+  flex: 3;
+}
+
+.new-round__add-remove-counterpart-button {
+  flex: 3;
+}
+
 .new-round__counterpart {
   padding: 1.25rem 0;
   display: flex;
