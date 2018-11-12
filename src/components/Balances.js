@@ -34,13 +34,9 @@ class Balances extends React.Component {
   markPaid() {
     this.props.settleBalance();
     this.props.showPayment(false, null);
-    console.log('mark paid, ', 'counterpartId: ', this.props.payment.counterpartId);
   }
 
   // TODO: show payment options for example Paypal link or sms notification
-  showPayment() {
-    console.log('request payment, ', 'counterpartId: ', this.props.payment.counterpartId);
-  }
 
   // Can payment modal be seperated into a new component?
   render() {

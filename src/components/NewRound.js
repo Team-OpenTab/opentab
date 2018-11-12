@@ -52,34 +52,36 @@ function NewRound({
           />
         </div>
         {/* RECIPIENTS */}
-        {Object.keys(recipients).map(recipient => (
-          <div className="new-round__counterpart added-recipient" key={recipient}>
-            <h3 className="new-round__counterpart-name">{counterparts[recipient].username}</h3>
-            <button
-              className="new-round__add-remove-counterpart-button"
-              type="button"
-              onClick={handleRoundCounterparts}
-              value={recipient}
-            >
-              {!Object.keys(recipients).includes(recipient.toString()) ? 'Add' : 'Remove'}
-            </button>
-            {splitType === 'manual' ? (
-              <input
-                className="new-round__input"
-                onChange={event => getRecipientAmount(recipient, event.target.value)}
-              />
-            ) : (
-              <p className="new-round__even-amount">
-                {(totalAmount / Object.keys(recipients).length).toFixed(2)}
-              </p>
-            )}
-          </div>
-        ))}
+        {Object.keys(recipients)
+          .filter(recipient => Number(recipient) !== userId)
+          .map(recipient => (
+            <div className="new-round__counterpart added-recipient" key={recipient}>
+              <h3 className="new-round__counterpart-name">{counterparts[recipient].username}</h3>
+              <button
+                className="new-round__add-remove-counterpart-button"
+                type="button"
+                onClick={handleRoundCounterparts}
+                value={recipient}
+              >
+                {!Object.keys(recipients).includes(recipient.toString()) ? 'Add' : 'Remove'}
+              </button>
+              {splitType === 'manual' ? (
+                <input
+                  className="new-round__input"
+                  onChange={event => getRecipientAmount(recipient, event.target.value)}
+                />
+              ) : (
+                <p className="new-round__even-amount">
+                  {(totalAmount / Object.keys(recipients).length).toFixed(2)}
+                </p>
+              )}
+            </div>
+          ))}
 
         {Object.values(counterparts).map(counterpart => (
-          <div>
+          <div key={counterpart.counterpart_id}>
             {!Object.keys(recipients).includes(counterpart.counterpart_id.toString()) && (
-              <div className="new-round__counterpart" key={counterpart.counterpart_id}>
+              <div className="new-round__counterpart">
                 <h3 className="new-round__counterpart-name">{counterpart.username}</h3>
                 <button
                   className="new-round__add-remove-counterpart-button"

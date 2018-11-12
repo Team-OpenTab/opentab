@@ -25,7 +25,7 @@ function round(state = initialState, action) {
     case 'RESET_ROUND':
       return Object.assign({}, initialState);
     case 'SET_AMOUNT':
-      return Object.assign({}, state, { totalAmount: parseInt(action.totalAmount) });
+      return Object.assign({}, state, { totalAmount: parseInt(action.totalAmount) || 0 });
     case 'SET_SPLIT_TYPE':
       return Object.assign({}, state, { splitType: action.splitType });
     case 'SET_ROUND_HISTORY':
