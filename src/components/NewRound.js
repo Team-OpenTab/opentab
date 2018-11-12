@@ -14,6 +14,7 @@ function NewRound({
   getRecipientAmount,
   handleRoundCounterparts,
   userId,
+  splitType,
 }) {
   return (
     <section>
@@ -50,7 +51,7 @@ function NewRound({
             onChange={event => getRecipientAmount(userId, event.target.value)}
           />
         </div>
-
+        {/* RECIPIENTS */}
         {Object.keys(recipients).map(recipient => (
           <div className="new-round__counterpart added-recipient" key={recipient}>
             <h3 className="new-round__counterpart-name">{counterparts[recipient].username}</h3>
@@ -62,10 +63,14 @@ function NewRound({
             >
               {!Object.keys(recipients).includes(recipient.toString()) ? 'Add' : 'Remove'}
             </button>
-            <input
-              className="new-round__input"
-              vonChange={event => getRecipientAmount(recipient, event.target.value)}
-            />
+            {splitType === 'manual' ? (
+              <input
+                className="new-round__input"
+                onChange={event => getRecipientAmount(recipient, event.target.value)}
+              />
+            ) : (
+              <p>£0.00</p>
+            )}
           </div>
         ))}
 
@@ -84,12 +89,6 @@ function NewRound({
                     ? 'Add'
                     : 'Remove'}
                 </button>
-                <input
-                  className="new-round__input"
-                  onChange={event =>
-                    getRecipientAmount(counterpart.counterpart_id, event.target.value)
-                  }
-                />
               </div>
             )}
           </div>
@@ -112,6 +111,7 @@ NewRound.propTypes = {
   getRecipientAmount: PropTypes.func.isRequired,
   handleRoundCounterparts: PropTypes.func.isRequired,
   userId: PropTypes.number,
+  splitType: PropTypes.string,
 };
 
 export default NewRound;
