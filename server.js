@@ -52,7 +52,7 @@ app.post('/api/login', (req, res) => {
     if (!user) {
       res.status(404).json({
         status: 404,
-        message: 'User does not exist',
+        message: 'Incorrect e-mail',
       });
     } else {
       bcrypt.compare(password, user.password, (err, result) => {

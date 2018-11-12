@@ -13,13 +13,7 @@ import {
 } from '../actions';
 
 const mapStateToProps = state => ({
-  email: state.user.email,
-  password: state.user.password,
-  username: state.user.username,
-  phone: state.user.phone,
-  userType: state.user.userType,
-  validationPassword: state.user.validationPassword,
-  avatar: state.user.avatar,
+  user: state.user,
 });
 
 const mapDispatchToProps = dispatch => ({
