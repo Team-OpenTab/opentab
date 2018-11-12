@@ -13,6 +13,7 @@ class Balances extends React.Component {
     const socket = io('localhost:8080');
     socket.on('refresh', () => {
       this.props.fetchBalances(this.props.userId);
+      this.props.fetchRoundHistory(this.props.userId);
     });
   }
 
