@@ -241,8 +241,10 @@ export function setRecipientAmount(id, amount) {
   return (dispatch, getState) => {
     const { recipients } = getState().round;
     const newRecipients = Object.assign({}, recipients);
-    newRecipients[id] = parseInt(amount);
-    const totalAmount = Object.values(newRecipients).reduce((a, b) => a + b);
+    newRecipients[id] = parseFloat(amount);
+    const totalAmount = Object.values(newRecipients)
+      .reduce((a, b) => a + b)
+      .toFixed(2);
     dispatch(setAmount(totalAmount));
     dispatch(setRecipients(newRecipients));
   };

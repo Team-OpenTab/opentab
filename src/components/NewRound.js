@@ -61,6 +61,7 @@ function NewRound({
             (splitType === 'manual' ? (
               <input
                 className="new-round__input"
+                value={recipients[userId].toFixed(2)}
                 onChange={event => getRecipientAmount(userId, event.target.value)}
               />
             ) : (
@@ -84,6 +85,7 @@ function NewRound({
               {splitType === 'manual' ? (
                 <input
                   className="new-round__input"
+                  value={recipients[recipient].toFixed(2)}
                   onChange={event => getRecipientAmount(recipient, event.target.value)}
                 />
               ) : (
