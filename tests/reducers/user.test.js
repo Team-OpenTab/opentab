@@ -66,7 +66,7 @@ describe('user reducer', () => {
   });
   it('sets phone number in state', () => {
     const action = {
-      type: 'SET_PHONE',
+      type: 'SET_USER_PHONE',
       phone: '073 5714 9757',
     };
 
