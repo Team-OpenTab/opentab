@@ -56,6 +56,13 @@ export function setUserType(userType) {
   };
 }
 
+export function setAvatar(avatar) {
+  return {
+    type: 'SET_AVATAR',
+    avatar,
+  };
+}
+
 export function setContactList(contactList) {
   return {
     type: 'SET_CONTACT_LIST',
@@ -77,6 +84,13 @@ export function getContactList(userId) {
   };
 }
 
+export function setLoginError(loginError) {
+  return {
+    type: 'SET_LOGIN_ERROR',
+    loginError,
+  };
+}
+
 export function loginUser() {
   return (dispatch, getState) => {
     const { email, password } = getState().user;
@@ -94,7 +108,10 @@ export function loginUser() {
           dispatch(setUsername(response.data.username));
           dispatch(setUserPhone(response.data.phone));
           dispatch(getContactList(response.data.id));
+          dispatch(setAvatar(response.data.avatar));
           dispatch(setStage('balances'));
+        } else {
+          dispatch(setLoginError(response.message));
         }
       })
       .catch(error => console.log(error));
