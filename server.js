@@ -291,14 +291,17 @@ app.post('/api/make-payment', (req, res) => {
 
 app.get('/api/get-rounds/:userId', (req, res) => {
   const { userId } = req.params;
+  console.log(userId);
   db.any('SELECT round_id FROM round_user WHERE counterpart_id = $1', [userId])
     .then(response => {
+      console.log(response);
       const promisesArray = response.map(round =>
         db.any(`SELECT * FROM transaction WHERE round_id = ${round.round_id} AND amount < 0`),
       );
       return Promise.all(promisesArray);
     })
     .then(response => {
+      console.log(response);
       const roundStore = response
         .map(round =>
           round.reduce((acc, curr) => {
@@ -319,6 +322,7 @@ app.get('/api/get-rounds/:userId', (req, res) => {
           }, {}),
         )
         .filter(round => round.hasOwnProperty('roundId'));
+      console.log(roundStore);
       res.json(roundStore);
     });
 });
