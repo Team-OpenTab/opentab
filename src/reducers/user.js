@@ -5,6 +5,7 @@ const initialState = {
   password: '',
   validationPassword: '',
   phone: '',
+  avatar: '',
   userType: 'existingUser',
 };
 
@@ -20,6 +21,8 @@ function user(state = initialState, action) {
       return Object.assign({}, state, { username: action.username });
     case 'SET_USER_PHONE':
       return Object.assign({}, state, { phone: action.phone });
+    case 'SET_AVATAR':
+      return Object.assign({}, state, { avatar: action.avatar });
     case 'SET_USER_TYPE':
       return Object.assign({}, state, { userType: action.userType });
     case 'SET_VALIDATION_PASSWORD':

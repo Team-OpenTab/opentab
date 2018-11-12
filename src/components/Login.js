@@ -8,6 +8,7 @@ function Login({
   phone,
   username,
   userType,
+  avatar,
   validationPassword,
   getLogin,
   getEmail,
@@ -17,6 +18,7 @@ function Login({
   getPhone,
   getUserType,
   getValidationPassword,
+  getAvatar,
 }) {
   return (
     <div className="login">
@@ -84,6 +86,13 @@ function Login({
             />
             <input
               className="form__field"
+              type="text"
+              value={avatar}
+              onChange={event => getAvatar(event.target.value)}
+              placeholder="Avatar URL"
+            />
+            <input
+              className="form__field"
               minLength="4"
               type="password"
               value={password}
@@ -135,6 +144,8 @@ Login.propTypes = {
   getPhone: PropTypes.func.isRequired,
   getUserType: PropTypes.func.isRequired,
   getValidationPassword: PropTypes.func.isRequired,
+  avatar: PropTypes.string.isRequired,
+  getAvatar: PropTypes.func.isRequired,
 };
 
 export default Login;

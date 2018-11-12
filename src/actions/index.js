@@ -56,6 +56,13 @@ export function setUserType(userType) {
   };
 }
 
+export function setAvatar(avatar) {
+  return {
+    type: 'SET_AVATAR',
+    avatar,
+  };
+}
+
 export function setContactList(contactList) {
   return {
     type: 'SET_CONTACT_LIST',
@@ -94,6 +101,7 @@ export function loginUser() {
           dispatch(setUsername(response.data.username));
           dispatch(setUserPhone(response.data.phone));
           dispatch(getContactList(response.data.id));
+          dispatch(setAvatar(response.data.avatar));
           dispatch(setStage('balances'));
         }
       })
