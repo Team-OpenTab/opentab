@@ -76,7 +76,6 @@ export function getContactList(userId) {
       .then(res => res.json())
       .then(response => {
         if (response.status === 200) {
-          console.log(response.data);
           dispatch(setContactList(response.data));
         }
       })
