@@ -9,6 +9,7 @@ import {
   setUserPhone,
   setUserType,
   setValidationPassword,
+  setAvatar,
 } from '../actions';
 
 const mapStateToProps = state => ({
@@ -18,6 +19,7 @@ const mapStateToProps = state => ({
   phone: state.user.phone,
   userType: state.user.userType,
   validationPassword: state.user.validationPassword,
+  avatar: state.user.avatar,
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -35,6 +37,7 @@ const mapDispatchToProps = dispatch => ({
   getPhone: phone => dispatch(setUserPhone(phone)),
   getUserType: userType => dispatch(setUserType(userType)),
   getValidationPassword: validationPassword => dispatch(setValidationPassword(validationPassword)),
+  getAvatar: avatar => dispatch(setAvatar(avatar)),
 });
 
 export default connect(

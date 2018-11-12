@@ -59,7 +59,7 @@ app.post('/api/login', (req, res) => {
         if (result) {
           res.json({
             status: 200,
-            data: { id: user.id, username: user.username, phone: user.phone },
+            data: user,
           });
         } else {
           res.status(401).json({
@@ -176,7 +176,7 @@ app.get('/api/get-contacts/:userId', (req, res) => {
   const { userId } = req.params;
   db.any(
     `
-    SELECT DISTINCT contact_id, username, email, phone 
+    SELECT DISTINCT contact_id, username, email, phone, avatar 
     FROM contact_user, "user" 
     WHERE contact_id = "user".id 
     AND contact_id != $1;
