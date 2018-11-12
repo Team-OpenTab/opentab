@@ -248,6 +248,19 @@ export function setRecipientAmount(id, amount) {
   };
 }
 
+export function refreshRecipientAmounts() {
+  return (dispatch, getState) => {
+    const { recipients, totalAmount, splitType } = getState().round;
+    if (splitType === 'even') {
+      const newRecipients = Object.assign({}, recipients);
+      Object.keys(newRecipients).forEach(recipientId => {
+        newRecipients[recipientId] = totalAmount / Object.keys(newRecipients).length;
+      });
+      dispatch(setRecipients(newRecipients));
+    }
+  };
+}
+
 // BALANCES ACTIONS
 
 export function setCounterpartBalances(balances) {
@@ -271,7 +284,7 @@ export function fetchBalances(userId) {
       .then(response => {
         if (response.status === 200) {
           const userBalance = Object.values(response.data.balances)
-            .map(item => parseInt(item.sum))
+            .map(item => parseFloat(item.sum))
             .reduce((a, b) => a + b);
           const userIds = Object.keys(response.data.balances);
           const counterpartIds = userIds.filter(key => parseInt(key) !== userId);

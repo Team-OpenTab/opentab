@@ -64,9 +64,7 @@ function NewRound({
                 onChange={event => getRecipientAmount(userId, event.target.value)}
               />
             ) : (
-              <p className="new-round__even-amount">
-                {(parseFloat(totalAmount) / Object.keys(recipients).length || 0).toFixed(2)}
-              </p>
+              <p className="new-round__even-amount">{recipients[userId].toFixed(2)}</p>
             ))}
         </div>
         {/* RECIPIENTS */}
@@ -89,9 +87,7 @@ function NewRound({
                   onChange={event => getRecipientAmount(recipient, event.target.value)}
                 />
               ) : (
-                <p className="new-round__even-amount">
-                  {(parseFloat(totalAmount) / Object.keys(recipients).length).toFixed(2)}
-                </p>
+                <p className="new-round__even-amount">{recipients[recipient].toFixed(2)}</p>
               )}
             </div>
           ))}
@@ -123,17 +119,17 @@ function NewRound({
   );
 }
 NewRound.propTypes = {
-  counterparts: PropTypes.object,
+  counterparts: PropTypes.object.isRequired,
   recipients: PropTypes.object.isRequired,
-  getStage: PropTypes.func,
-  getAmount: PropTypes.func,
+  getStage: PropTypes.func.isRequired,
+  getAmount: PropTypes.func.isRequired,
   totalAmount: PropTypes.string.isRequired,
   getSplitType: PropTypes.func.isRequired,
   getNewRound: PropTypes.func.isRequired,
   getRecipientAmount: PropTypes.func.isRequired,
   handleRoundCounterparts: PropTypes.func.isRequired,
-  userId: PropTypes.number,
-  splitType: PropTypes.string,
+  userId: PropTypes.number.isRequired,
+  splitType: PropTypes.string.isRequired,
 };
 
 export default NewRound;
