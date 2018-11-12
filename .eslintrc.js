@@ -21,6 +21,7 @@ module.exports = {
     'function-paren-newline': 'off', // Incompatible with prettier
     'space-before-function-paren': 0, // Incompatible with prettier
     'implicit-arrow-linebreak': 'off',
+    'operator-linebreak': 'off',
 
     'max-len': ['error', 100, 2, { ignoreUrls: true }], // airbnb is allowing some edge cases
     'no-console': 'off', // airbnb is using warn

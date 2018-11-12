@@ -28,12 +28,23 @@ function NewRound({
       <div className="new-round__amount">
         <h3>Round Amount</h3>
         <input value={totalAmount} onChange={event => getAmount(event.target.value)} />
-        <button type="button" onClick={() => getSplitType('even')}>
-          Split Evenly
-        </button>
-        <button type="button" onClick={() => getSplitType('manual')}>
-          Split Manually
-        </button>
+        <input
+          type="radio"
+          name="splitType"
+          id="radio1"
+          value="even"
+          onClick={event => getSplitType(event.target.value)}
+          defaultChecked
+        />
+        <label htmlFor="radio1">Split Evenly</label>
+        <input
+          type="radio"
+          name="splitType"
+          id="radio2"
+          value="manual"
+          onClick={event => getSplitType(event.target.value)}
+        />
+        <label htmlFor="radio2">Split Manually</label>
       </div>
       <div className="new-round__users">
         <div className="new-round__counterpart">
@@ -46,10 +57,17 @@ function NewRound({
           >
             {!Object.keys(recipients).includes(userId.toString()) ? 'Add' : 'Remove'}
           </button>
-          <input
-            className="new-round__input"
-            onChange={event => getRecipientAmount(userId, event.target.value)}
-          />
+          {Object.keys(recipients).includes(userId.toString()) &&
+            (splitType === 'manual' ? (
+              <input
+                className="new-round__input"
+                onChange={event => getRecipientAmount(userId, event.target.value)}
+              />
+            ) : (
+              <p className="new-round__even-amount">
+                {(parseFloat(totalAmount) / Object.keys(recipients).length || 0).toFixed(2)}
+              </p>
+            ))}
         </div>
         {/* RECIPIENTS */}
         {Object.keys(recipients)
@@ -72,7 +90,7 @@ function NewRound({
                 />
               ) : (
                 <p className="new-round__even-amount">
-                  {(totalAmount / Object.keys(recipients).length).toFixed(2)}
+                  {(parseFloat(totalAmount) / Object.keys(recipients).length).toFixed(2)}
                 </p>
               )}
             </div>
@@ -109,7 +127,7 @@ NewRound.propTypes = {
   recipients: PropTypes.object.isRequired,
   getStage: PropTypes.func,
   getAmount: PropTypes.func,
-  totalAmount: PropTypes.number,
+  totalAmount: PropTypes.string.isRequired,
   getSplitType: PropTypes.func.isRequired,
   getNewRound: PropTypes.func.isRequired,
   getRecipientAmount: PropTypes.func.isRequired,

@@ -1,8 +1,8 @@
 const initialState = {
   buyerId: '',
   recipients: {},
-  totalAmount: 0,
-  splitType: '',
+  totalAmount: '',
+  splitType: 'even',
 };
 
 function round(state = initialState, action) {
@@ -24,7 +24,7 @@ function round(state = initialState, action) {
     case 'RESET_ROUND':
       return Object.assign({}, initialState);
     case 'SET_AMOUNT':
-      return Object.assign({}, state, { totalAmount: parseInt(action.totalAmount) || 0 });
+      return Object.assign({}, state, { totalAmount: action.totalAmount });
     case 'SET_SPLIT_TYPE':
       return Object.assign({}, state, { splitType: action.splitType });
     default:
