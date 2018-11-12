@@ -28,6 +28,7 @@ module.exports = {
     'no-nested-ternary': 'off',
     'no-param-reassign': 'off', // Not our taste?
     radix: 'off', // parseInt, parseFloat radix turned off. Not my taste.
+    'no-prototype-builtins': 'off',
 
     'react/require-default-props': 'off', // airbnb use error
     'react/forbid-prop-types': 'off', // airbnb use error
