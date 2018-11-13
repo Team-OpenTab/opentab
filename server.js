@@ -310,7 +310,12 @@ app.post('/api/make-payment', (req, res) => {
 
 app.get('/api/get-rounds/:userId', (req, res) => {
   const { userId } = req.params;
-  db.any('SELECT round_id FROM round_user WHERE counterpart_id = $1', [userId])
+  db.any(
+    `SELECT round_id FROM round_user WHERE counterpart_id = $1
+     UNION
+     SELECT id FROM "round" WHERE user_id = $1 `,
+    [userId],
+  )
     .then(response => {
       const promisesArray = response.map(round =>
         db.any(`SELECT * FROM transaction WHERE round_id = ${round.round_id} AND amount < 0`),
@@ -318,26 +323,29 @@ app.get('/api/get-rounds/:userId', (req, res) => {
       return Promise.all(promisesArray);
     })
     .then(response => {
-      const roundStore = response
-        .map(round =>
-          round.reduce((acc, curr) => {
-            const counterparts = !acc.counterparts
-              ? { [curr.user_id]: curr.amount }
-              : acc.counterparts;
-            acc = {
-              roundId: curr.round_id,
-              userId: curr.user_id,
-              counterparts: Object.assign({}, counterparts, { [curr.counterpart_id]: curr.amount }),
-              roundTotal: Object.values(counterparts).reduce(
-                (agg, val) => parseFloat(agg) + parseFloat(val),
-                0,
-              ),
-              roundTime: curr.time,
-            };
-            return acc;
-          }, {}),
-        )
-        .filter(round => round.hasOwnProperty('roundId'));
+      const roundStore = response.map(round => {
+        const reducedRound = round.reduce((acc, curr) => {
+          const counterparts = !acc.counterparts
+            ? { [curr.counterpart_id]: curr.amount }
+            : acc.counterparts;
+          acc = {
+            roundId: curr.round_id,
+            userId: curr.user_id,
+            counterparts: Object.assign({}, counterparts, { [curr.counterpart_id]: curr.amount }),
+            roundTime: curr.time,
+          };
+          return acc;
+        }, {});
+        const roundTotal = Object.values(reducedRound.counterparts).reduce(
+          (acc, item) => parseFloat(acc) + parseFloat(item),
+          0,
+        );
+        const roundWithTotal = Object.assign({}, reducedRound, {
+          roundTotal: roundTotal.toFixed(2),
+        });
+        return roundWithTotal;
+      });
+
       res.json(roundStore);
     });
 });
