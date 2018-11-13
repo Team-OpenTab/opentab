@@ -350,6 +350,6 @@ app.get('/api/get-rounds/:userId', (req, res) => {
     });
 });
 
-server.listen(8080, () => {
+server.listen(process.env.PORT || 8080, () => {
   console.log('Listening on port 8080');
 });
