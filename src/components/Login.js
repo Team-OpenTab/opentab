@@ -69,6 +69,15 @@ function Login({
 
       {userType === 'newUser' && (
         <div className="container login--new-user">
+          <div className="logo">
+            <div className="logo__container">
+              <img
+                className="logo__container__img"
+                src="../static/images/logoPlaceholder.png"
+                alt="Open Tab"
+              />
+            </div>
+          </div>
           <form className="form" onSubmit={getNewUser}>
             <input
               className="form__field"
