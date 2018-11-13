@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import BalancesContainer from '../containers/BalancesContainer';
 import NewRoundContainer from '../containers/NewRoundContainer';
 import LoginContainer from '../containers/LoginContainer';
+import TabsContainer from '../containers/TabsContainer';
 
 class Content extends React.Component {
   render() {
@@ -13,6 +14,7 @@ class Content extends React.Component {
         {stage === 'login' && <LoginContainer />}
         {stage === 'balances' && <BalancesContainer />}
         {stage === 'newRound' && <NewRoundContainer />}
+        {stage === 'tabs' && <TabsContainer />}
       </div>
     );
   }

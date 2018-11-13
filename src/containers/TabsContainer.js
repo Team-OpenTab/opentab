@@ -1,15 +1,20 @@
 import { connect } from 'react-redux';
 import Tabs from '../components/Tabs';
-import reOrderRound from '../actions';
+import { reOrder, setStage } from '../actions';
 
 const mapStateToProps = state => ({
-  contacts: state.contacts,
-  userId: state.userId,
+  contacts: state.contacts.contactList,
+  userId: state.user.id,
   roundHistory: state.round.roundHistory,
+  stage: state.stage,
 });
 
 const mapDispatchToProps = dispatch => ({
-  reOrderRound: round => dispatch(reOrderRound(round)),
+  reOrderRound: round => dispatch(reOrder(round)),
+  getStage: stage => dispatch(setStage(stage)),
 });
 
-export default connect({ mapStateToProps, mapDispatchToProps })(Tabs);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(Tabs);
