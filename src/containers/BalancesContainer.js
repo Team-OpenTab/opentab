@@ -8,6 +8,7 @@ import {
   handleContactSearch,
   addContact,
   approveContact,
+  fetchRoundHistory,
 } from '../actions';
 
 const mapStateToProps = state => ({
@@ -27,6 +28,7 @@ const mapDispatchToProps = dispatch => ({
   handleContactSearch: event => dispatch(handleContactSearch(event.target.value)),
   addContact: contactId => dispatch(addContact(contactId)),
   approveContact: contactId => dispatch(approveContact(contactId)),
+  fetchRoundHistory: userId => dispatch(fetchRoundHistory(userId)),
 });
 
 export default connect(

@@ -426,3 +426,21 @@ export function approveContact(contactId) {
       });
   };
 }
+
+export function receiveRoundHistory(roundHistory) {
+  return {
+    type: 'SET_ROUND_HISTORY',
+    roundHistory,
+  };
+}
+
+export function fetchRoundHistory(userId) {
+  return dispatch => {
+    fetch(`/api/get-rounds/${userId}`)
+      .then(response => response.json())
+      .then(data => {
+        console.log(data);
+        dispatch(receiveRoundHistory(data));
+      });
+  };
+}

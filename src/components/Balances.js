@@ -9,9 +9,11 @@ import '../../styles/components/Balances.scss';
 class Balances extends React.Component {
   componentDidMount() {
     this.props.fetchBalances(this.props.userId);
+    this.props.fetchRoundHistory(this.props.userId);
     const socket = io('localhost:8080');
     socket.on('refresh', () => {
       this.props.fetchBalances(this.props.userId);
+      this.props.fetchRoundHistory(this.props.userId);
     });
   }
 
@@ -146,6 +148,7 @@ Balances.propTypes = {
   contactSearchString: PropTypes.string.isRequired,
   contactList: PropTypes.array.isRequired,
   approveContact: PropTypes.func.isRequired,
+  fetchRoundHistory: PropTypes.func.isRequired,
 };
 
 export default Balances;
