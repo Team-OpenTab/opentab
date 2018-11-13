@@ -18,6 +18,7 @@ const mapStateToProps = state => ({
   contactList: state.contacts.contactList,
   contactSearchResults: state.contacts.search.searchResults,
   contactSearchString: state.contacts.search.searchString,
+  stage: state.stage,
 });
 
 const mapDispatchToProps = dispatch => ({
