@@ -38,6 +38,11 @@ class Balances extends React.Component {
 
   // Can payment modal be seperated into a new component?
   render() {
+    const friendRequests = this.props.contactList
+      .filter(contact => !contact.approved)
+      .map(contact => contact.contact_id);
+    console.log(friendRequests);
+
     return (
       <div>
         <TitleBar
@@ -74,6 +79,15 @@ class Balances extends React.Component {
               <div className="counterpart__balance">
                 £{this.props.balances.counterpartBalances[key].sum}
               </div>
+              {friendRequests.includes(Number(key)) && (
+                <button
+                  className="counterpart__btn"
+                  type="button"
+                  onClick={() => this.props.approveContact(key)}
+                >
+                  Approve
+                </button>
+              )}
               {this.props.balances.counterpartBalances[key].sum !== '0.00' && (
                 <button
                   className="counterpart__btn"
@@ -130,6 +144,8 @@ Balances.propTypes = {
   contactSearchResults: PropTypes.array.isRequired,
   addContact: PropTypes.func.isRequired,
   contactSearchString: PropTypes.string.isRequired,
+  contactList: PropTypes.array.isRequired,
+  approveContact: PropTypes.func.isRequired,
 };
 
 export default Balances;

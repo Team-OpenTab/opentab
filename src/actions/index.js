@@ -296,6 +296,7 @@ export function fetchBalances(userId) {
           );
           dispatch(setUserBalance(userBalance));
           dispatch(setCounterpartBalances(counterpartBalances));
+          dispatch(getContactList(userId));
         } else if (response.status === 404) {
           dispatch(setUserBalance(0));
           dispatch(setCounterpartBalances({}));
@@ -401,6 +402,25 @@ export function addContact(contactId) {
         if (response.status === 200) {
           dispatch(fetchBalances(userId));
           dispatch(resetContactSearch());
+          dispatch(getContactList(userId));
+        }
+      });
+  };
+}
+
+export function approveContact(contactId) {
+  return (dispatch, getState) => {
+    const userId = getState().user.id;
+    fetch('/api/approve-contact', {
+      method: 'POST',
+      body: JSON.stringify({ userId, contactId }),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+      .then(res => res.json())
+      .then(response => {
+        if (response.status === 200) {
           dispatch(getContactList(userId));
         }
       });
