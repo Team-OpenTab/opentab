@@ -15,6 +15,7 @@ const mapStateToProps = state => ({
   userId: state.user.id,
   contactSearchResults: state.contacts.search.searchResults,
   contactSearchString: state.contacts.search.searchString,
+  stage: state.stage,
 });
 
 const mapDispatchToProps = dispatch => ({

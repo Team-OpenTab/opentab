@@ -42,7 +42,9 @@ class Balances extends React.Component {
       <div>
         <TitleBar
           title={`Balance: £${this.props.balances.userBalance.toFixed(2)}`}
-          previous="App"
+          previous="login"
+          getStage={this.props.getStage}
+          stage={this.props.stage}
         />
         <div className="balances__add-contact">
           <input
@@ -130,6 +132,7 @@ Balances.propTypes = {
   contactSearchResults: PropTypes.array.isRequired,
   addContact: PropTypes.func.isRequired,
   contactSearchString: PropTypes.string.isRequired,
+  stage: PropTypes.string.isRequired,
 };
 
 export default Balances;
