@@ -3,6 +3,8 @@ const initialState = {
   recipients: {},
   totalAmount: '',
   splitType: 'even',
+  roundHistory: [],
+
 };
 
 function round(state = initialState, action) {
