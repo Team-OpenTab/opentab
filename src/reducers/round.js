@@ -11,7 +11,7 @@ function round(state = initialState, action) {
       return Object.assign({}, state, { buyerId: action.buyerId });
     case 'ADD_RECIPIENT': {
       const newRecipients = Object.assign({}, state.recipients);
-      newRecipients[action.recipient] = {};
+      newRecipients[action.recipient] = 0;
       return Object.assign({}, state, { recipients: newRecipients });
     }
     case 'REMOVE_RECIPIENT': {
