@@ -11,6 +11,14 @@
 
   &__balance {
     padding: 0 15px;
+
+    &--red {
+      color: red;
+    }
+
+    &--green {
+      color: green;
+    }
   }
 }
 
