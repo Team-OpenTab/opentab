@@ -23,27 +23,45 @@ function Tabs({ userId, roundHistory, contacts, reOrderRound, getStage, stage })
       {roundHistory.map(round => {
         if (round.userId === userId) {
           return (
-            <div>
-              <p>I paid {round.roundTotal}, split as:</p>
-              <p>{crossReference(round.counterparts, roundHistory.indexOf(round))}</p>
-              <button onClick={() => reOrderRound(round)} type="button">
-                RE-ORDER
-              </button>
+            <div className="tab-container">
+              <div className="tab">
+                <p className="tab__payer">I paid {round.roundTotal}, split as:</p>
+                <p className="tab__payees">
+                  {crossReference(round.counterparts, roundHistory.indexOf(round))}
+                </p>
+              </div>
+              <div className="tab-footer">
+                <p className="tab-footer__date" />
+                <button
+                  className="tab-footer__btn"
+                  onClick={() => reOrderRound(round)}
+                  type="button"
+                >
+                  RE-ORDER
+                </button>
+              </div>
             </div>
           );
         }
         return (
-          <div>
-            <p>
-              {Object.values(contacts).map(
-                contact => (contact.contact_id === round.userId ? contact.username : null),
-              )}{' '}
-              paid: {round.roundTotal}
-            </p>
-            <p>{crossReference(round.counterparts, roundHistory.indexOf(round))}</p>
-            <button onClick={() => reOrderRound(round)} type="button">
-              RE-ORDER
-            </button>
+          <div className="tab-container">
+            <div className="tab">
+              <p className="tab__payer">
+                {Object.values(contacts).map(
+                  contact => (contact.contact_id === round.userId ? contact.username : null),
+                )}{' '}
+                paid: {round.roundTotal}
+              </p>
+              <p className="tab__payees">
+                {crossReference(round.counterparts, roundHistory.indexOf(round))}
+              </p>
+              <div className="tab-footer">
+                <p className="tab-footer__date" />
+                <button onClick={() => reOrderRound(round)} type="button">
+                  RE-ORDER
+                </button>
+              </div>
+            </div>
           </div>
         );
       })}
