@@ -4,6 +4,7 @@ const initialState = {
   totalAmount: '',
   splitType: 'even',
   roundHistory: [],
+
 };
 
 function round(state = initialState, action) {
