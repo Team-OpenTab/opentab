@@ -401,6 +401,7 @@ export function addContact(contactId) {
         if (response.status === 200) {
           dispatch(fetchBalances(userId));
           dispatch(resetContactSearch());
+          dispatch(getContactList(userId));
         }
       });
   };
