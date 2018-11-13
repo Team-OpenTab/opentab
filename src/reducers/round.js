@@ -3,30 +3,6 @@ const initialState = {
   recipients: {},
   totalAmount: '',
   splitType: 'even',
-  roundHistory: [
-    {
-      roundId: 1,
-      userId: 6,
-      counterparts: {
-        1: '-10.00',
-        2: '-10.00',
-        6: '-10.00',
-      },
-      roundTotal: -30,
-      roundTime: '2018-11-13T10:22:33.792Z',
-    },
-    {
-      roundId: 2,
-      userId: 6,
-      counterparts: {
-        3: '-10.00',
-        5: '-10.00',
-        6: '-10.00',
-      },
-      roundTotal: -30,
-      roundTime: '2018-11-13T10:24:29.193Z',
-    },
-  ],
 };
 
 function round(state = initialState, action) {
