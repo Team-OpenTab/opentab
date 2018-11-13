@@ -323,8 +323,6 @@ app.get('/api/get-rounds/:userId', (req, res) => {
       return Promise.all(promisesArray);
     })
     .then(response => {
-      // console.log(response);
-
       const roundStore = response.map(round => {
         const reducedRound = round.reduce((acc, curr) => {
           const counterparts = !acc.counterparts
@@ -334,14 +332,10 @@ app.get('/api/get-rounds/:userId', (req, res) => {
             roundId: curr.round_id,
             userId: curr.user_id,
             counterparts: Object.assign({}, counterparts, { [curr.counterpart_id]: curr.amount }),
-            // roundTotal: Object.values(counterparts).reduce(
-            //   (agg, val) => parseFloat(agg) + parseFloat(val),
-            //   Object.values(counterparts)[0],
             roundTime: curr.time,
           };
           return acc;
         }, {});
-        console.log(reducedRound.counterparts);
         const roundTotal = Object.values(reducedRound.counterparts).reduce(
           (acc, item) => parseFloat(acc) + parseFloat(item),
           0,
@@ -352,8 +346,6 @@ app.get('/api/get-rounds/:userId', (req, res) => {
         return roundWithTotal;
       });
 
-      // .filter(round => round.hasOwnProperty('roundId'));
-      console.log(roundStore);
       res.json(roundStore);
     });
 });
