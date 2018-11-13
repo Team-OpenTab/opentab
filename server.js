@@ -11,7 +11,7 @@ const server = http.Server(app);
 const io = socketIo(server);
 
 const db = pgp({
-  host: 'localhost',
+  host: process.env.HOST || 'localhost',
   port: 5432,
   database: process.env.DB_NAME,
   user: process.env.DB_USERNAME,
