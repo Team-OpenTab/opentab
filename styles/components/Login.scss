@@ -45,7 +45,8 @@
 
 .form {
   display: flex;
-  justify-content: flex-end;
+  flex: 5;
+  justify-content: center;
   width: 100%;
   flex-direction: column;
   padding: 0 2rem;
@@ -67,13 +68,13 @@
 }
 
 .sign-up {
-  flex: 3;
+  font-weight: 700;
+  flex: 2;
   color: $text-color-light;
   display: flex;
   align-items: center;
   justify-content: center;
-  flex: 3;
-  max-height: calc(100vh / 3);
+  // max-height: calc(100vh / 3);
 
   & p {
     cursor: pointer;
