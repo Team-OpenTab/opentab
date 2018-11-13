@@ -52,7 +52,9 @@ function Tabs({ userId, roundHistory, contacts, reOrderRound, getStage, stage })
                 )}{' '}
                 paid: {round.roundTotal}
               </p>
-              <p className="tab__payees">{crossReference(round.counterparts)}</p>
+              <p className="tab__payees">
+                {crossReference(round.counterparts, roundHistory.indexOf(round))}
+              </p>
               <div className="tab-footer">
                 <p className="tab-footer__date" />
                 <button onClick={() => reOrderRound(round)} type="button">
