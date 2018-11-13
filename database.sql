@@ -41,6 +41,7 @@ CREATE TABLE contact_user(
   id SERIAL PRIMARY KEY,
   user_id INT NOT NULL,
   contact_id INT NOT NULL,
+  approved BOOLEAN NOT NULL,
   FOREIGN KEY(user_id) REFERENCES "user" (id),
   FOREIGN KEY(contact_id) REFERENCES "user" (id)
 );
@@ -51,27 +52,27 @@ INSERT INTO "user" (username, password, email, phone, avatar) VALUES ('Dan', '$$
 INSERT INTO "user" (username, password, email, phone, avatar) VALUES ('Tony', '$2b$10$XAEMX1WihrziSl0urFWhcesKynW20wPUlC2r1cCIGDAV/F6Ipz4Hi', 'tony@gmail.com', '07998333222','https://avatars2.githubusercontent.com/u/42917940?s=400&v=4');
 INSERT INTO "user" (username, password, email, phone, avatar) VALUES ('Luke', '$2b$10$XAEMX1WihrziSl0urFWhcesKynW20wPUlC2r1cCIGDAV/F6Ipz4Hi', 'luke@gmail.com', '07998222111','https://avatars0.githubusercontent.com/u/40580944?s=400&v=4');
 
-INSERT INTO contact_user(user_id, contact_id) VALUES (1, 2);
-INSERT INTO contact_user(user_id, contact_id) VALUES (1, 3);
-INSERT INTO contact_user(user_id, contact_id) VALUES (1, 4);
-INSERT INTO contact_user(user_id, contact_id) VALUES (1, 5);
+INSERT INTO contact_user(user_id, contact_id, approved) VALUES (1, 2, true);
+INSERT INTO contact_user(user_id, contact_id, approved) VALUES (1, 3, true);
+INSERT INTO contact_user(user_id, contact_id, approved) VALUES (1, 4, true);
+INSERT INTO contact_user(user_id, contact_id, approved) VALUES (1, 5, true);
 
-INSERT INTO contact_user(user_id, contact_id) VALUES (2, 1);
-INSERT INTO contact_user(user_id, contact_id) VALUES (2, 3);
-INSERT INTO contact_user(user_id, contact_id) VALUES (2, 4);
-INSERT INTO contact_user(user_id, contact_id) VALUES (2, 5);
+INSERT INTO contact_user(user_id, contact_id, approved) VALUES (2, 1, true);
+INSERT INTO contact_user(user_id, contact_id, approved) VALUES (2, 3, true);
+INSERT INTO contact_user(user_id, contact_id, approved) VALUES (2, 4, true);
+INSERT INTO contact_user(user_id, contact_id, approved) VALUES (2, 5, true);
 
-INSERT INTO contact_user(user_id, contact_id) VALUES (3, 1);
-INSERT INTO contact_user(user_id, contact_id) VALUES (3, 2);
-INSERT INTO contact_user(user_id, contact_id) VALUES (3, 4);
-INSERT INTO contact_user(user_id, contact_id) VALUES (3, 5);
+INSERT INTO contact_user(user_id, contact_id, approved) VALUES (3, 1, true);
+INSERT INTO contact_user(user_id, contact_id, approved) VALUES (3, 2, true);
+INSERT INTO contact_user(user_id, contact_id, approved) VALUES (3, 4, true);
+INSERT INTO contact_user(user_id, contact_id, approved) VALUES (3, 5, true);
 
-INSERT INTO contact_user(user_id, contact_id) VALUES (4, 1);
-INSERT INTO contact_user(user_id, contact_id) VALUES (4, 2);
-INSERT INTO contact_user(user_id, contact_id) VALUES (4, 3);
-INSERT INTO contact_user(user_id, contact_id) VALUES (4, 5);
+INSERT INTO contact_user(user_id, contact_id, approved) VALUES (4, 1, true);
+INSERT INTO contact_user(user_id, contact_id, approved) VALUES (4, 2, true);
+INSERT INTO contact_user(user_id, contact_id, approved) VALUES (4, 3, true);
+INSERT INTO contact_user(user_id, contact_id, approved) VALUES (4, 5, true);
 
-INSERT INTO contact_user(user_id, contact_id) VALUES (5, 1);
-INSERT INTO contact_user(user_id, contact_id) VALUES (5, 2);
-INSERT INTO contact_user(user_id, contact_id) VALUES (5, 3);
-INSERT INTO contact_user(user_id, contact_id) VALUES (5, 4);
+INSERT INTO contact_user(user_id, contact_id, approved) VALUES (5, 1, true);
+INSERT INTO contact_user(user_id, contact_id, approved) VALUES (5, 2, true);
+INSERT INTO contact_user(user_id, contact_id, approved) VALUES (5, 3, true);
+INSERT INTO contact_user(user_id, contact_id, approved) VALUES (5, 4, true);
