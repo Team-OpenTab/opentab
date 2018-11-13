@@ -17,6 +17,7 @@ export const mapStateToProps = state => ({
   counterparts: state.balances.counterpartBalances,
   userId: state.user.id,
   splitType: state.round.splitType,
+  stage: state.stage,
 });
 
 const mapDispatchToProps = dispatch => ({

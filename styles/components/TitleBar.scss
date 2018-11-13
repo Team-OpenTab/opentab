@@ -1,0 +1,63 @@
+@import '../main';
+
+.title-bar-container {
+  padding: 0;
+}
+
+.title-bar {
+  font-size: 1em;
+  display: flex;
+  align-items: center;
+  height: 60px;
+  background-color: $primary-color;
+  color: $text-color-light;
+
+  &__back {
+    cursor: pointer;
+    font-size: 1.5em;
+    font-weight: 900;
+    padding-left: 1.25rem;
+  }
+
+  &__title {
+    flex: 1;
+    text-align: center;
+  }
+
+  &__menu {
+    padding-right: 1.25rem;
+    cursor: pointer;
+  }
+}
+
+.navigation-bar {
+  @extend .title-bar;
+  display: flex;
+  text-align: center;
+  height: 40px;
+  font-size: 0.8em;
+
+  &__balances {
+    height: 40px;
+    line-height: 40px;
+    vertical-align: middle;
+    flex: 1;
+    cursor: pointer;
+  }
+
+  &__balances--active {
+    background-color: #15c7a6;
+  }
+
+  &__tabs {
+    height: 40px;
+    line-height: 40px;
+    vertical-align: middle;
+    flex: 1;
+    cursor: pointer;
+  }
+
+  &__tabs--active {
+    background-color: #15c7a6;
+  }
+}

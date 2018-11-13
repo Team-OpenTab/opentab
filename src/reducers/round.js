@@ -27,6 +27,8 @@ function round(state = initialState, action) {
       return Object.assign({}, state, { totalAmount: action.totalAmount });
     case 'SET_SPLIT_TYPE':
       return Object.assign({}, state, { splitType: action.splitType });
+    case 'SET_ROUND_HISTORY':
+      return Object.assign({}, state, { roundHistory: action.roundHistory });
     default:
       return state;
   }
