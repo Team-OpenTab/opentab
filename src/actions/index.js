@@ -405,3 +405,10 @@ export function addContact(contactId) {
       });
   };
 }
+
+// TABS ACTIONS
+
+export function reOrder(round) {
+  // some re-order logic here
+  Object.assign(round, { some: 'logic here' });
+}
