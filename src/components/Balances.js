@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import cx from 'classnames';
 import io from 'socket.io-client';
 import TitleBar from './TitleBar';
+import BalanceItem from './BalanceItem';
 import '../../styles/components/Balances.scss';
 // import CounterpartList from './CounterpartList';
 
@@ -43,7 +44,6 @@ class Balances extends React.Component {
     const friendRequests = this.props.contactList
       .filter(contact => !contact.approved)
       .map(contact => contact.contact_id);
-    console.log(friendRequests);
 
     return (
       <div>
@@ -75,45 +75,16 @@ class Balances extends React.Component {
           <div>It feels lonely in here... Add your friends by searching above!</div>
         )}
         <div className="counterpart-list">
-          {Object.keys(this.props.balances.counterpartBalances).map(key => {
-            const contact = this.props.balances.counterpartBalances[key];
-            const balanceClasses = cx('counterpart__balance', {
-              'counterpart__balance--red': contact.sum > 0,
-              'counterpart__balance--green': contact.sum < 0,
-            });
-            return (
-              <div className="counterpart" key={key}>
-                <div className="counterpart__name">{contact.username}</div>
-                <div className={balanceClasses}>
-                  {contact.sum < 0 ? (
-                    <div>Owes you</div>
-                  ) : contact.sum === '0.00' ? null : (
-                    <div>You owe</div>
-                  )}
-                  £{contact.sum[0] === '-' ? (-contact.sum).toFixed(2) : contact.sum}
-                </div>
-                {friendRequests.includes(Number(key)) && (
-                  <button
-                    className="counterpart__btn"
-                    type="button"
-                    onClick={() => this.props.approveContact(key)}
-                  >
-                    Approve
-                  </button>
-                )}
-                {contact.sum !== '0.00' && (
-                  <button
-                    className="counterpart__btn"
-                    id={key}
-                    type="button"
-                    onClick={() => this.props.showPayment(true, Number(key))}
-                  >
-                    Pay
-                  </button>
-                )}
-              </div>
-            );
-          })}
+          {Object.keys(this.props.balances.counterpartBalances).map(key => (
+            <BalanceItem
+              key={key}
+              contactId={key}
+              contact={this.props.balances.counterpartBalances[key]}
+              friendRequests={friendRequests}
+              approveContact={this.props.approveContact}
+              showPayment={this.props.showPayment}
+            />
+          ))}
         </div>
 
         <div
