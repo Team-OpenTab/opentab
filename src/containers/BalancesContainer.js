@@ -7,6 +7,7 @@ import {
   fetchBalances,
   handleContactSearch,
   addContact,
+  fetchRoundHistory,
 } from '../actions';
 
 const mapStateToProps = state => ({
@@ -24,6 +25,7 @@ const mapDispatchToProps = dispatch => ({
   fetchBalances: userId => dispatch(fetchBalances(userId)),
   handleContactSearch: event => dispatch(handleContactSearch(event.target.value)),
   addContact: contactId => dispatch(addContact(contactId)),
+  fetchRoundHistory: userId => dispatch(fetchRoundHistory(userId)),
   // handleButtonClick: buttonLabel => {
   //   dispatch(handleButtonClick(buttonLabel));
 });

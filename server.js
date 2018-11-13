@@ -310,8 +310,8 @@ app.get('/api/get-rounds/:userId', (req, res) => {
               userId: curr.user_id,
               counterparts: Object.assign({}, counterparts, { [curr.counterpart_id]: curr.amount }),
               roundTotal: Object.values(counterparts).reduce(
-                (agg, val) => parseInt(agg) + parseInt(val),
-                Object.values(counterparts)[0],
+                (agg, val) => parseFloat(agg) + parseFloat(val),
+                0,
               ),
               roundTime: curr.time,
             };
