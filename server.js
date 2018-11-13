@@ -180,11 +180,30 @@ app.get('/api/get-balances/:userId', (req, res) => {
   });
 });
 
+app.post('/api/approve-contact', (req, res) => {
+  const { userId, contactId } = req.body;
+  db.one(
+    `
+    UPDATE contact_user
+    SET approved = true
+    WHERE user_id = $1
+    AND contact_id = $2
+    RETURNING approved;
+    `,
+    [userId, contactId],
+  ).then(data => {
+    res.json({
+      status: 200,
+      data,
+    });
+  });
+});
+
 app.get('/api/get-contacts/:userId', (req, res) => {
   const { userId } = req.params;
   db.any(
     `
-    SELECT contact_id, username, email, phone, avatar
+    SELECT contact_id, username, email, phone, avatar, contact_user.approved
     FROM contact_user, "user"
     WHERE contact_id = "user".id
     AND user_id = $1;
@@ -234,15 +253,15 @@ app.post('/api/add-contact', (req, res) => {
   Promise.all([
     db.none(
       `
-      INSERT INTO contact_user (user_id, contact_id)
-      VALUES ($1, $2)
+      INSERT INTO contact_user (user_id, contact_id, approved)
+      VALUES ($1, $2, true)
       `,
       [userId, contactId],
     ),
     db.none(
       `
-      INSERT INTO contact_user (user_id, contact_id)
-      VALUES ($1, $2)
+      INSERT INTO contact_user (user_id, contact_id, approved)
+      VALUES ($1, $2, false)
       `,
       [contactId, userId],
     ),
@@ -342,5 +361,3 @@ app.get('/api/get-rounds/:userId', (req, res) => {
 server.listen(8080, () => {
   console.log('Listening on port 8080');
 });
-
-// Gets round buyer, counterparts, amount given to each counterpart

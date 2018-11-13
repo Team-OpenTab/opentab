@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import TitleBar from './TitleBar';
 // import Button from './Button';
 import '../../styles/components/NewRound.scss';
 
@@ -11,6 +12,7 @@ function NewRound({
   totalAmount,
   getNewRound,
   getStage,
+  stage,
   getRecipientAmount,
   handleRoundCounterparts,
   userId,
@@ -18,13 +20,7 @@ function NewRound({
 }) {
   return (
     <section>
-      <div className="title-bar">
-        <p className="title-bar__back" onClick={() => getStage('balances')}>
-          Back
-        </p>
-        <h2 className="title-bar__title">New Round</h2>
-      </div>
-
+      <TitleBar title="New Round" previous="balances" getStage={getStage} stage={stage} />
       <div className="new-round__amount">
         <h3>Round Amount</h3>
         <input value={totalAmount} onChange={event => getAmount(event.target.value)} />
@@ -132,6 +128,7 @@ NewRound.propTypes = {
   handleRoundCounterparts: PropTypes.func.isRequired,
   userId: PropTypes.number.isRequired,
   splitType: PropTypes.string.isRequired,
+  stage: PropTypes.string.isRequired,
 };
 
 export default NewRound;

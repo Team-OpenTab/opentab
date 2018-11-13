@@ -241,7 +241,7 @@ export function setRecipientAmount(id, amount) {
   return (dispatch, getState) => {
     const { recipients } = getState().round;
     const newRecipients = Object.assign({}, recipients);
-    newRecipients[id] = parseFloat(amount);
+    newRecipients[id] = Math.round(parseFloat(amount) * 100) / 100;
     const totalAmount = Object.values(newRecipients)
       .reduce((a, b) => a + b)
       .toFixed(2);
@@ -256,9 +256,16 @@ export function refreshRecipientAmounts() {
     if (splitType === 'even') {
       const newRecipients = Object.assign({}, recipients);
       Object.keys(newRecipients).forEach(recipientId => {
-        newRecipients[recipientId] = totalAmount / Object.keys(newRecipients).length;
+        newRecipients[recipientId] =
+          Math.round((totalAmount / Object.keys(newRecipients).length) * 100) / 100;
       });
-      dispatch(setRecipients(newRecipients));
+      if (Object.values(newRecipients).length) {
+        const residual = totalAmount - Object.values(newRecipients).reduce((a, b) => a + b, 0);
+        const recipientIds = Object.keys(newRecipients);
+        const randomId = recipientIds[Math.floor(Math.random() * recipientIds.length)];
+        newRecipients[randomId] += residual;
+        dispatch(setRecipients(newRecipients));
+      }
     }
   };
 }
@@ -296,6 +303,7 @@ export function fetchBalances(userId) {
           );
           dispatch(setUserBalance(userBalance));
           dispatch(setCounterpartBalances(counterpartBalances));
+          dispatch(getContactList(userId));
         } else if (response.status === 404) {
           dispatch(setUserBalance(0));
           dispatch(setCounterpartBalances({}));
@@ -401,6 +409,33 @@ export function addContact(contactId) {
         if (response.status === 200) {
           dispatch(fetchBalances(userId));
           dispatch(resetContactSearch());
+          dispatch(getContactList(userId));
+        }
+      });
+  };
+}
+
+// TABS ACTIONS
+
+export function reOrder(round) {
+  // some re-order logic here
+  Object.assign(round, { some: 'logic here' });
+}
+
+export function approveContact(contactId) {
+  return (dispatch, getState) => {
+    const userId = getState().user.id;
+    fetch('/api/approve-contact', {
+      method: 'POST',
+      body: JSON.stringify({ userId, contactId }),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+      .then(res => res.json())
+      .then(response => {
+        if (response.status === 200) {
+          dispatch(getContactList(userId));
         }
       });
   };
