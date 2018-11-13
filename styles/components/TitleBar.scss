@@ -46,7 +46,7 @@
   }
 
   &__balances--active {
-    background-color: #15c7a6;
+    border-bottom: 2px solid #ffdf8c;
   }
 
   &__tabs {
@@ -58,6 +58,6 @@
   }
 
   &__tabs--active {
-    background-color: #15c7a6;
+    border-bottom: 2px solid #ffdf8c;
   }
 }
