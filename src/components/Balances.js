@@ -55,6 +55,7 @@ class Balances extends React.Component {
         />
         <div className="balances__add-contact">
           <input
+            className="balances__search"
             type="text"
             placeholder="Search for contacts..."
             onChange={this.props.handleContactSearch}
@@ -106,7 +107,7 @@ class Balances extends React.Component {
         {/* <CounterpartList users={users} balances={balances} /> */}
         <button
           type="button"
-          className="button new-round-btn"
+          className="new-round-btn"
           onClick={() => this.props.getStage('newRound')}
         >
           NEW ROUND
