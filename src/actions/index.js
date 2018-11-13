@@ -241,7 +241,7 @@ export function setRecipientAmount(id, amount) {
   return (dispatch, getState) => {
     const { recipients } = getState().round;
     const newRecipients = Object.assign({}, recipients);
-    newRecipients[id] = parseFloat(amount);
+    newRecipients[id] = Math.round(parseFloat(amount) * 100) / 100;
     const totalAmount = Object.values(newRecipients)
       .reduce((a, b) => a + b)
       .toFixed(2);
@@ -256,9 +256,16 @@ export function refreshRecipientAmounts() {
     if (splitType === 'even') {
       const newRecipients = Object.assign({}, recipients);
       Object.keys(newRecipients).forEach(recipientId => {
-        newRecipients[recipientId] = totalAmount / Object.keys(newRecipients).length;
+        newRecipients[recipientId] =
+          Math.round((totalAmount / Object.keys(newRecipients).length) * 100) / 100;
       });
-      dispatch(setRecipients(newRecipients));
+      if (Object.values(newRecipients).length) {
+        const residual = totalAmount - Object.values(newRecipients).reduce((a, b) => a + b, 0);
+        const recipientIds = Object.keys(newRecipients);
+        const randomId = recipientIds[Math.floor(Math.random() * recipientIds.length)];
+        newRecipients[randomId] += residual;
+        dispatch(setRecipients(newRecipients));
+      }
     }
   };
 }
