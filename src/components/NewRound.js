@@ -19,6 +19,7 @@ function NewRound({
   handleRoundCounterparts,
   userId,
   splitType,
+  contacts,
   roundName,
   getRoundName,
 }) {
@@ -103,6 +104,7 @@ function NewRound({
               splitType={splitType}
               handleRoundCounterparts={handleRoundCounterparts}
               getRecipientAmount={getRecipientAmount}
+              contacts={contacts}
             />
           ))}
 
@@ -112,6 +114,7 @@ function NewRound({
             counterpart={counterpart}
             recipients={recipients}
             handleRoundCounterparts={handleRoundCounterparts}
+            contacts={contacts}
           />
         ))}
       </div>
@@ -134,6 +137,7 @@ NewRound.propTypes = {
   userId: PropTypes.number.isRequired,
   splitType: PropTypes.string.isRequired,
   stage: PropTypes.string.isRequired,
+  contacts: PropTypes.array.isRequired,
   roundName: PropTypes.string.isRequired,
   getRoundName: PropTypes.func.isRequired,
 };
