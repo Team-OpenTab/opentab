@@ -5,15 +5,19 @@ import '../../styles/components/Tabs.scss';
 
 function Tabs({ userId, roundHistory, contacts, reOrderRound, getStage, stage }) {
   function crossReference(roundCounterparts, index) {
-    return Object.keys(roundCounterparts).map((counterpart) =>
-      Object.values(contacts).map((contact) => {
+    return Object.keys(roundCounterparts).map(counterpart =>
+      contacts.map(contact => {
         if (contact.contact_id.toString() === counterpart) {
           return (
-            <label>
+            <label key={contact.contact_id}>
               {contact.username} paid: {roundHistory[index].counterparts[counterpart]}
             </label>
           );
         }
+        if (contact.contact_id === userId) {
+          return <label>I paid : {roundHistory[index].counterparts[counterpart]}</label>;
+        }
+
         return null;
       }),
     );
@@ -24,7 +28,7 @@ function Tabs({ userId, roundHistory, contacts, reOrderRound, getStage, stage })
       {roundHistory.map((round) => {
         if (round.userId === userId) {
           return (
-            <div className="tab" key={round.roundId}>
+            <div className="tab">
               <p className="tab__payer">I paid {round.roundTotal}, split as:</p>
               <p className="tab__payees">
                 {crossReference(round.counterparts, roundHistory.indexOf(round))}
