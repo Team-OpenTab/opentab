@@ -1,4 +1,4 @@
-@import '../main';
+@import "../main";
 
 .tab {
   background-color: $card-background-color;
@@ -10,4 +10,23 @@
   &__title {
     margin: 0;
   }
+}
+
+.tab-footer__btn {
+  border: none;
+  background: $secondary-color;
+  color: $text-color-light;
+  height: 35px;
+  width: 35px;
+  display: flex;
+  justify-content: center;
+  border-radius: 50%;
+}
+.tab-footer-container {
+  align-items: center;
+}
+
+.tab-reorder {
+  max-height: 35px;
+  max-width: 35px;
 }
