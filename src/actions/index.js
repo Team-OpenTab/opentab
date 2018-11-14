@@ -232,7 +232,7 @@ export function setSplitType(splitType) {
 
 export function setRecipients(recipients) {
   return {
-    type: 'SET_RECIPIENT_AMOUNT',
+    type: 'SET_RECIPIENTS',
     recipients,
   };
 }

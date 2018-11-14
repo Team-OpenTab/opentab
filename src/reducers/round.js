@@ -20,7 +20,7 @@ function round(state = initialState, action) {
       delete newRecipients[action.recipient];
       return Object.assign({}, state, { recipients: newRecipients });
     }
-    case 'SET_RECIPIENT_AMOUNT':
+    case 'SET_RECIPIENTS':
       return Object.assign({}, state, { recipients: action.recipients });
     case 'RESET_ROUND':
       return Object.assign({}, initialState);
