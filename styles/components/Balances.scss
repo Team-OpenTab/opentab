@@ -1,4 +1,43 @@
-@import '../main';
+@import "../main";
+
+.balances__search {
+  width: 100%;
+  padding: 1em;
+  font-size: 1em;
+  border: 0;
+  border-bottom: 1px solid #d1d1d1;
+  text-align: center;
+}
+
+.balances__contact-list {
+  list-style: none;
+  padding: 0;
+}
+
+.balances__contact-item {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding: 1em;
+  background-color: $card-background-color;
+  &__user {
+    flex: 1;
+    margin-left: 2em;
+  }
+  &__button {
+    flex: 1;
+    margin-right: 2em;
+    border: none;
+    padding: 0.6em;
+    background-color: $secondary-color;
+    color: $button-color-light;
+  }
+}
+
+.lonely-message {
+  text-align: center;
+  color: $text-color-dark;
+}
 
 .counterpart-list {
   display: flex;
@@ -7,10 +46,44 @@
 
 .counterpart {
   display: flex;
-  flex-direction: row;
-
+  justify-content: space-around;
+  align-items: center;
+  padding: 1em;
+  background-color: $card-background-color;
+  border-bottom: 2px solid #d1d1d1;
+  &__name {
+    flex: 1;
+    font-weight: 600;
+  }
   &__balance {
     padding: 0 15px;
+    flex: 1;
+    &--red {
+      color: rgb(141, 34, 34);
+    }
+
+    &--green {
+      color: rgb(23, 124, 23);
+    }
+  }
+  &__container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: $card-background-color;
+    border: none;
+    padding: 0;
+    flex: 1;
+  }
+  &__btn {
+    padding: 0;
+    display: flex;
+    align-items: center;
+    background-color: $card-background-color;
+    border: none;
+  }
+  &__arrow {
+    height: 35px;
   }
 }
 
@@ -57,6 +130,17 @@
 
 .payment--closed {
   display: unset;
+}
+
+.new-round-btn {
+  width: 100%;
+  text-align: center;
+  background-color: #0875a5;
+  color: #fff;
+  border: none;
+  padding: 1em;
+  position: absolute;
+  bottom: 0;
 }
 
 @media screen and (min-width: 768px) {

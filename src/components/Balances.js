@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import cx from 'classnames';
 import io from 'socket.io-client';
 import TitleBar from './TitleBar';
+import BalanceItem from './BalanceItem';
 import '../../styles/components/Balances.scss';
 // import CounterpartList from './CounterpartList';
 
@@ -43,7 +44,6 @@ class Balances extends React.Component {
     const friendRequests = this.props.contactList
       .filter(contact => !contact.approved)
       .map(contact => contact.contact_id);
-    console.log(friendRequests);
 
     return (
       <div>
@@ -55,16 +55,21 @@ class Balances extends React.Component {
         />
         <div className="balances__add-contact">
           <input
+            className="balances__search"
             type="text"
             placeholder="Search for contacts..."
             onChange={this.props.handleContactSearch}
             value={this.props.contactSearchString}
           />
-          <ul>
+          <ul className="balances__contact-list">
             {this.props.contactSearchResults.map(result => (
-              <div key={result.id}>
-                <li>{result.username}</li>
-                <button type="button" onClick={() => this.props.addContact(result.id)}>
+              <div key={result.id} className="balances__contact-item">
+                <li className="balances__contact-item__user">{result.username}</li>
+                <button
+                  className="balances__contact-item__button"
+                  type="button"
+                  onClick={() => this.props.addContact(result.id)}
+                >
                   Add to contacts
                 </button>
               </div>
@@ -72,37 +77,20 @@ class Balances extends React.Component {
           </ul>
         </div>
         {!Object.keys(this.props.balances.counterpartBalances).length && (
-          <div>It feels lonely in here... Add your friends by searching above!</div>
+          <div className="lonely-message">
+            It feels lonely in here... Add your friends by searching above!
+          </div>
         )}
         <div className="counterpart-list">
           {Object.keys(this.props.balances.counterpartBalances).map(key => (
-            <div className="counterpart" key={key}>
-              <div className="counterpart__name">
-                {this.props.balances.counterpartBalances[key].username}
-              </div>
-              <div className="counterpart__balance">
-                £{this.props.balances.counterpartBalances[key].sum}
-              </div>
-              {friendRequests.includes(Number(key)) && (
-                <button
-                  className="counterpart__btn"
-                  type="button"
-                  onClick={() => this.props.approveContact(key)}
-                >
-                  Approve
-                </button>
-              )}
-              {this.props.balances.counterpartBalances[key].sum !== '0.00' && (
-                <button
-                  className="counterpart__btn"
-                  id={key}
-                  type="button"
-                  onClick={() => this.props.showPayment(true, Number(key))}
-                >
-                  Pay
-                </button>
-              )}
-            </div>
+            <BalanceItem
+              key={key}
+              contactId={key}
+              contact={this.props.balances.counterpartBalances[key]}
+              friendRequests={friendRequests}
+              approveContact={this.props.approveContact}
+              showPayment={this.props.showPayment}
+            />
           ))}
         </div>
 
@@ -115,9 +103,12 @@ class Balances extends React.Component {
             <button className="payment-btn" type="button" onClick={() => this.markPaid()}>
               Mark Paid
             </button>
-            <button className="payment-btn" type="button" onClick={() => this.requestPayment()}>
-              Request Payment
-            </button>
+            {this.props.payment.receiverId &&
+              this.props.balances.counterpartBalances[this.props.payment.receiverId].sum < 0 && (
+                <button className="payment-btn" type="button" onClick={() => this.requestPayment()}>
+                  Request Payment
+                </button>
+            )}
             <p onClick={() => this.props.showPayment(false, null)}>CLOSE</p>
           </div>
         </div>
@@ -125,7 +116,7 @@ class Balances extends React.Component {
         {/* <CounterpartList users={users} balances={balances} /> */}
         <button
           type="button"
-          className="button new-round-btn"
+          className="new-round-btn"
           onClick={() => this.props.getStage('newRound')}
         >
           NEW ROUND

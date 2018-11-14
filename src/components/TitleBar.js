@@ -39,6 +39,7 @@ function TitleBar({ title, previous, getStage, stage }) {
           <p className={balancesClassName()} onClick={() => getStage('balances')}>
             BALANCES
           </p>
+
           <p className={tabsClassName()} onClick={() => getStage('tabs')}>
             TABS
           </p>
