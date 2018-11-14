@@ -168,6 +168,13 @@ export function setRoundBuyer(buyerId) {
   };
 }
 
+export function setRoundName(roundName) {
+  return {
+    type: 'SET_ROUND_NAME',
+    roundName,
+  };
+}
+
 export function setNewRound() {
   return (dispatch, getState) => {
     const buyerId = getState().user.id;
