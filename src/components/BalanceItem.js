@@ -17,7 +17,7 @@ function BalanceItem({ contactId, contact, friendRequests, approveContact, showP
       </div>
       {friendRequests.includes(Number(contactId)) && (
         <button
-          className="counterpart__btn"
+          className="counterpart__btn approve-btn"
           type="button"
           onClick={() => approveContact(contactId)}
         >
@@ -26,7 +26,7 @@ function BalanceItem({ contactId, contact, friendRequests, approveContact, showP
       )}
       {contact.sum !== '0.00' && (
         <button
-          className="counterpart__btn"
+          className="counterpart__btn pay-btn"
           id={contactId}
           type="button"
           onClick={() => showPayment(true, Number(contactId))}
