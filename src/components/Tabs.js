@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import TitleBar from './TitleBar';
+import '../../styles/components/Tabs.scss';
 
 function Tabs({ userId, roundHistory, contacts, reOrderRound, getStage, stage }) {
   function crossReference(roundCounterparts, index) {
@@ -23,24 +24,31 @@ function Tabs({ userId, roundHistory, contacts, reOrderRound, getStage, stage })
       {roundHistory.map(round => {
         if (round.userId === userId) {
           return (
-            <div>
-              <p>I paid {round.roundTotal}, split as:</p>
-              <p>{crossReference(round.counterparts, roundHistory.indexOf(round))}</p>
-              <button onClick={() => reOrderRound(round)} type="button">
+            <div className="tab">
+              <p className="tab__payer">I paid {round.roundTotal}, split as:</p>
+              <p className="tab__payees">
+                {crossReference(round.counterparts, roundHistory.indexOf(round))}
+              </p>
+
+              <p className="tab-footer__date" />
+              <button className="tab-footer__btn" onClick={() => reOrderRound(round)} type="button">
                 RE-ORDER
               </button>
             </div>
           );
         }
         return (
-          <div>
-            <p>
+          <div className="tab">
+            <p className="tab__payer">
               {Object.values(contacts).map(
                 contact => (contact.contact_id === round.userId ? contact.username : null),
               )}{' '}
               paid: {round.roundTotal}
             </p>
-            <p>{crossReference(round.counterparts, roundHistory.indexOf(round))}</p>
+            <p className="tab__payees">
+              {crossReference(round.counterparts, roundHistory.indexOf(round))}
+            </p>
+            <p className="tab-footer__date" />
             <button onClick={() => reOrderRound(round)} type="button">
               RE-ORDER
             </button>
