@@ -19,12 +19,12 @@ export const mapStateToProps = (state) => ({
   userId: state.user.id,
   splitType: state.round.splitType,
   stage: state.stage,
-
   contacts: state.contacts.contactList,
   roundName: state.round.roundName,
 });
 
 const mapDispatchToProps = (dispatch) => ({
+  resetRound: () => dispatch(resetRound()),
   getRoundName: (roundName) => dispatch(setRoundName(roundName)),
   getNewRound: () => {
     dispatch(setNewRound());

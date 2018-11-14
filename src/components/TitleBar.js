@@ -3,10 +3,11 @@ import PropTypes from 'prop-types';
 import cx from 'classnames';
 import '../../styles/components/TitleBar.scss';
 
-function TitleBar({ title, previous, getStage, stage }) {
+function TitleBar({ title, previous, getStage, stage, resetRound }) {
   function clickOnBack() {
     console.log('clicked on back: ', previous);
     getStage(previous);
+    resetRound();
   }
 
   function clickOnMenu() {
@@ -54,6 +55,7 @@ TitleBar.propTypes = {
   previous: PropTypes.string.isRequired,
   getStage: PropTypes.func.isRequired,
   stage: PropTypes.string.isRequired,
+  resetRound: PropTypes.func.isRequired,
 };
 
 export default TitleBar;

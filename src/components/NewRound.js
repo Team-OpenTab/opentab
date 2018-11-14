@@ -21,11 +21,18 @@ function NewRound({
   splitType,
   contacts,
   roundName,
+  resetRound,
   getRoundName,
 }) {
   return (
     <section>
-      <TitleBar title="New Round" previous="balances" getStage={getStage} stage={stage} />
+      <TitleBar
+        title="New Round"
+        previous="balances"
+        resetRound={resetRound}
+        getStage={getStage}
+        stage={stage}
+      />
       <div className="new-round-container">
         <div className="round-amount">
           <div className="round-amount__currency">£</div>
@@ -140,6 +147,7 @@ NewRound.propTypes = {
   contacts: PropTypes.array.isRequired,
   roundName: PropTypes.string.isRequired,
   getRoundName: PropTypes.func.isRequired,
+  resetRound: PropTypes.func.isRequired,
 };
 
 export default NewRound;
