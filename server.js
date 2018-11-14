@@ -323,6 +323,7 @@ app.get('/api/get-rounds/:userId', (req, res) => {
       return Promise.all(promisesArray);
     })
     .then(response => {
+      console.log(response);
       const roundStore = response.map(round => {
         const reducedRound = round.reduce((acc, curr) => {
           const counterparts = !acc.counterparts
