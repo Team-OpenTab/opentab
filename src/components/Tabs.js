@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import TitleBar from './TitleBar';
 import '../../styles/components/Tabs.scss';
 
+const dateFormat = require('dateformat');
+
 function Tabs({ userId, roundHistory, contacts, reOrderRound, getStage, stage }) {
   function crossReference(roundCounterparts, index) {
     return Object.keys(roundCounterparts).map((counterpart) =>
@@ -10,12 +12,14 @@ function Tabs({ userId, roundHistory, contacts, reOrderRound, getStage, stage })
         if (contact.contact_id.toString() === counterpart) {
           return (
             <label key={contact.contact_id}>
-              {contact.username} paid: {roundHistory[index].counterparts[counterpart]}
+              {contact.username}: £{(-roundHistory[index].counterparts[counterpart]).toFixed(2)}
             </label>
           );
         }
         if (contact.contact_id === userId) {
-          return <label>I paid : {roundHistory[index].counterparts[counterpart]}</label>;
+          return (
+            <label>Myself: {(-roundHistory[index].counterparts[counterpart]).toFixed(2)}</label>
+          );
         }
 
         return null;
@@ -30,12 +34,14 @@ function Tabs({ userId, roundHistory, contacts, reOrderRound, getStage, stage })
           return (
             <div className="tab" key={round.roundTime}>
               <h2>{round.roundName}</h2>
-              <p className="tab__payer">I paid {round.roundTotal}, split as:</p>
+              <p className="tab__payer">I paid £{(-round.roundTotal).toFixed(2)}, split as:</p>
               <p className="tab__payees">
                 {crossReference(round.counterparts, roundHistory.indexOf(round))}
               </p>
 
-              <p className="tab-footer__date" />
+              <p className="tab-footer__date">
+                {dateFormat(new Date(round.roundTime), 'ddd dS mmm, HH:MM')}
+              </p>
               <span className="tab-footer-container">
                 <button
                   className="tab-footer__btn"

@@ -55,7 +55,7 @@ TitleBar.propTypes = {
   previous: PropTypes.string.isRequired,
   getStage: PropTypes.func.isRequired,
   stage: PropTypes.string.isRequired,
-  resetRound: PropTypes.func.isRequired,
+  resetRound: PropTypes.func,
 };
 
 export default TitleBar;
