@@ -1,6 +1,8 @@
 import React from 'react';
 import { shallow } from 'enzyme'; // import shallow renderer from enzyme
 import NewRound from '../../src/components/NewRound';
+// import NewRoundRecipient from '../../src/components/NewRoundRecipient';
+import NewRoundCounterpart from '../../src/components/NewRoundCounterpart';
 
 function setup() {
   const props = {
@@ -31,16 +33,9 @@ describe('NewRound component', () => {
   it('renders contacts', () => {
     expect(
       wrapper
-        .find('.new-round__counterpart')
-        .at(1)
+        .find(NewRoundCounterpart)
         .exists(),
     ).toBe(true);
-    expect(
-      wrapper
-        .find('.new-round__counterpart-name')
-        .at(1)
-        .text(),
-    ).toBe('Test');
   });
   it('dispatches handleRoundCounterparts when add/remove is clicked', () => {
     const event = { target: { value: 1 } };

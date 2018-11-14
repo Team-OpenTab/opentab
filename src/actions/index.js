@@ -168,6 +168,13 @@ export function setRoundBuyer(buyerId) {
   };
 }
 
+export function setRoundName(roundName) {
+  return {
+    type: 'SET_ROUND_NAME',
+    roundName,
+  };
+}
+
 export function setNewRound() {
   return (dispatch, getState) => {
     const buyerId = getState().user.id;
@@ -232,7 +239,7 @@ export function setSplitType(splitType) {
 
 export function setRecipients(recipients) {
   return {
-    type: 'SET_RECIPIENT_AMOUNT',
+    type: 'SET_RECIPIENTS',
     recipients,
   };
 }
@@ -426,8 +433,21 @@ export function addContact(contactId) {
 // TABS ACTIONS
 
 export function reOrder(round) {
-  // some re-order logic here
-  Object.assign(round, { some: 'logic here' });
+  return (dispatch, getState) => {
+    const userId = getState().user.id;
+    const counterparts = Object.assign({}, round.counterparts);
+    Object.keys(counterparts).forEach((key) => {
+      counterparts[key] = (counterparts[key] * -1).toFixed(2);
+    });
+    const roundAmounts = Object.values(counterparts).map((amount) => parseFloat(amount));
+    const roundTotal = roundAmounts.reduce((acc, val) => acc + val).toFixed(2);
+    const splitEven = roundAmounts.every((val, i, arr) => Math.abs(val - arr[0]) < 0.02);
+    dispatch(setSplitType(splitEven ? 'even' : 'manual'));
+    dispatch(setRoundBuyer(userId));
+    dispatch(setRecipients(counterparts));
+    dispatch(setAmount(roundTotal));
+    dispatch(setStage('newRound'));
+  };
 }
 
 export function approveContact(contactId) {
@@ -461,7 +481,6 @@ export function fetchRoundHistory(userId) {
     fetch(`/api/get-rounds/${userId}`)
       .then((response) => response.json())
       .then((data) => {
-        console.log(data);
         dispatch(receiveRoundHistory(data));
       });
   };

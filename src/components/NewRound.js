@@ -20,6 +20,8 @@ function NewRound({
   userId,
   splitType,
   contacts,
+  roundName,
+  getRoundName,
 }) {
   return (
     <section>
@@ -32,12 +34,17 @@ function NewRound({
             value={totalAmount}
             placeholder="Total Amount"
             type="number"
-            onChange={event => getAmount(event.target.value)}
+            onChange={(event) => getAmount(event.target.value)}
           />
         </div>
         <div className="round-name">
           <div className="round-name__text">...</div>
-          <input className="round-amount__input" placeholder="Tab Name" />
+          <input
+            className="round-amount__input"
+            placeholder="Tab Name"
+            value={roundName}
+            onChange={(event) => getRoundName(event.target.value)}
+          />
         </div>
 
         <div className="round-split">
@@ -46,9 +53,8 @@ function NewRound({
               type="radio"
               name="splitType"
               id="radio1"
-              value="even"
-              onClick={event => getSplitType(event.target.value)}
-              defaultChecked
+              checked={splitType === 'even'}
+              onClick={() => getSplitType('even')}
             />
             <label htmlFor="radio1">Split Evenly</label>
           </div>
@@ -57,8 +63,8 @@ function NewRound({
               type="radio"
               name="splitType"
               id="radio2"
-              value="manual"
-              onClick={event => getSplitType(event.target.value)}
+              checked={splitType === 'manual'}
+              onClick={() => getSplitType('manual')}
             />
             <label htmlFor="radio2">Split Manually</label>
           </div>
@@ -80,7 +86,7 @@ function NewRound({
               <input
                 className="new-round__input"
                 value={recipients[userId]}
-                onChange={event => getRecipientAmount(userId, event.target.value)}
+                onChange={(event) => getRecipientAmount(userId, event.target.value)}
               />
             ) : (
               <p className="new-round__even-amount">{recipients[userId]}</p>
@@ -88,8 +94,8 @@ function NewRound({
         </div>
         {/* RECIPIENTS */}
         {Object.keys(recipients)
-          .filter(recipient => Number(recipient) !== userId)
-          .map(recipient => (
+          .filter((recipient) => Number(recipient) !== userId)
+          .map((recipient) => (
             <NewRoundRecipient
               key={recipient}
               counterparts={counterparts}
@@ -102,7 +108,7 @@ function NewRound({
             />
           ))}
 
-        {Object.values(counterparts).map(counterpart => (
+        {Object.values(counterparts).map((counterpart) => (
           <NewRoundCounterpart
             key={counterpart.counterpart_id}
             counterpart={counterpart}
@@ -132,6 +138,8 @@ NewRound.propTypes = {
   splitType: PropTypes.string.isRequired,
   stage: PropTypes.string.isRequired,
   contacts: PropTypes.array.isRequired,
+  roundName: PropTypes.string.isRequired,
+  getRoundName: PropTypes.func.isRequired,
 };
 
 export default NewRound;

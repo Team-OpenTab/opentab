@@ -5,8 +5,8 @@ import '../../styles/components/Tabs.scss';
 
 function Tabs({ userId, roundHistory, contacts, reOrderRound, getStage, stage }) {
   function crossReference(roundCounterparts, index) {
-    return Object.keys(roundCounterparts).map(counterpart =>
-      contacts.map(contact => {
+    return Object.keys(roundCounterparts).map((counterpart) =>
+      contacts.map((contact) => {
         if (contact.contact_id.toString() === counterpart) {
           return (
             <label key={contact.contact_id}>
@@ -25,27 +25,38 @@ function Tabs({ userId, roundHistory, contacts, reOrderRound, getStage, stage })
   return (
     <section>
       <TitleBar title="Tabs" previous="balances" getStage={getStage} stage={stage} />
-      {roundHistory.map(round => {
+      {roundHistory.map((round) => {
         if (round.userId === userId) {
           return (
-            <div className="tab">
+            <div className="tab" key={round.roundTime}>
+              <h2>{round.roundName}</h2>
               <p className="tab__payer">I paid {round.roundTotal}, split as:</p>
               <p className="tab__payees">
                 {crossReference(round.counterparts, roundHistory.indexOf(round))}
               </p>
 
               <p className="tab-footer__date" />
-              <button className="tab-footer__btn" onClick={() => reOrderRound(round)} type="button">
-                RE-ORDER
-              </button>
+              <span className="tab-footer-container">
+                <button
+                  className="tab-footer__btn"
+                  onClick={() => reOrderRound(round)}
+                  type="button"
+                >
+                  <img
+                    className="tab-reorder"
+                    alt="re-order"
+                    src="../../static/images/reorder.png"
+                  />
+                </button>
+              </span>
             </div>
           );
         }
         return (
-          <div className="tab">
+          <div className="tab" key={round.roundId}>
             <p className="tab__payer">
               {Object.values(contacts).map(
-                contact => (contact.contact_id === round.userId ? contact.username : null),
+                (contact) => (contact.contact_id === round.userId ? contact.username : null),
               )}{' '}
               paid: {round.roundTotal}
             </p>
@@ -53,8 +64,8 @@ function Tabs({ userId, roundHistory, contacts, reOrderRound, getStage, stage })
               {crossReference(round.counterparts, roundHistory.indexOf(round))}
             </p>
             <p className="tab-footer__date" />
-            <button onClick={() => reOrderRound(round)} type="button">
-              RE-ORDER
+            <button className="tab-footer__btn" onClick={() => reOrderRound(round)} type="button">
+              <img className="tab-reorder" alt="re-order" src="../../static/images/reorder.png" />
             </button>
           </div>
         );
