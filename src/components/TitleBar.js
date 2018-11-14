@@ -32,7 +32,7 @@ function TitleBar({ title, previous, getStage, stage }) {
           {'<'}
         </p>
         <h2 className="title-bar__title">{title}</h2>
-        <p className="title-bar__menu" onClick={() => clickOnMenu()} />
+        <p className="title-bar__menu" onClick={() => clickOnMenu()} />{' '}
       </div>
       {stage !== 'newRound' && (
         <div className="navigation-bar">

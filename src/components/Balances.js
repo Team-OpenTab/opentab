@@ -11,7 +11,7 @@ class Balances extends React.Component {
   componentDidMount() {
     this.props.fetchBalances(this.props.userId);
     this.props.fetchRoundHistory(this.props.userId);
-    const socket = io('localhost:8080');
+    const socket = io(window.location.origin);
     socket.on('refresh', () => {
       this.props.fetchBalances(this.props.userId);
       this.props.fetchRoundHistory(this.props.userId);
@@ -42,8 +42,8 @@ class Balances extends React.Component {
   // Can payment modal be seperated into a new component?
   render() {
     const friendRequests = this.props.contactList
-      .filter(contact => !contact.approved)
-      .map(contact => contact.contact_id);
+      .filter((contact) => !contact.approved)
+      .map((contact) => contact.contact_id);
 
     return (
       <div>
@@ -55,13 +55,14 @@ class Balances extends React.Component {
         />
         <div className="balances__add-contact">
           <input
+            className="balances__search"
             type="text"
             placeholder="Search for contacts..."
             onChange={this.props.handleContactSearch}
             value={this.props.contactSearchString}
           />
           <ul>
-            {this.props.contactSearchResults.map(result => (
+            {this.props.contactSearchResults.map((result) => (
               <div key={result.id}>
                 <li>{result.username}</li>
                 <button type="button" onClick={() => this.props.addContact(result.id)}>
@@ -75,7 +76,7 @@ class Balances extends React.Component {
           <div>It feels lonely in here... Add your friends by searching above!</div>
         )}
         <div className="counterpart-list">
-          {Object.keys(this.props.balances.counterpartBalances).map(key => (
+          {Object.keys(this.props.balances.counterpartBalances).map((key) => (
             <BalanceItem
               key={key}
               contactId={key}
@@ -90,15 +91,18 @@ class Balances extends React.Component {
         <div
           className={this.paymentClassName()}
           role="dialog"
-          onClick={event => this.showModal(event)}
+          onClick={(event) => this.showModal(event)}
         >
           <div className="payment__content">
             <button className="payment-btn" type="button" onClick={() => this.markPaid()}>
               Mark Paid
             </button>
-            <button className="payment-btn" type="button" onClick={() => this.requestPayment()}>
-              Request Payment
-            </button>
+            {this.props.payment.receiverId &&
+              this.props.balances.counterpartBalances[this.props.payment.receiverId].sum < 0 && (
+                <button className="payment-btn" type="button" onClick={() => this.requestPayment()}>
+                  Request Payment
+                </button>
+            )}
             <p onClick={() => this.props.showPayment(false, null)}>CLOSE</p>
           </div>
         </div>
@@ -106,7 +110,7 @@ class Balances extends React.Component {
         {/* <CounterpartList users={users} balances={balances} /> */}
         <button
           type="button"
-          className="button new-round-btn"
+          className="new-round-btn"
           onClick={() => this.props.getStage('newRound')}
         >
           NEW ROUND

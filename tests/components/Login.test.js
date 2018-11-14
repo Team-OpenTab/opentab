@@ -4,12 +4,17 @@ import Login from '../../src/components/Login';
 
 function setup(type) {
   const props = {
-    email: 'test',
-    password: 'test',
-    username: 'test',
-    phone: 'test',
-    userType: type,
-    validationPassword: 'test',
+    user: {
+      email: 'test',
+      password: 'test',
+      username: 'test',
+      phone: 'test',
+      userType: type,
+      validationPassword: 'test',
+      avatar: 'test',
+      loginError: false,
+      newUserError: false,
+    },
     getLogin: jest.fn(),
     getEmail: jest.fn(),
     getPassword: jest.fn(),
@@ -18,6 +23,7 @@ function setup(type) {
     getPhone: jest.fn(),
     getUserType: jest.fn(),
     getValidationPassword: jest.fn(),
+    getAvatar: jest.fn(),
   };
 
   const wrapper = shallow(<Login {...props} />);

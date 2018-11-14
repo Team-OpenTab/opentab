@@ -24,6 +24,7 @@ function Tabs({ userId, roundHistory, contacts, reOrderRound, getStage, stage })
       {roundHistory.map(round => {
         if (round.userId === userId) {
           return (
+
             <div className="tab">
               <p className="tab__payer">I paid {round.roundTotal}, split as:</p>
               <p className="tab__payees">
@@ -52,6 +53,7 @@ function Tabs({ userId, roundHistory, contacts, reOrderRound, getStage, stage })
             <button onClick={() => reOrderRound(round)} type="button">
               RE-ORDER
             </button>
+
           </div>
         );
       })}

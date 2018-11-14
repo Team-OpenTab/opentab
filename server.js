@@ -11,7 +11,7 @@ const server = http.Server(app);
 const io = socketIo(server);
 
 const db = pgp({
-  host: 'localhost',
+  host: process.env.DB_HOST || 'localhost',
   port: 5432,
   database: process.env.DB_NAME,
   user: process.env.DB_USERNAME,
@@ -350,6 +350,6 @@ app.get('/api/get-rounds/:userId', (req, res) => {
     });
 });
 
-server.listen(8080, () => {
+server.listen(process.env.PORT || 8080, () => {
   console.log('Listening on port 8080');
 });
