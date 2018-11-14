@@ -474,7 +474,6 @@ export function fetchRoundHistory(userId) {
     fetch(`/api/get-rounds/${userId}`)
       .then((response) => response.json())
       .then((data) => {
-        console.log(data);
         dispatch(receiveRoundHistory(data));
       });
   };

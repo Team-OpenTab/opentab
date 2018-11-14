@@ -31,15 +31,12 @@ function NewRound({
             value={totalAmount}
             placeholder="Total Amount"
             type="number"
-            onChange={event => getAmount(event.target.value)}
+            onChange={(event) => getAmount(event.target.value)}
           />
         </div>
         <div className="round-name">
           <div className="round-name__text">...</div>
-          <input
-            className="round-amount__input"
-            placeholder="Tab Name"
-          />
+          <input className="round-amount__input" placeholder="Tab Name" />
         </div>
 
         <div className="round-split">
@@ -81,7 +78,7 @@ function NewRound({
               <input
                 className="new-round__input"
                 value={recipients[userId]}
-                onChange={event => getRecipientAmount(userId, event.target.value)}
+                onChange={(event) => getRecipientAmount(userId, event.target.value)}
               />
             ) : (
               <p className="new-round__even-amount">{recipients[userId]}</p>
@@ -89,8 +86,8 @@ function NewRound({
         </div>
         {/* RECIPIENTS */}
         {Object.keys(recipients)
-          .filter(recipient => Number(recipient) !== userId)
-          .map(recipient => (
+          .filter((recipient) => Number(recipient) !== userId)
+          .map((recipient) => (
             <NewRoundRecipient
               key={recipient}
               counterparts={counterparts}
@@ -102,7 +99,7 @@ function NewRound({
             />
           ))}
 
-        {Object.values(counterparts).map(counterpart => (
+        {Object.values(counterparts).map((counterpart) => (
           <NewRoundCounterpart
             key={counterpart.counterpart_id}
             counterpart={counterpart}
