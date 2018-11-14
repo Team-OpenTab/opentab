@@ -9,7 +9,7 @@ function Tabs({ userId, roundHistory, contacts, reOrderRound, getStage, stage })
       contacts.map(contact => {
         if (contact.contact_id.toString() === counterpart) {
           return (
-            <label>
+            <label key={contact.contact_id}>
               {contact.username} paid: {roundHistory[index].counterparts[counterpart]}
             </label>
           );

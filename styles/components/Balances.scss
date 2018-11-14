@@ -47,9 +47,10 @@
 .counterpart {
   display: flex;
   justify-content: space-around;
+  align-items: center;
   padding: 1em;
+  background-color: $card-background-color;
   border-bottom: 2px solid #d1d1d1;
-  margin-bottom: 0.5rem;
   &__name {
     flex: 1;
     font-weight: 600;
@@ -65,12 +66,24 @@
       color: rgb(23, 124, 23);
     }
   }
-  &__btn {
-    background-color: $secondary-color;
-
+  &__container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: $card-background-color;
     border: none;
-    color: $button-color-light;
+    padding: 0;
     flex: 1;
+  }
+  &__btn {
+    padding: 0;
+    display: flex;
+    align-items: center;
+    background-color: $card-background-color;
+    border: none;
+  }
+  &__arrow {
+    height: 35px;
   }
 }
 
