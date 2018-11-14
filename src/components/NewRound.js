@@ -8,21 +8,18 @@ import '../../styles/components/NewRound.scss';
 
 function NewRound({
   counterparts,
-  recipients,
   getAmount,
   getSplitType,
-  totalAmount,
   getNewRound,
   getStage,
   stage,
   getRecipientAmount,
   handleRoundCounterparts,
   userId,
-  splitType,
   contacts,
-  roundName,
   resetRound,
   getRoundName,
+  round,
 }) {
   return (
     <section>
@@ -34,33 +31,32 @@ function NewRound({
         stage={stage}
       />
       <div className="new-round-container">
-        <div className="round-amount">
-          <div className="round-amount__currency">£</div>
-          <input
-            className="round-amount__input"
-            value={totalAmount}
-            placeholder="Total Amount"
-            type="number"
-            onChange={(event) => getAmount(event.target.value)}
-          />
-        </div>
         <div className="round-name">
           <div className="round-name__text">...</div>
           <input
             className="round-amount__input"
             placeholder="Tab Name"
-            value={roundName}
+            value={round.roundName}
             onChange={(event) => getRoundName(event.target.value)}
           />
         </div>
-
+        <div className="round-amount">
+          <div className="round-amount__currency">£</div>
+          <input
+            className="round-amount__input"
+            value={round.totalAmount}
+            placeholder="Total Amount"
+            type="number"
+            onChange={(event) => getAmount(event.target.value)}
+          />
+        </div>
         <div className="round-split">
           <div className="round-split__evenly">
             <input
               type="radio"
               name="splitType"
               id="radio1"
-              checked={splitType === 'even'}
+              checked={round.splitType === 'even'}
               onChange={() => getSplitType('even')}
             />
             <label htmlFor="radio1">Split Evenly</label>
@@ -70,7 +66,7 @@ function NewRound({
               type="radio"
               name="splitType"
               id="radio2"
-              checked={splitType === 'manual'}
+              checked={round.splitType === 'manual'}
               onChange={() => getSplitType('manual')}
             />
             <label htmlFor="radio2">Split Manually</label>
@@ -86,29 +82,29 @@ function NewRound({
             onClick={handleRoundCounterparts}
             value={userId}
           >
-            {!Object.keys(recipients).includes(userId.toString()) ? 'Add' : 'Remove'}
+            {!Object.keys(round.recipients).includes(userId.toString()) ? 'Add' : 'Remove'}
           </button>
-          {Object.keys(recipients).includes(userId.toString()) &&
-            (splitType === 'manual' ? (
+          {Object.keys(round.recipients).includes(userId.toString()) &&
+            (round.splitType === 'manual' ? (
               <input
                 className="new-round__input"
-                value={recipients[userId]}
+                value={round.recipients[userId]}
                 onChange={(event) => getRecipientAmount(userId, event.target.value)}
               />
             ) : (
-              <p className="new-round__even-amount">{recipients[userId]}</p>
+              <p className="new-round__even-amount">{round.recipients[userId]}</p>
             ))}
         </div>
         {/* RECIPIENTS */}
-        {Object.keys(recipients)
+        {Object.keys(round.recipients)
           .filter((recipient) => Number(recipient) !== userId)
           .map((recipient) => (
             <NewRoundRecipient
               key={recipient}
               counterparts={counterparts}
               recipient={recipient}
-              recipients={recipients}
-              splitType={splitType}
+              recipients={round.recipients}
+              splitType={round.splitType}
               handleRoundCounterparts={handleRoundCounterparts}
               getRecipientAmount={getRecipientAmount}
               contacts={contacts}
@@ -119,7 +115,7 @@ function NewRound({
           <NewRoundCounterpart
             key={counterpart.counterpart_id}
             counterpart={counterpart}
-            recipients={recipients}
+            recipients={round.recipients}
             handleRoundCounterparts={handleRoundCounterparts}
             contacts={contacts}
           />
@@ -133,21 +129,18 @@ function NewRound({
 }
 NewRound.propTypes = {
   counterparts: PropTypes.object.isRequired,
-  recipients: PropTypes.object.isRequired,
   getStage: PropTypes.func.isRequired,
   getAmount: PropTypes.func.isRequired,
-  totalAmount: PropTypes.string.isRequired,
   getSplitType: PropTypes.func.isRequired,
   getNewRound: PropTypes.func.isRequired,
   getRecipientAmount: PropTypes.func.isRequired,
   handleRoundCounterparts: PropTypes.func.isRequired,
   userId: PropTypes.number.isRequired,
-  splitType: PropTypes.string.isRequired,
   stage: PropTypes.string.isRequired,
   contacts: PropTypes.array.isRequired,
-  roundName: PropTypes.string.isRequired,
   getRoundName: PropTypes.func.isRequired,
   resetRound: PropTypes.func.isRequired,
+  round: PropTypes.object.isRequired,
 };
 
 export default NewRound;

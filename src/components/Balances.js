@@ -41,9 +41,9 @@ class Balances extends React.Component {
 
   // Can payment modal be seperated into a new component?
   render() {
-    const friendRequests = this.props.contactList
-      .filter(contact => !contact.approved)
-      .map(contact => contact.contact_id);
+    const friendRequests = this.props.contacts.contactList
+      .filter((contact) => !contact.approved)
+      .map((contact) => contact.contact_id);
 
     return (
       <div>
@@ -59,10 +59,10 @@ class Balances extends React.Component {
             type="text"
             placeholder="Search for contacts..."
             onChange={this.props.handleContactSearch}
-            value={this.props.contactSearchString}
+            value={this.props.contacts.search.searchString}
           />
           <ul className="balances__contact-list">
-            {this.props.contactSearchResults.map(result => (
+            {this.props.contacts.search.searchResults.map((result) => (
               <div key={result.id} className="balances__contact-item">
                 <li className="balances__contact-item__user">{result.username}</li>
                 <button
@@ -82,7 +82,7 @@ class Balances extends React.Component {
           </div>
         )}
         <div className="counterpart-list">
-          {Object.keys(this.props.balances.counterpartBalances).map(key => (
+          {Object.keys(this.props.balances.counterpartBalances).map((key) => (
             <BalanceItem
               key={key}
               contactId={key}
@@ -97,7 +97,7 @@ class Balances extends React.Component {
         <div
           className={this.paymentClassName()}
           role="dialog"
-          onClick={event => this.showModal(event)}
+          onClick={(event) => this.showModal(event)}
         >
           <div className="payment__content">
             <button className="payment-btn" type="button" onClick={() => this.markPaid()}>
@@ -136,11 +136,9 @@ Balances.propTypes = {
   settleBalance: PropTypes.func.isRequired,
   fetchBalances: PropTypes.func.isRequired,
   handleContactSearch: PropTypes.func.isRequired,
-  contactSearchResults: PropTypes.array.isRequired,
   addContact: PropTypes.func.isRequired,
-  contactSearchString: PropTypes.string.isRequired,
   stage: PropTypes.string.isRequired,
-  contactList: PropTypes.array.isRequired,
+  contacts: PropTypes.object.isRequired,
   approveContact: PropTypes.func.isRequired,
   fetchRoundHistory: PropTypes.func.isRequired,
 };
