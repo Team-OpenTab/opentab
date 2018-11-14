@@ -71,15 +71,15 @@ export function setContactList(contactList) {
 }
 
 export function getContactList(userId) {
-  return (dispatch) => {
+  return dispatch => {
     fetch(`/api/get-contacts/${userId}`)
-      .then((res) => res.json())
-      .then((response) => {
+      .then(res => res.json())
+      .then(response => {
         if (response.status === 200) {
           dispatch(setContactList(response.data));
         }
       })
-      .catch((error) => console.log(error));
+      .catch(error => console.log(error));
   };
 }
 
@@ -100,8 +100,8 @@ export function loginUser() {
         'Content-Type': 'application/json',
       },
     })
-      .then((res) => res.json())
-      .then((response) => {
+      .then(res => res.json())
+      .then(response => {
         if (response.status === 200) {
           dispatch(setUserId(response.data.id));
           dispatch(setUsername(response.data.username));
@@ -113,7 +113,7 @@ export function loginUser() {
           dispatch(setLoginError(response.message));
         }
       })
-      .catch((error) => console.log(error));
+      .catch(error => console.log(error));
   };
 }
 
@@ -129,7 +129,7 @@ export function createNewUser() {
     const { email, password, validationPassword, username, phone, avatar } = getState().user;
     if (!email.length || !username.length || !password.length || !validationPassword.length) {
       dispatch(setNewUserError('Please fill in all required fields'));
-    } else if (!['@', '.'].some((char) => email.includes(char))) {
+    } else if (!['@', '.'].some(char => email.includes(char))) {
       dispatch(setNewUserError('Incorrect e-mail address'));
     } else if (Number.isNaN(phone)) {
       dispatch(setNewUserError('Phone number should only consist of numbers'));
@@ -145,8 +145,8 @@ export function createNewUser() {
           'Content-Type': 'application/json',
         },
       })
-        .then((res) => res.json())
-        .then((response) => {
+        .then(res => res.json())
+        .then(response => {
           if (response.status === 200) {
             dispatch(setUserId(response.data.id));
             dispatch(setStage('balances'));
@@ -154,7 +154,7 @@ export function createNewUser() {
             dispatch(setNewUserError(response.message));
           }
         })
-        .catch((error) => console.log(error));
+        .catch(error => console.log(error));
     }
   };
 }
@@ -165,13 +165,6 @@ export function setRoundBuyer(buyerId) {
   return {
     type: 'SET_ROUND_BUYER',
     buyerId,
-  };
-}
-
-export function setRoundName(roundName) {
-  return {
-    type: 'SET_ROUND_NAME',
-    roundName,
   };
 }
 
@@ -187,8 +180,8 @@ export function setNewRound() {
         'Content-Type': 'application/json',
       },
     })
-      .then((res) => res.json())
-      .catch((error) => console.log(error));
+      .then(res => res.json())
+      .catch(error => console.log(error));
   };
 }
 
@@ -239,7 +232,7 @@ export function setSplitType(splitType) {
 
 export function setRecipients(recipients) {
   return {
-    type: 'SET_RECIPIENTS',
+    type: 'SET_RECIPIENT_AMOUNT',
     recipients,
   };
 }
@@ -248,9 +241,9 @@ export function setRecipientAmount(id, amount) {
   return (dispatch, getState) => {
     const { recipients } = getState().round;
     const newRecipients = Object.assign({}, recipients);
-    newRecipients[id] = (Math.round(parseFloat(amount) * 100) / 100).toFixed(2);
+    newRecipients[id] = Math.round(parseFloat(amount) * 100) / 100;
     const totalAmount = Object.values(newRecipients)
-      .reduce((a, b) => parseFloat(a) + parseFloat(b))
+      .reduce((a, b) => a + b)
       .toFixed(2);
     dispatch(setAmount(totalAmount));
     dispatch(setRecipients(newRecipients));
@@ -262,21 +255,15 @@ export function refreshRecipientAmounts() {
     const { recipients, totalAmount, splitType } = getState().round;
     if (splitType === 'even') {
       const newRecipients = Object.assign({}, recipients);
-      Object.keys(newRecipients).forEach((recipientId) => {
-        newRecipients[recipientId] = (
-          Math.round((totalAmount / Object.keys(newRecipients).length) * 100) / 100
-        ).toFixed(2);
+      Object.keys(newRecipients).forEach(recipientId => {
+        newRecipients[recipientId] =
+          Math.round((totalAmount / Object.keys(newRecipients).length) * 100) / 100;
       });
       if (Object.values(newRecipients).length) {
-        const residual =
-          Math.round(
-            (totalAmount -
-              Object.values(newRecipients).reduce((a, b) => parseFloat(a) + parseFloat(b), 0)) *
-              100,
-          ) / 100;
+        const residual = totalAmount - Object.values(newRecipients).reduce((a, b) => a + b, 0);
         const recipientIds = Object.keys(newRecipients);
         const randomId = recipientIds[Math.floor(Math.random() * recipientIds.length)];
-        newRecipients[randomId] = (parseFloat(newRecipients[randomId]) + residual).toFixed(2);
+        newRecipients[randomId] += residual;
         dispatch(setRecipients(newRecipients));
       }
     }
@@ -300,18 +287,18 @@ export function setUserBalance(balance) {
 }
 
 export function fetchBalances(userId) {
-  return (dispatch) => {
+  return dispatch => {
     fetch(`/api/get-balances/${userId}`)
-      .then((res) => res.json())
-      .then((response) => {
+      .then(res => res.json())
+      .then(response => {
         if (response.status === 200) {
           const userBalance = Object.values(response.data.balances)
-            .map((item) => parseFloat(item.sum))
+            .map(item => parseFloat(item.sum))
             .reduce((a, b) => a + b);
           const userIds = Object.keys(response.data.balances);
-          const counterpartIds = userIds.filter((key) => parseInt(key) !== userId);
+          const counterpartIds = userIds.filter(key => parseInt(key) !== userId);
           const counterpartBalances = {};
-          counterpartIds.map((key) =>
+          counterpartIds.map(key =>
             Object.assign(counterpartBalances, { [key]: response.data.balances[key] }),
           );
           dispatch(setUserBalance(userBalance));
@@ -341,8 +328,8 @@ export function settleBalance() {
         'Content-Type': 'application/json',
       },
     })
-      .then((res) => res.json())
-      .catch((error) => console.log(error));
+      .then(res => res.json())
+      .catch(error => console.log(error));
   };
 }
 
@@ -387,16 +374,14 @@ export function handleContactSearch(text) {
     dispatch(setContactSearchString(text));
     if (text.length > 2) {
       fetch(`/api/get-contact/${text}`)
-        .then((res) => res.json())
-        .then((response) => {
+        .then(res => res.json())
+        .then(response => {
           if (response.status === 200) {
-            const contactList = getState().contacts.contactList.map(
-              (contact) => contact.contact_id,
-            );
+            const contactList = getState().contacts.contactList.map(contact => contact.contact_id);
             const userId = getState().user.id;
             const searchResults = response.data.user;
             const filteredSearchResults = searchResults.filter(
-              (result) => result.id !== userId && !contactList.includes(result.id),
+              result => result.id !== userId && !contactList.includes(result.id),
             );
             dispatch(setContactSearchResults(filteredSearchResults));
           } else {
@@ -419,8 +404,8 @@ export function addContact(contactId) {
         'Content-Type': 'application/json',
       },
     })
-      .then((res) => res.json())
-      .then((response) => {
+      .then(res => res.json())
+      .then(response => {
         if (response.status === 200) {
           dispatch(fetchBalances(userId));
           dispatch(resetContactSearch());
@@ -433,21 +418,8 @@ export function addContact(contactId) {
 // TABS ACTIONS
 
 export function reOrder(round) {
-  return (dispatch, getState) => {
-    const userId = getState().user.id;
-    const counterparts = Object.assign({}, round.counterparts);
-    Object.keys(counterparts).forEach((key) => {
-      counterparts[key] = (counterparts[key] * -1).toFixed(2);
-    });
-    const roundAmounts = Object.values(counterparts).map((amount) => parseFloat(amount));
-    const roundTotal = roundAmounts.reduce((acc, val) => acc + val).toFixed(2);
-    const splitEven = roundAmounts.every((val, i, arr) => Math.abs(val - arr[0]) < 0.02);
-    dispatch(setSplitType(splitEven ? 'even' : 'manual'));
-    dispatch(setRoundBuyer(userId));
-    dispatch(setRecipients(counterparts));
-    dispatch(setAmount(roundTotal));
-    dispatch(setStage('newRound'));
-  };
+  // some re-order logic here
+  Object.assign(round, { some: 'logic here' });
 }
 
 export function approveContact(contactId) {
@@ -460,8 +432,8 @@ export function approveContact(contactId) {
         'Content-Type': 'application/json',
       },
     })
-      .then((res) => res.json())
-      .then((response) => {
+      .then(res => res.json())
+      .then(response => {
         if (response.status === 200) {
           dispatch(getContactList(userId));
         }
@@ -477,10 +449,11 @@ export function receiveRoundHistory(roundHistory) {
 }
 
 export function fetchRoundHistory(userId) {
-  return (dispatch) => {
+  return dispatch => {
     fetch(`/api/get-rounds/${userId}`)
-      .then((response) => response.json())
-      .then((data) => {
+      .then(response => response.json())
+      .then(data => {
+        console.log(data);
         dispatch(receiveRoundHistory(data));
       });
   };

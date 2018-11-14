@@ -1,7 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme'; // import shallow renderer from enzyme
 import Balances from '../../src/components/Balances';
-import BalanceItem from '../../src/components/BalanceItem';
 
 function setup() {
   const props = {
@@ -15,14 +14,10 @@ function setup() {
     getStage: jest.fn(),
     showPayment: jest.fn(),
     payment: {},
-    stage: 'balances',
     settleBalance: jest.fn(),
     fetchBalances: jest.fn(),
     handleContactSearch: jest.fn(),
     addContact: jest.fn(),
-    approveContact: jest.fn(),
-    fetchRoundHistory: jest.fn(),
-    contactList: [],
   };
 
   const wrapper = shallow(<Balances {...props} />);
@@ -45,12 +40,12 @@ describe('balances component', () => {
         counterpartBalances: { 1: { username: 'Test', counterpart_id: 1, sum: '-10.00' } },
       },
     });
-    expect(wrapper.find(BalanceItem).exists()).toBe(true);
+    expect(wrapper.find('.counterpart').exists()).toBe(true);
   });
-  // it('calls showPayment modal if pay button is clicked', () => {
-  //   wrapper.find('.payment--closed').simulate('click');
-  //   expect(props.showPayment).toHaveBeenCalled();
-  // });
+  it('calls showPayment modal if pay button is clicked', () => {
+    wrapper.find('.counterpart__btn').simulate('click');
+    expect(props.showPayment).toHaveBeenCalled();
+  });
   it('calls getStage with newRound when new round button is clicked', () => {
     wrapper.find('.new-round-btn').simulate('click');
     expect(props.getStage).toHaveBeenCalledWith('newRound');

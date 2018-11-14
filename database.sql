@@ -1,3 +1,4 @@
+CREATE DATABASE opentab;
 
 CREATE TABLE "user" (
   id SERIAL PRIMARY KEY,
@@ -11,7 +12,6 @@ CREATE TABLE "user" (
 CREATE TABLE round (
   id SERIAL PRIMARY KEY,
   user_id INT NOT NULL,
-  name varchar(50) NOT NULL,
   time TIMESTAMP WITH TIME ZONE NOT NULL,
   FOREIGN KEY (user_id) REFERENCES "user" (id)
 );

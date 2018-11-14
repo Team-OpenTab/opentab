@@ -6,9 +6,8 @@ describe('round reducer', () => {
     initialState = {
       buyerId: '',
       recipients: {},
-      totalAmount: '',
-      splitType: 'even',
-      roundHistory: [],
+      totalAmount: 0,
+      splitType: '',
     };
   });
   it('sets round buyer with provided userId', () => {
@@ -38,7 +37,7 @@ describe('round reducer', () => {
       recipient: 2,
     };
 
-    const expectedState = { recipients: { 2: 0 } };
+    const expectedState = { recipients: { 2: {} } };
 
     const outputState = round(initialState, action);
 

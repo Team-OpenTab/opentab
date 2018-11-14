@@ -4,18 +4,16 @@ import NewRound from '../../src/components/NewRound';
 
 function setup() {
   const props = {
-    totalAmount: '0.00',
+    totalAmount: 0,
     recipients: {},
     counterparts: { 1: { username: 'Test', counterpart_id: 1, sum: '-10.00' } },
     userId: 1,
-    splitType: 'even',
     getNewRound: jest.fn(),
     getStage: jest.fn(),
     getAmount: jest.fn(),
     handleRoundCounterparts: jest.fn(),
     getSplitType: jest.fn(),
     getRecipientAmount: jest.fn(),
-    stage: 'newRound',
   };
 
   const wrapper = shallow(<NewRound {...props} />);
@@ -29,25 +27,12 @@ function setup() {
 describe('NewRound component', () => {
   const { wrapper, props } = setup();
   it('renders contacts', () => {
-    expect(
-      wrapper
-        .find('.new-round__counterpart')
-        .at(1)
-        .exists(),
-    ).toBe(true);
-    expect(
-      wrapper
-        .find('.new-round__counterpart-name')
-        .at(1)
-        .text(),
-    ).toBe('Test');
+    expect(wrapper.find('.new-round__counterpart').exists()).toBe(true);
+    expect(wrapper.find('.new-round__counterpart-name').text()).toBe('Test');
   });
   it('dispatches handleRoundCounterparts when add/remove is clicked', () => {
     const event = { target: { value: 1 } };
-    wrapper
-      .find('.new-round__add-remove-counterpart-button')
-      .first()
-      .simulate('click', event.target.value);
+    wrapper.find('.new-round__add-remove-counterpart-button').simulate('click', event.target.value);
     expect(props.handleRoundCounterparts).toHaveBeenCalledWith(event.target.value);
   });
 });
