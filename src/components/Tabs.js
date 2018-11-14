@@ -25,7 +25,7 @@ function Tabs({ userId, roundHistory, contacts, reOrderRound, getStage, stage })
   return (
     <section>
       <TitleBar title="Tabs" previous="balances" getStage={getStage} stage={stage} />
-      {roundHistory.map(round => {
+      {roundHistory.map((round) => {
         if (round.userId === userId) {
           return (
             <div className="tab">
@@ -42,10 +42,10 @@ function Tabs({ userId, roundHistory, contacts, reOrderRound, getStage, stage })
           );
         }
         return (
-          <div className="tab">
+          <div className="tab" key={round.roundId}>
             <p className="tab__payer">
               {Object.values(contacts).map(
-                contact => (contact.contact_id === round.userId ? contact.username : null),
+                (contact) => (contact.contact_id === round.userId ? contact.username : null),
               )}{' '}
               paid: {round.roundTotal}
             </p>
