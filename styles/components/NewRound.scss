@@ -68,6 +68,12 @@
   flex: 3;
 }
 
+.new-round__counterpart {
+  flex: 3;
+  border-bottom: 1px solid $line-color;
+  padding-bottom: 1.25rem;
+}
+
 .new-round__input {
   flex: 3;
 }
@@ -82,12 +88,6 @@
 
 .new-round__add-remove-counterpart-button {
   flex: 3;
-}
-
-.new-round__counterpart {
-  padding: 1rem 0;
-  display: flex;
-  justify-content: space-between;
 }
 
 .added-recipient {

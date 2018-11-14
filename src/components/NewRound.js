@@ -19,6 +19,7 @@ function NewRound({
   handleRoundCounterparts,
   userId,
   splitType,
+  contacts,
 }) {
   return (
     <section>
@@ -36,10 +37,7 @@ function NewRound({
         </div>
         <div className="round-name">
           <div className="round-name__text">...</div>
-          <input
-            className="round-amount__input"
-            placeholder="Tab Name"
-          />
+          <input className="round-amount__input" placeholder="Tab Name" />
         </div>
 
         <div className="round-split">
@@ -100,6 +98,7 @@ function NewRound({
               splitType={splitType}
               handleRoundCounterparts={handleRoundCounterparts}
               getRecipientAmount={getRecipientAmount}
+              contacts={contacts}
             />
           ))}
 
@@ -109,6 +108,7 @@ function NewRound({
             counterpart={counterpart}
             recipients={recipients}
             handleRoundCounterparts={handleRoundCounterparts}
+            contacts={contacts}
           />
         ))}
       </div>
@@ -131,6 +131,7 @@ NewRound.propTypes = {
   userId: PropTypes.number.isRequired,
   splitType: PropTypes.string.isRequired,
   stage: PropTypes.string.isRequired,
+  contacts: PropTypes.array.isRequired,
 };
 
 export default NewRound;

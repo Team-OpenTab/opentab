@@ -18,6 +18,7 @@ export const mapStateToProps = state => ({
   userId: state.user.id,
   splitType: state.round.splitType,
   stage: state.stage,
+  contacts: state.contacts.contactList,
 });
 
 const mapDispatchToProps = dispatch => ({
