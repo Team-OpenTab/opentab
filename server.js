@@ -38,13 +38,13 @@ app.post('/api/new-user', (req, res) => {
       `,
       [username, hash, email, phone, avatar],
     )
-      .then(userId => {
+      .then((userId) => {
         res.json({
           status: 200,
           data: userId,
         });
       })
-      .catch(error => {
+      .catch((error) => {
         res.status(401).json({
           status: 401,
           message: 'E-mail address already registered to another user',
@@ -56,7 +56,7 @@ app.post('/api/new-user', (req, res) => {
 
 app.post('/api/login', (req, res) => {
   const { email, password } = req.body;
-  db.oneOrNone('SELECT * FROM "user" WHERE email = $1', [email]).then(user => {
+  db.oneOrNone('SELECT * FROM "user" WHERE email = $1', [email]).then((user) => {
     if (!user) {
       res.status(404).json({
         status: 404,
@@ -91,11 +91,11 @@ app.post('/api/new-round', (req, res) => {
     `,
     [buyerId],
   )
-    .then(data => {
+    .then((data) => {
       const roundId = data.id;
       return Promise.all(
         Object.keys(recipients)
-          .map(recipientId => [
+          .map((recipientId) => [
             db.one(
               `
               INSERT INTO transaction (user_id, counterpart_id, round_id, amount, type, time)
@@ -130,7 +130,7 @@ app.post('/api/new-round', (req, res) => {
           .reduce((a, b) => a.concat(b)),
       );
     })
-    .then(data => {
+    .then((data) => {
       const roundId = data[0].round_id;
       io.emit('refresh');
       res.json({
@@ -163,7 +163,7 @@ app.get('/api/get-balances/:userId', (req, res) => {
     )
     `,
     [userId],
-  ).then(data => {
+  ).then((data) => {
     if (!data.length) {
       res.status(404).json({
         status: 404,
@@ -171,7 +171,7 @@ app.get('/api/get-balances/:userId', (req, res) => {
       });
     } else {
       const balances = {};
-      data.map(balance => Object.assign(balances, { [balance.counterpart_id]: balance }));
+      data.map((balance) => Object.assign(balances, { [balance.counterpart_id]: balance }));
       res.json({
         status: 200,
         data: { balances },
@@ -191,7 +191,7 @@ app.post('/api/approve-contact', (req, res) => {
     RETURNING approved;
     `,
     [userId, contactId],
-  ).then(data => {
+  ).then((data) => {
     res.json({
       status: 200,
       data,
@@ -209,7 +209,7 @@ app.get('/api/get-contacts/:userId', (req, res) => {
     AND user_id = $1;
     `,
     [userId],
-  ).then(data => {
+  ).then((data) => {
     if (!data.length) {
       res.status(404).json({
         status: 404,
@@ -233,7 +233,7 @@ app.get('/api/get-contact/:username', (req, res) => {
     WHERE lower(username) LIKE $1;
     `,
     [username],
-  ).then(user => {
+  ).then((user) => {
     if (!user.length) {
       res.status(404).json({
         status: 404,
@@ -270,7 +270,7 @@ app.post('/api/add-contact', (req, res) => {
       io.emit('refresh');
       res.json({ status: 200 });
     })
-    .catch(error =>
+    .catch((error) =>
       res.status(400).json({
         status: 400,
         message: 'Error while adding user to contacts',
@@ -299,7 +299,7 @@ app.post('/api/make-payment', (req, res) => {
       io.emit('refresh');
       res.json({ status: 200 });
     })
-    .catch(error =>
+    .catch((error) =>
       res.status(400).json({
         status: 400,
         message: 'Error while making payment',
@@ -316,36 +316,37 @@ app.get('/api/get-rounds/:userId', (req, res) => {
      SELECT id FROM "round" WHERE user_id = $1 `,
     [userId],
   )
-    .then(response => {
-      const promisesArray = response.map(round =>
+    .then((response) => {
+      const promisesArray = response.map((round) =>
         db.any(`SELECT * FROM transaction WHERE round_id = ${round.round_id} AND amount < 0`),
       );
       return Promise.all(promisesArray);
     })
-    .then(response => {
-      const roundStore = response.map(round => {
-        const reducedRound = round.reduce((acc, curr) => {
-          const counterparts = !acc.counterparts
-            ? { [curr.counterpart_id]: curr.amount }
-            : acc.counterparts;
-          acc = {
-            roundId: curr.round_id,
-            userId: curr.user_id,
-            counterparts: Object.assign({}, counterparts, { [curr.counterpart_id]: curr.amount }),
-            roundTime: curr.time,
-          };
-          return acc;
-        }, {});
-        const roundTotal = Object.values(reducedRound.counterparts).reduce(
-          (acc, item) => parseFloat(acc) + parseFloat(item),
-          0,
-        );
-        const roundWithTotal = Object.assign({}, reducedRound, {
-          roundTotal: roundTotal.toFixed(2),
-        });
-        return roundWithTotal;
-      });
-
+    .then((response) => {
+      const roundStore = response
+        .map((round) => {
+          const reducedRound = round.reduce((acc, curr) => {
+            const counterparts = !acc.counterparts
+              ? { [curr.counterpart_id]: curr.amount }
+              : acc.counterparts;
+            acc = {
+              roundId: curr.round_id,
+              userId: curr.user_id,
+              counterparts: Object.assign({}, counterparts, { [curr.counterpart_id]: curr.amount }),
+              roundTime: curr.time,
+            };
+            return acc;
+          }, {});
+          const roundTotal = Object.values(reducedRound.counterparts).reduce(
+            (acc, item) => parseFloat(acc) + parseFloat(item),
+            0,
+          );
+          const roundWithTotal = Object.assign({}, reducedRound, {
+            roundTotal: roundTotal.toFixed(2),
+          });
+          return roundWithTotal;
+        })
+        .sort((a, b) => new Date(b.roundTime) - new Date(a.roundTime));
       res.json(roundStore);
     });
 });
