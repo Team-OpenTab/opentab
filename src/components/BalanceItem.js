@@ -25,6 +25,7 @@ function BalanceItem({ contactId, contact, friendRequests, approveContact, showP
         </button>
       )}
       {contact.sum !== '0.00' && (
+
         <button
           className="counterpart__btn pay-btn"
           id={contactId}
@@ -33,6 +34,7 @@ function BalanceItem({ contactId, contact, friendRequests, approveContact, showP
         >
           Pay
         </button>
+
       )}
     </div>
   );
