@@ -29,6 +29,7 @@ function Tabs({ userId, roundHistory, contacts, reOrderRound, getStage, stage })
         if (round.userId === userId) {
           return (
             <div className="tab" key={round.roundTime}>
+              <h2>{round.name}</h2>
               <p className="tab__payer">I paid {round.roundTotal}, split as:</p>
               <p className="tab__payees">
                 {crossReference(round.counterparts, roundHistory.indexOf(round))}
