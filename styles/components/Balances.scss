@@ -1,4 +1,4 @@
-@import '../main';
+@import "../main";
 
 .balances__search {
   width: 100%;
@@ -7,6 +7,36 @@
   border: 0;
   border-bottom: 1px solid #d1d1d1;
   text-align: center;
+}
+
+.balances__contact-list {
+  list-style: none;
+  padding: 0;
+}
+
+.balances__contact-item {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding: 1em;
+  background-color: $card-background-color;
+  &__user {
+    flex: 1;
+    margin-left: 2em;
+  }
+  &__button {
+    flex: 1;
+    margin-right: 2em;
+    border: none;
+    padding: 0.6em;
+    background-color: $secondary-color;
+    color: $button-color-light;
+  }
+}
+
+.lonely-message {
+  text-align: center;
+  color: $text-color-dark;
 }
 
 .counterpart-list {
@@ -36,10 +66,10 @@
     }
   }
   &__btn {
-    background-color: #0875a5;
+    background-color: $secondary-color;
 
     border: none;
-    color: #fff;
+    color: $button-color-light;
     flex: 1;
   }
 }
@@ -90,14 +120,14 @@
 }
 
 .new-round-btn {
-  display: flex;
-  flex-direction: column;
-  flex: 1;
   width: 100%;
+  text-align: center;
   background-color: #0875a5;
   color: #fff;
   border: none;
   padding: 1em;
+  position: absolute;
+  bottom: 0;
 }
 
 @media screen and (min-width: 768px) {
