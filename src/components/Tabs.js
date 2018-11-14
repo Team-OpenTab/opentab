@@ -5,8 +5,8 @@ import '../../styles/components/Tabs.scss';
 
 function Tabs({ userId, roundHistory, contacts, reOrderRound, getStage, stage }) {
   function crossReference(roundCounterparts, index) {
-    return Object.keys(roundCounterparts).map(counterpart =>
-      Object.values(contacts).map(contact => {
+    return Object.keys(roundCounterparts).map((counterpart) =>
+      Object.values(contacts).map((contact) => {
         if (contact.contact_id.toString() === counterpart) {
           return (
             <label>
@@ -21,11 +21,10 @@ function Tabs({ userId, roundHistory, contacts, reOrderRound, getStage, stage })
   return (
     <section>
       <TitleBar title="Tabs" previous="balances" getStage={getStage} stage={stage} />
-      {roundHistory.map(round => {
+      {roundHistory.map((round) => {
         if (round.userId === userId) {
           return (
-
-            <div className="tab">
+            <div className="tab" key={round.roundId}>
               <p className="tab__payer">I paid {round.roundTotal}, split as:</p>
               <p className="tab__payees">
                 {crossReference(round.counterparts, roundHistory.indexOf(round))}
@@ -39,10 +38,10 @@ function Tabs({ userId, roundHistory, contacts, reOrderRound, getStage, stage })
           );
         }
         return (
-          <div className="tab">
+          <div className="tab" key={round.roundId}>
             <p className="tab__payer">
               {Object.values(contacts).map(
-                contact => (contact.contact_id === round.userId ? contact.username : null),
+                (contact) => (contact.contact_id === round.userId ? contact.username : null),
               )}{' '}
               paid: {round.roundTotal}
             </p>
@@ -53,7 +52,6 @@ function Tabs({ userId, roundHistory, contacts, reOrderRound, getStage, stage })
             <button onClick={() => reOrderRound(round)} type="button">
               RE-ORDER
             </button>
-
           </div>
         );
       })}
@@ -64,7 +62,7 @@ function Tabs({ userId, roundHistory, contacts, reOrderRound, getStage, stage })
 Tabs.propTypes = {
   userId: PropTypes.number.isRequired,
   roundHistory: PropTypes.array.isRequired,
-  contacts: PropTypes.object.isRequired,
+  contacts: PropTypes.array.isRequired,
   reOrderRound: PropTypes.func.isRequired,
   getStage: PropTypes.func.isRequired,
   stage: PropTypes.string.isRequired,

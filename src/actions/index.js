@@ -426,8 +426,21 @@ export function addContact(contactId) {
 // TABS ACTIONS
 
 export function reOrder(round) {
-  // some re-order logic here
-  Object.assign(round, { some: 'logic here' });
+  return (dispatch, getState) => {
+    const userId = getState().user.id;
+    const counterparts = Object.assign({}, round.counterparts);
+    Object.keys(counterparts).forEach((key) => {
+      counterparts[key] = (counterparts[key] * -1).toFixed(2);
+    });
+    const roundAmounts = Object.values(counterparts).map((amount) => parseFloat(amount));
+    const roundTotal = roundAmounts.reduce((acc, val) => acc + val).toFixed(2);
+    const splitEven = roundAmounts.every((val, i, arr) => Math.abs(val - arr[0]) < 0.02);
+    dispatch(setSplitType(splitEven ? 'even' : 'manual'));
+    dispatch(setRoundBuyer(userId));
+    dispatch(setRecipients(counterparts));
+    dispatch(setAmount(roundTotal));
+    dispatch(setStage('newRound'));
+  };
 }
 
 export function approveContact(contactId) {

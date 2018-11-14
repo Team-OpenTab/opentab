@@ -4,7 +4,6 @@ const initialState = {
   totalAmount: '',
   splitType: 'even',
   roundHistory: [],
-
 };
 
 function round(state = initialState, action) {
@@ -31,6 +30,9 @@ function round(state = initialState, action) {
       return Object.assign({}, state, { splitType: action.splitType });
     case 'SET_ROUND_HISTORY':
       return Object.assign({}, state, { roundHistory: action.roundHistory });
+    case 'REORDER_ROUND':
+      console.log(action.round);
+      return state;
     default:
       return state;
   }
