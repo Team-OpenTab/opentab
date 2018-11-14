@@ -23,26 +23,48 @@ function NewRound({
   return (
     <section>
       <TitleBar title="New Round" previous="balances" getStage={getStage} stage={stage} />
-      <div className="new-round__amount">
-        <h3>Round Amount</h3>
-        <input value={totalAmount} onChange={(event) => getAmount(event.target.value)} />
-        <input
-          type="radio"
-          name="splitType"
-          id="radio1"
-          value="even"
-          onClick={(event) => getSplitType(event.target.value)}
-          defaultChecked
-        />
-        <label htmlFor="radio1">Split Evenly</label>
-        <input
-          type="radio"
-          name="splitType"
-          id="radio2"
-          value="manual"
-          onClick={(event) => getSplitType(event.target.value)}
-        />
-        <label htmlFor="radio2">Split Manually</label>
+      <div className="new-round-container">
+        <div className="round-amount">
+          <div className="round-amount__currency">£</div>
+          <input
+            className="round-amount__input"
+            value={totalAmount}
+            placeholder="Total Amount"
+            type="number"
+            onChange={event => getAmount(event.target.value)}
+          />
+        </div>
+        <div className="round-name">
+          <div className="round-name__text">...</div>
+          <input
+            className="round-amount__input"
+            placeholder="Tab Name"
+          />
+        </div>
+
+        <div className="round-split">
+          <div className="round-split__evenly">
+            <input
+              type="radio"
+              name="splitType"
+              id="radio1"
+              value="even"
+              onClick={event => getSplitType(event.target.value)}
+              defaultChecked
+            />
+            <label htmlFor="radio1">Split Evenly</label>
+          </div>
+          <div className="round-split__manually">
+            <input
+              type="radio"
+              name="splitType"
+              id="radio2"
+              value="manual"
+              onClick={event => getSplitType(event.target.value)}
+            />
+            <label htmlFor="radio2">Split Manually</label>
+          </div>
+        </div>
       </div>
       <div className="new-round__users">
         <div className="new-round__counterpart">
@@ -60,7 +82,7 @@ function NewRound({
               <input
                 className="new-round__input"
                 value={recipients[userId]}
-                onChange={(event) => getRecipientAmount(userId, event.target.value)}
+                onChange={event => getRecipientAmount(userId, event.target.value)}
               />
             ) : (
               <p className="new-round__even-amount">{recipients[userId]}</p>
@@ -68,8 +90,8 @@ function NewRound({
         </div>
         {/* RECIPIENTS */}
         {Object.keys(recipients)
-          .filter((recipient) => Number(recipient) !== userId)
-          .map((recipient) => (
+          .filter(recipient => Number(recipient) !== userId)
+          .map(recipient => (
             <NewRoundRecipient
               key={recipient}
               counterparts={counterparts}
@@ -81,7 +103,7 @@ function NewRound({
             />
           ))}
 
-        {Object.values(counterparts).map((counterpart) => (
+        {Object.values(counterparts).map(counterpart => (
           <NewRoundCounterpart
             key={counterpart.counterpart_id}
             counterpart={counterpart}
@@ -90,7 +112,7 @@ function NewRound({
           />
         ))}
       </div>
-      <button type="button" className="button" onClick={getNewRound}>
+      <button type="button" className="buy-round-btn" onClick={getNewRound}>
         BUY ROUND{' '}
       </button>
     </section>
