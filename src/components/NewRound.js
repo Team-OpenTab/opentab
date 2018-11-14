@@ -31,6 +31,15 @@ function NewRound({
         stage={stage}
       />
       <div className="new-round-container">
+        <div className="round-name">
+          <div className="round-name__text">...</div>
+          <input
+            className="round-amount__input"
+            placeholder="Tab Name"
+            value={round.roundName}
+            onChange={(event) => getRoundName(event.target.value)}
+          />
+        </div>
         <div className="round-amount">
           <div className="round-amount__currency">£</div>
           <input
@@ -41,16 +50,6 @@ function NewRound({
             onChange={(event) => getAmount(event.target.value)}
           />
         </div>
-        <div className="round-name">
-          <div className="round-name__text">...</div>
-          <input
-            className="round-amount__input"
-            placeholder="Tab Name"
-            value={round.roundName}
-            onChange={(event) => getRoundName(event.target.value)}
-          />
-        </div>
-
         <div className="round-split">
           <div className="round-split__evenly">
             <input
