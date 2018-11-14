@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import TitleBar from './TitleBar';
+import NewRoundRecipient from './NewRoundRecipient';
 // import Button from './Button';
 import '../../styles/components/NewRound.scss';
 
@@ -68,26 +69,15 @@ function NewRound({
         {Object.keys(recipients)
           .filter((recipient) => Number(recipient) !== userId)
           .map((recipient) => (
-            <div className="new-round__counterpart added-recipient" key={recipient}>
-              <h3 className="new-round__counterpart-name">{counterparts[recipient].username}</h3>
-              <button
-                className="new-round__add-remove-counterpart-button"
-                type="button"
-                onClick={handleRoundCounterparts}
-                value={recipient}
-              >
-                {!Object.keys(recipients).includes(recipient.toString()) ? 'Add' : 'Remove'}
-              </button>
-              {splitType === 'manual' ? (
-                <input
-                  className="new-round__input"
-                  value={recipients[recipient]}
-                  onChange={(event) => getRecipientAmount(recipient, event.target.value)}
-                />
-              ) : (
-                <p className="new-round__even-amount">{recipients[recipient]}</p>
-              )}
-            </div>
+            <NewRoundRecipient
+              key={recipient}
+              counterparts={counterparts}
+              recipient={recipient}
+              recipients={recipients}
+              splitType={splitType}
+              handleRoundCounterparts={handleRoundCounterparts}
+              getRecipientAmount={getRecipientAmount}
+            />
           ))}
 
         {Object.values(counterparts).map((counterpart) => (
