@@ -42,8 +42,8 @@ class Balances extends React.Component {
   // Can payment modal be seperated into a new component?
   render() {
     const friendRequests = this.props.contactList
-      .filter((contact) => !contact.approved)
-      .map((contact) => contact.contact_id);
+      .filter(contact => !contact.approved)
+      .map(contact => contact.contact_id);
 
     return (
       <div>
@@ -61,11 +61,15 @@ class Balances extends React.Component {
             onChange={this.props.handleContactSearch}
             value={this.props.contactSearchString}
           />
-          <ul>
-            {this.props.contactSearchResults.map((result) => (
-              <div key={result.id}>
-                <li>{result.username}</li>
-                <button type="button" onClick={() => this.props.addContact(result.id)}>
+          <ul className="balances__contact-list">
+            {this.props.contactSearchResults.map(result => (
+              <div key={result.id} className="balances__contact-item">
+                <li className="balances__contact-item__user">{result.username}</li>
+                <button
+                  className="balances__contact-item__button"
+                  type="button"
+                  onClick={() => this.props.addContact(result.id)}
+                >
                   Add to contacts
                 </button>
               </div>
@@ -73,10 +77,12 @@ class Balances extends React.Component {
           </ul>
         </div>
         {!Object.keys(this.props.balances.counterpartBalances).length && (
-          <div>It feels lonely in here... Add your friends by searching above!</div>
+          <div className="lonely-message">
+            It feels lonely in here... Add your friends by searching above!
+          </div>
         )}
         <div className="counterpart-list">
-          {Object.keys(this.props.balances.counterpartBalances).map((key) => (
+          {Object.keys(this.props.balances.counterpartBalances).map(key => (
             <BalanceItem
               key={key}
               contactId={key}
@@ -91,7 +97,7 @@ class Balances extends React.Component {
         <div
           className={this.paymentClassName()}
           role="dialog"
-          onClick={(event) => this.showModal(event)}
+          onClick={event => this.showModal(event)}
         >
           <div className="payment__content">
             <button className="payment-btn" type="button" onClick={() => this.markPaid()}>
