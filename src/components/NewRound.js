@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import TitleBar from './TitleBar';
 import NewRoundRecipient from './NewRoundRecipient';
+import NewRoundCounterpart from './NewRoundCounterpart';
 // import Button from './Button';
 import '../../styles/components/NewRound.scss';
 
@@ -81,23 +82,12 @@ function NewRound({
           ))}
 
         {Object.values(counterparts).map((counterpart) => (
-          <div key={counterpart.counterpart_id}>
-            {!Object.keys(recipients).includes(counterpart.counterpart_id.toString()) && (
-              <div className="new-round__counterpart">
-                <h3 className="new-round__counterpart-name">{counterpart.username}</h3>
-                <button
-                  className="new-round__add-remove-counterpart-button"
-                  type="button"
-                  onClick={handleRoundCounterparts}
-                  value={counterpart.counterpart_id}
-                >
-                  {!Object.keys(recipients).includes(counterpart.counterpart_id.toString())
-                    ? 'Add'
-                    : 'Remove'}
-                </button>
-              </div>
-            )}
-          </div>
+          <NewRoundCounterpart
+            key={counterpart.counterpart_id}
+            counterpart={counterpart}
+            recipients={recipients}
+            handleRoundCounterparts={handleRoundCounterparts}
+          />
         ))}
       </div>
       <button type="button" className="button" onClick={getNewRound}>
