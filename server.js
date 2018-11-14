@@ -82,14 +82,14 @@ app.post('/api/login', (req, res) => {
 });
 
 app.post('/api/new-round', (req, res) => {
-  const { buyerId, recipients } = req.body;
+  const { buyerId, recipients, roundName } = req.body;
   db.one(
     `
-    INSERT INTO round (user_id, time)
-    VALUES ($1, now())
+    INSERT INTO round (user_id, name, time)
+    VALUES ($1, $2, now())
     RETURNING id
     `,
-    [buyerId],
+    [buyerId, roundName],
   )
     .then((data) => {
       const roundId = data.id;
@@ -318,7 +318,16 @@ app.get('/api/get-rounds/:userId', (req, res) => {
   )
     .then((response) => {
       const promisesArray = response.map((round) =>
-        db.any(`SELECT * FROM transaction WHERE round_id = ${round.round_id} AND amount < 0`),
+        db.any(
+          `
+          SELECT transaction.id, transaction.user_id, transaction.counterpart_id, 
+            transaction.round_id, transaction.amount, transaction.type, round.name, transaction.time
+          FROM transaction, round
+          WHERE round_id = ${round.round_id}
+          AND amount < 0
+          AND transaction.round_id = round.id;
+          `,
+        ),
       );
       return Promise.all(promisesArray);
     })
@@ -331,6 +340,7 @@ app.get('/api/get-rounds/:userId', (req, res) => {
               : acc.counterparts;
             acc = {
               roundId: curr.round_id,
+              roundName: curr.name,
               userId: curr.user_id,
               counterparts: Object.assign({}, counterparts, { [curr.counterpart_id]: curr.amount }),
               roundTime: curr.time,

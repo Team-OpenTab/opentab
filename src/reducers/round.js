@@ -1,5 +1,6 @@
 const initialState = {
   buyerId: '',
+  roundName: '',
   recipients: {},
   totalAmount: '',
   splitType: 'even',
@@ -10,6 +11,8 @@ function round(state = initialState, action) {
   switch (action.type) {
     case 'SET_ROUND_BUYER':
       return Object.assign({}, state, { buyerId: action.buyerId });
+    case 'SET_ROUND_NAME':
+      return Object.assign({}, state, { roundName: action.roundName });
     case 'ADD_RECIPIENT': {
       const newRecipients = Object.assign({}, state.recipients);
       newRecipients[action.recipient] = 0;

@@ -19,6 +19,8 @@ function NewRound({
   handleRoundCounterparts,
   userId,
   splitType,
+  roundName,
+  getRoundName,
 }) {
   return (
     <section>
@@ -36,7 +38,12 @@ function NewRound({
         </div>
         <div className="round-name">
           <div className="round-name__text">...</div>
-          <input className="round-amount__input" placeholder="Tab Name" />
+          <input
+            className="round-amount__input"
+            placeholder="Tab Name"
+            value={roundName}
+            onChange={(event) => getRoundName(event.target.value)}
+          />
         </div>
 
         <div className="round-split">
@@ -127,6 +134,8 @@ NewRound.propTypes = {
   userId: PropTypes.number.isRequired,
   splitType: PropTypes.string.isRequired,
   stage: PropTypes.string.isRequired,
+  roundName: PropTypes.string.isRequired,
+  getRoundName: PropTypes.func.isRequired,
 };
 
 export default NewRound;
