@@ -35,9 +35,19 @@ function Tabs({ userId, roundHistory, contacts, reOrderRound, getStage, stage })
               </p>
 
               <p className="tab-footer__date" />
-              <button className="tab-footer__btn" onClick={() => reOrderRound(round)} type="button">
-                RE-ORDER
-              </button>
+              <span className="tab-footer-container">
+                <button
+                  className="tab-footer__btn"
+                  onClick={() => reOrderRound(round)}
+                  type="button"
+                >
+                  <img
+                    className="tab-reorder"
+                    alt="re-order"
+                    src="../../static/images/reorder.png"
+                  />
+                </button>
+              </span>
             </div>
           );
         }
@@ -53,8 +63,8 @@ function Tabs({ userId, roundHistory, contacts, reOrderRound, getStage, stage })
               {crossReference(round.counterparts, roundHistory.indexOf(round))}
             </p>
             <p className="tab-footer__date" />
-            <button onClick={() => reOrderRound(round)} type="button">
-              RE-ORDER
+            <button className="tab-footer__btn" onClick={() => reOrderRound(round)} type="button">
+              <img className="tab-reorder" alt="re-order" src="../../static/images/reorder.png" />
             </button>
           </div>
         );
