@@ -5,7 +5,16 @@ import '../../styles/components/Tabs.scss';
 
 const dateFormat = require('dateformat');
 
-function Tabs({ userId, balance, roundHistory, contactList, reOrderRound, getStage, stage }) {
+function Tabs({
+  userId,
+  balance,
+  roundHistory,
+  contactList,
+  reOrderRound,
+  getStage,
+  stage,
+  logoutUser,
+}) {
   function crossReference(roundCounterparts) {
     return Object.keys(roundCounterparts).map((recipientId) => (
       <label className="tab__label" key={recipientId}>
@@ -24,6 +33,7 @@ function Tabs({ userId, balance, roundHistory, contactList, reOrderRound, getSta
         previous="balances"
         getStage={getStage}
         stage={stage}
+        logoutUser={logoutUser}
       />
       <div className="tabs-content">
         {roundHistory.map((round) => {
@@ -73,6 +83,7 @@ Tabs.propTypes = {
   getStage: PropTypes.func.isRequired,
   stage: PropTypes.string.isRequired,
   balance: PropTypes.number.isRequired,
+  logoutUser: PropTypes.func.isRequired,
 };
 
 export default Tabs;

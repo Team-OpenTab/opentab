@@ -21,6 +21,10 @@
     top: 15px;
     background: transparent;
     border: none;
+
+    &:focus {
+      outline: 0;
+    }
   }
 
   &__logout {
@@ -33,6 +37,10 @@
     background: transparent;
     border: none;
     transform: rotate(180deg);
+
+    &:focus {
+      outline: 0;
+    }
   }
 
   &__title {
