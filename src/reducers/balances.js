@@ -15,6 +15,8 @@ function balances(state = initialState, action) {
         userBalance: action.balance,
         counterpartBalances: state.counterpartBalances,
       };
+    case 'RESET_BALANCES':
+      return initialState;
     default:
       return state;
   }

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import cx from 'classnames';
 import '../../styles/components/TitleBar.scss';
 
-function TitleBar({ title, previous, getStage, stage, resetRound }) {
+function TitleBar({ title, previous, getStage, stage, resetRound, logoutUser }) {
   function clickOnBack() {
     console.log('clicked on back: ', previous);
     getStage(previous);
@@ -32,11 +32,12 @@ function TitleBar({ title, previous, getStage, stage, resetRound }) {
         {stage === 'newRound' ? (
           <p className="title-bar__back" onClick={() => clickOnBack()}>
             {'<'}
-          </p>) :
-          (
-            <p className="title-bar__back">
-              {'Log out'}
-            </p>)}
+          </p>
+        ) : (
+          <p className="title-bar__back" onClick={() => logoutUser()}>
+            Log out
+          </p>
+        )}
         <h2 className="title-bar__title">{title}</h2>
         <p className="title-bar__menu" onClick={() => clickOnMenu()} />{' '}
       </div>
@@ -61,6 +62,7 @@ TitleBar.propTypes = {
   getStage: PropTypes.func.isRequired,
   stage: PropTypes.string.isRequired,
   resetRound: PropTypes.func,
+  logoutUser: PropTypes.func,
 };
 
 export default TitleBar;

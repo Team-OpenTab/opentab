@@ -9,6 +9,7 @@ import {
   addContact,
   approveContact,
   fetchRoundHistory,
+  logoutUser,
 } from '../actions';
 
 const mapStateToProps = (state) => ({
@@ -28,6 +29,7 @@ const mapDispatchToProps = (dispatch) => ({
   addContact: (contactId) => dispatch(addContact(contactId)),
   approveContact: (contactId) => dispatch(approveContact(contactId)),
   fetchRoundHistory: (userId) => dispatch(fetchRoundHistory(userId)),
+  logoutUser: () => dispatch(logoutUser()),
 });
 
 export default connect(
