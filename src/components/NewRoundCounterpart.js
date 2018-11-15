@@ -12,10 +12,18 @@ function NewRoundCounterpart({ counterpart, recipients, handleRoundCounterparts,
               className="user-container__avatar"
               src={
                 contacts[contacts.findIndex(x => x.contact_id === counterpart.counterpart_id)]
-                  .avatar
+                  .avatar === undefined ||
+                contacts[contacts.findIndex(x => x.contact_id === counterpart.counterpart_id)]
+                  .avatar === ''
+                  ? `https://ui-avatars.com/api/rounded=true?name=${
+                    counterpart.username
+                  }&size=50&background=eaae60`
+                  : contacts[contacts.findIndex(x => x.contact_id === counterpart.counterpart_id)]
+                    .avatar
               }
-              alt="avatar"
+              alt=""
             />
+
             <h3 className="user-container__name">{counterpart.username}</h3>
           </div>
 

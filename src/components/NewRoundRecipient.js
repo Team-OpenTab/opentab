@@ -16,10 +16,17 @@ function NewRoundRecipient({
       <div className="user-container">
         <img
           className="user-container__avatar"
-          src={contacts[contacts.findIndex(x => x.contact_id === Number(recipient))].avatar}
-          alt="avatar"
+          src={
+            contacts[contacts.findIndex(x => x.contact_id === Number(recipient))].avatar ===
+              undefined ||
+            contacts[contacts.findIndex(x => x.contact_id === Number(recipient))].avatar === ''
+              ? `https://ui-avatars.com/api/rounded=true?name=${
+                counterparts[recipient].username
+              }&size=50&background=eaae60`
+              : contacts[contacts.findIndex(x => x.contact_id === Number(recipient))].avatar
+          }
+          alt=""
         />
-
         <h3 className="user-container__name">{counterparts[recipient].username}</h3>
       </div>
 
