@@ -48,7 +48,7 @@ CREATE TABLE contact_user(
 
 INSERT INTO "user" (username, password, email, phone, avatar) VALUES ('Yetkin', '$2b$10$XAEMX1WihrziSl0urFWhcesKynW20wPUlC2r1cCIGDAV/F6Ipz4Hi', 'yetkin@gmail.com', '07998777666','https://avatars0.githubusercontent.com/u/42815334?s=400&v=4');
 INSERT INTO "user" (username, password, email, phone, avatar) VALUES ('Dave', '$2b$10$XAEMX1WihrziSl0urFWhcesKynW20wPUlC2r1cCIGDAV/F6Ipz4Hi', 'dave@gmail.com', '07998555444', 'https://avatars1.githubusercontent.com/u/42816100?s=400&v=4');
-INSERT INTO "user" (username, password, email, phone, avatar) VALUES ('Dan', '$$2b$10$XAEMX1WihrziSl0urFWhcesKynW20wPUlC2r1cCIGDAV/F6Ipz4Hi', 'dan@gmail.com', '07998444333','https://avatars2.githubusercontent.com/u/38405106?s=400&v=4');
+INSERT INTO "user" (username, password, email, phone, avatar) VALUES ('Dan', '$2b$10$XAEMX1WihrziSl0urFWhcesKynW20wPUlC2r1cCIGDAV/F6Ipz4Hi', 'dan@gmail.com', '07998444333','https://avatars2.githubusercontent.com/u/38405106?s=400&v=4');
 INSERT INTO "user" (username, password, email, phone, avatar) VALUES ('Tony', '$2b$10$XAEMX1WihrziSl0urFWhcesKynW20wPUlC2r1cCIGDAV/F6Ipz4Hi', 'tony@gmail.com', '07998333222','https://avatars2.githubusercontent.com/u/42917940?s=400&v=4');
 INSERT INTO "user" (username, password, email, phone, avatar) VALUES ('Luke', '$2b$10$XAEMX1WihrziSl0urFWhcesKynW20wPUlC2r1cCIGDAV/F6Ipz4Hi', 'luke@gmail.com', '07998222111','https://avatars0.githubusercontent.com/u/40580944?s=400&v=4');
 
