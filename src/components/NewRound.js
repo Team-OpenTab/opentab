@@ -75,6 +75,7 @@ function NewRound({
             <label htmlFor="radio2">Split Manually</label>
           </div>
         </div>
+
         <div className="new-round-recipient-container">
           <div className="user-container">
             <img className="user-container__avatar" src={user.avatar} alt="avatar" />
@@ -82,9 +83,9 @@ function NewRound({
             <h3 className="user-container__name">You</h3>
           </div>
 
-          {!Object.keys(round.recipients).includes(userId.toString()) && <p>£&nbsp;</p>}
+          {Object.keys(round.recipients).includes(userId.toString()) && <p>£&nbsp;</p>}
 
-          {!Object.keys(round.recipients).includes(userId.toString()) &&
+          {Object.keys(round.recipients).includes(userId.toString()) &&
             (round.splitType === 'manual' ? (
               <input
                 className="new-round__input"
