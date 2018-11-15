@@ -5,26 +5,17 @@ import '../../styles/components/Tabs.scss';
 
 const dateFormat = require('dateformat');
 
-function Tabs({ userId, roundHistory, contacts, reOrderRound, getStage, stage }) {
-  function crossReference(roundCounterparts, index) {
-    return Object.keys(roundCounterparts).map((counterpart) =>
-      contacts.map((contact) => {
-        if (contact.contact_id.toString() === counterpart) {
-          return (
-            <label key={contact.contact_id}>
-              {contact.username}: £{(-roundHistory[index].counterparts[counterpart]).toFixed(2)}
-            </label>
-          );
-        }
-        if (contact.contact_id === userId) {
-          return (
-            <label>Myself: {(-roundHistory[index].counterparts[counterpart]).toFixed(2)}</label>
-          );
-        }
-
-        return null;
-      }),
-    );
+function Tabs({ userId, roundHistory, contactList, reOrderRound, getStage, stage }) {
+  function crossReference(roundCounterparts) {
+    return Object.keys(roundCounterparts).map((recipientId) => (
+      <label key={recipientId}>
+        {recipientId === userId.toString()
+          ? 'Myself'
+          : contactList.filter((contact) => contact.contact_id.toString() === recipientId)[0]
+            .username}
+        : £{(-roundCounterparts[recipientId]).toFixed(2)}
+      </label>
+    ));
   }
   return (
     <section>
@@ -35,9 +26,7 @@ function Tabs({ userId, roundHistory, contacts, reOrderRound, getStage, stage })
             <div className="tab" key={round.roundTime}>
               <h2>{round.roundName}</h2>
               <p className="tab__payer">I paid £{(-round.roundTotal).toFixed(2)}, split as:</p>
-              <p className="tab__payees">
-                {crossReference(round.counterparts, roundHistory.indexOf(round))}
-              </p>
+              <p className="tab__payees">{crossReference(round.counterparts)}</p>
 
               <p className="tab-footer__date">
                 {dateFormat(new Date(round.roundTime), 'ddd dS mmm, HH:MM')}
@@ -61,7 +50,7 @@ function Tabs({ userId, roundHistory, contacts, reOrderRound, getStage, stage })
         return (
           <div className="tab" key={round.roundId}>
             <p className="tab__payer">
-              {Object.values(contacts).map(
+              {Object.values(contactList).map(
                 (contact) => (contact.contact_id === round.userId ? contact.username : null),
               )}{' '}
               paid: {round.roundTotal}
@@ -83,7 +72,7 @@ function Tabs({ userId, roundHistory, contacts, reOrderRound, getStage, stage })
 Tabs.propTypes = {
   userId: PropTypes.number.isRequired,
   roundHistory: PropTypes.array.isRequired,
-  contacts: PropTypes.array.isRequired,
+  contactList: PropTypes.array.isRequired,
   reOrderRound: PropTypes.func.isRequired,
   getStage: PropTypes.func.isRequired,
   stage: PropTypes.string.isRequired,

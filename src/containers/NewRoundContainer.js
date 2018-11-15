@@ -15,9 +15,9 @@ import NewRound from '../components/NewRound';
 export const mapStateToProps = state => ({
   totalAmount: state.round.totalAmount,
   recipients: state.round.recipients,
+  round: state.round,
   counterparts: state.balances.counterpartBalances,
   userId: state.user.id,
-  splitType: state.round.splitType,
   stage: state.stage,
   contacts: state.contacts.contactList,
   roundName: state.round.roundName,
