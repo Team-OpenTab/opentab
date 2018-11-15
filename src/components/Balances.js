@@ -11,11 +11,16 @@ class Balances extends React.Component {
   componentDidMount() {
     this.props.fetchBalances(this.props.userId);
     this.props.fetchRoundHistory(this.props.userId);
-    const socket = io(window.location.origin);
-    socket.on('refresh', () => {
+    this.socket = io(window.location.origin);
+    this.socket.on('refresh', () => {
       this.props.fetchBalances(this.props.userId);
       this.props.fetchRoundHistory(this.props.userId);
     });
+  }
+
+  componentWillUnmount() {
+    console.log('disconnecting');
+    this.socket.disconnect(true);
   }
 
   paymentClassName(close) {
