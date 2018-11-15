@@ -24,6 +24,9 @@
 }
 .tab-footer-container {
   align-items: center;
+  display: flex;
+  justify-content: flex-end;
+  margin-right: 20px;
 }
 
 .tab-reorder {
