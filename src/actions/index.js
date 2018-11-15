@@ -313,7 +313,7 @@ export function refreshRecipientAmounts() {
           Math.round(
             (totalAmount -
               Object.values(newRecipients).reduce((a, b) => parseFloat(a) + parseFloat(b), 0)) *
-              100,
+            100,
           ) / 100;
         const recipientIds = Object.keys(newRecipients);
         const randomId = recipientIds[Math.floor(Math.random() * recipientIds.length)];
@@ -382,7 +382,10 @@ export function settleBalance() {
         'Content-Type': 'application/json',
       },
     })
-      .then((res) => res.json())
+      .then((res) => {
+        dispatch(fetchBalances(payerId));
+        res.json();
+      })
       .catch((error) => console.log(error));
   };
 }
