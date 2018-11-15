@@ -41,7 +41,7 @@ function NewRoundRecipient({
         onClick={handleRoundCounterparts}
         value={recipient}
       >
-        {!Object.keys(recipients).includes(recipient.toString()) ? '+' : 'x'}
+        {!Object.keys(recipients).includes(recipient.toString()) ? '+' : '-'}
       </button>
     </div>
   );
