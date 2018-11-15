@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import TitleBar from './TitleBar';
 import NewRoundRecipient from './NewRoundRecipient';
 import NewRoundCounterpart from './NewRoundCounterpart';
 // import Button from './Button';
@@ -12,7 +11,6 @@ function NewRound({
   getSplitType,
   getNewRound,
   getStage,
-  stage,
   getRecipientAmount,
   handleRoundCounterparts,
   userId,
@@ -24,15 +22,20 @@ function NewRound({
   totalAmount,
   recipients,
 }) {
+  function handleClick() {
+    getStage('balances');
+    resetRound();
+  }
   return (
     <div className="new-round-container">
-      <TitleBar
-        title="New Round"
-        previous="balances"
-        resetRound={resetRound}
-        getStage={getStage}
-        stage={stage}
-      />
+      <div className="title-bar-container">
+        <div className="title-bar">
+          <button className="title-bar__back" type="button" onClick={handleClick}>
+            <i className="fas fa-chevron-left" />
+          </button>
+          <h2 className="title-bar__title">New Round</h2>
+        </div>
+      </div>
       <div className="new-round-content">
         <div className="round-input-container">
           <div className="round-input-container__icon">...</div>
@@ -40,7 +43,7 @@ function NewRound({
             className="round-input-container__input"
             placeholder="Tab Name"
             value={round.roundName}
-            onChange={event => getRoundName(event.target.value)}
+            onChange={(event) => getRoundName(event.target.value)}
           />
         </div>
         <div className="round-input-container">
@@ -50,7 +53,7 @@ function NewRound({
             value={totalAmount}
             placeholder="Total Amount"
             type="number"
-            onChange={event => getAmount(event.target.value)}
+            onChange={(event) => getAmount(event.target.value)}
           />
         </div>
         <div className="round-split">
@@ -103,7 +106,7 @@ function NewRound({
               <input
                 className="new-round__input"
                 value={round.recipients[userId]}
-                onChange={event => getRecipientAmount(userId, event.target.value)}
+                onChange={(event) => getRecipientAmount(userId, event.target.value)}
               />
             ) : (
               <div className="new-round__input">{round.recipients[userId]}</div>
@@ -120,8 +123,8 @@ function NewRound({
         </div>
         {/* RECIPIENTS */}
         {Object.keys(round.recipients)
-          .filter(recipient => Number(recipient) !== userId)
-          .map(recipient => (
+          .filter((recipient) => Number(recipient) !== userId)
+          .map((recipient) => (
             <NewRoundRecipient
               key={recipient}
               counterparts={counterparts}
@@ -134,7 +137,7 @@ function NewRound({
             />
           ))}
 
-        {Object.values(counterparts).map(counterpart => (
+        {Object.values(counterparts).map((counterpart) => (
           <NewRoundCounterpart
             key={counterpart.counterpart_id}
             counterpart={counterpart}
