@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import NewRoundRecipient from './NewRoundRecipient';
 import NewRoundCounterpart from './NewRoundCounterpart';
-// import Button from './Button';
 import '../../styles/components/NewRound.scss';
 
 function NewRound({
@@ -147,11 +146,15 @@ function NewRound({
           />
         ))}
       </div>
-      <div className="button-container">
-        <button type="button" className="new-round-btn" onClick={getNewRound}>
-          OPEN TAB{' '}
-        </button>
-      </div>
+      {round.roundName !== '' &&
+        Object.keys(round.recipients).length &&
+        round.totalAmount !== '' && (
+          <div className="button-container">
+            <button type="button" className="new-round-btn" onClick={getNewRound}>
+              OPEN TAB{' '}
+            </button>
+          </div>
+      )}
     </div>
   );
 }

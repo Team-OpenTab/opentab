@@ -5,7 +5,6 @@ import io from 'socket.io-client';
 import TitleBar from './TitleBar';
 import BalanceItem from './BalanceItem';
 import '../../styles/components/Balances.scss';
-// import CounterpartList from './CounterpartList';
 
 class Balances extends React.Component {
   componentDidMount() {
@@ -19,7 +18,6 @@ class Balances extends React.Component {
   }
 
   componentWillUnmount() {
-    console.log('disconnecting');
     this.socket.disconnect(true);
   }
 

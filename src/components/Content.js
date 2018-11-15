@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-
 import BalancesContainer from '../containers/BalancesContainer';
 import NewRoundContainer from '../containers/NewRoundContainer';
 import LoginContainer from '../containers/LoginContainer';
