@@ -72,7 +72,7 @@ function Tabs({ userId, balance, roundHistory, contactList, reOrderRound, getSta
         })}
       </div>
       <div className="button-container">
-        <button type="button" className="new-round-btn">
+        <button type="button" className="new-round-btn" onClick={() => getStage('newRound')}>
           NEW TAB
         </button>
       </div>
