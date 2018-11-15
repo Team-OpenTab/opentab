@@ -5,7 +5,6 @@ import '../../styles/components/TitleBar.scss';
 
 function TitleBar({ title, previous, getStage, stage, resetRound }) {
   function clickOnBack() {
-    console.log('clicked on back: ', previous);
     getStage(previous);
     resetRound();
   }
