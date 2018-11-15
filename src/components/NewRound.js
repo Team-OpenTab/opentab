@@ -106,7 +106,7 @@ function NewRound({
             onClick={handleRoundCounterparts}
             value={userId}
           >
-            {!Object.keys(recipients).includes(userId.toString()) ? '+' : 'x'}
+            {!Object.keys(recipients).includes(userId.toString()) ? '+' : '-'}
           </button>
         </div>
         {/* RECIPIENTS */}
