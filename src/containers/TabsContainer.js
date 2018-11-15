@@ -7,6 +7,7 @@ const mapStateToProps = (state) => ({
   userId: state.user.id,
   roundHistory: state.round.roundHistory,
   stage: state.stage,
+  balance: state.balances.userBalance,
 });
 
 const mapDispatchToProps = (dispatch) => ({
