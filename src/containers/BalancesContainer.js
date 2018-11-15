@@ -12,7 +12,7 @@ import {
   logoutUser,
 } from '../actions';
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = state => ({
   balances: state.balances,
   payment: state.payment,
   userId: state.user.id,
@@ -20,8 +20,8 @@ const mapStateToProps = (state) => ({
   stage: state.stage,
 });
 
-const mapDispatchToProps = (dispatch) => ({
-  getStage: (stage) => dispatch(setStage(stage)),
+const mapDispatchToProps = dispatch => ({
+  getStage: stage => dispatch(setStage(stage)),
   showPayment: (payment, receiverId) => dispatch(showPayment(payment, receiverId)),
   settleBalance: () => dispatch(settleBalance()),
   fetchBalances: (userId) => dispatch(fetchBalances(userId)),
