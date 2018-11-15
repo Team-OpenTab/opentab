@@ -125,6 +125,16 @@
   }
 }
 
+.payment-btn {
+  padding: 0rem;
+  margin: 1.25rem 1.25rem 0 1.25rem;
+  padding: 0.5rem;
+  border: 1px solid $input-border-color;
+  background-color: $secondary-color;
+  color: white;
+  text-align: center;
+}
+
 .payment--closed {
   display: unset;
 }
