@@ -10,6 +10,8 @@ function payment(state = initialState, action) {
         payment: action.payment,
         receiverId: action.receiverId,
       };
+    case 'RESET_PAYMENT':
+      return initialState;
     default:
       return state;
   }

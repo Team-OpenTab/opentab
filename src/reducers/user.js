@@ -33,6 +33,8 @@ function user(state = initialState, action) {
       return Object.assign({}, state, { loginError: action.loginError });
     case 'SET_NEW_USER_ERROR':
       return Object.assign({}, state, { newUserError: action.newUserError });
+    case 'RESET_USER':
+      return initialState;
     default:
       return state;
   }
