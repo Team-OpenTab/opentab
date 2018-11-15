@@ -19,10 +19,11 @@ function NewRound({
   contacts,
   resetRound,
   getRoundName,
+  user,
   round,
 }) {
   return (
-    <section>
+    <div>
       <TitleBar
         title="New Round"
         previous="balances"
@@ -30,24 +31,24 @@ function NewRound({
         getStage={getStage}
         stage={stage}
       />
-      <div className="new-round-container">
-        <div className="round-name">
-          <div className="round-name__text">...</div>
+      <div className="new-round-content">
+        <div className="round-input-container">
+          <div className="round-input-container__icon">£</div>
           <input
-            className="round-amount__input"
+            className="round-input-container__input"
+            value={totalAmount}
+            placeholder="Total Amount"
+            type="number"
+            onChange={event => getAmount(event.target.value)}
+          />
+        </div>
+        <div className="round-input-container">
+          <div className="round-input-container__icon">...</div>
+          <input
+            className="round-input-container__input"
             placeholder="Tab Name"
             value={round.roundName}
             onChange={(event) => getRoundName(event.target.value)}
-          />
-        </div>
-        <div className="round-amount">
-          <div className="round-amount__currency">£</div>
-          <input
-            className="round-amount__input"
-            value={round.totalAmount}
-            placeholder="Total Amount"
-            type="number"
-            onChange={(event) => getAmount(event.target.value)}
           />
         </div>
         <div className="round-split">
@@ -72,28 +73,34 @@ function NewRound({
             <label htmlFor="radio2">Split Manually</label>
           </div>
         </div>
-      </div>
-      <div className="new-round__users">
-        <div className="new-round__counterpart">
-          <h3 className="new-round__counterpart-name">You</h3>
-          <button
-            className="new-round__add-remove-counterpart-button"
-            type="button"
-            onClick={handleRoundCounterparts}
-            value={userId}
-          >
-            {!Object.keys(round.recipients).includes(userId.toString()) ? 'Add' : 'Remove'}
-          </button>
-          {Object.keys(round.recipients).includes(userId.toString()) &&
+        <div className="new-round-recipient-container">
+          <div className="user-container">
+            <img className="user-container__avatar" src={user.avatar} alt="avatar" />
+
+            <h3 className="user-container__name">You</h3>
+          </div>
+
+          {!Object.keys(round.recipients).includes(userId.toString()) && <p>£&nbsp;</p>}
+
+          {!Object.keys(round.recipients).includes(userId.toString()) &&
             (round.splitType === 'manual' ? (
               <input
                 className="new-round__input"
                 value={round.recipients[userId]}
-                onChange={(event) => getRecipientAmount(userId, event.target.value)}
+                onChange={event => getRecipientAmount(userId, event.target.value)}
               />
             ) : (
-              <p className="new-round__even-amount">{round.recipients[userId]}</p>
+              <div className="new-round__input">{round.recipients[userId]}</div>
             ))}
+
+          <button
+            className="new-round-add-remove-btn"
+            type="button"
+            onClick={handleRoundCounterparts}
+            value={userId}
+          >
+            {!Object.keys(recipients).includes(userId.toString()) ? '+' : 'x'}
+          </button>
         </div>
         {/* RECIPIENTS */}
         {Object.keys(round.recipients)
@@ -111,7 +118,7 @@ function NewRound({
             />
           ))}
 
-        {Object.values(counterparts).map((counterpart) => (
+        {Object.values(counterparts).map(counterpart => (
           <NewRoundCounterpart
             key={counterpart.counterpart_id}
             counterpart={counterpart}
@@ -121,10 +128,11 @@ function NewRound({
           />
         ))}
       </div>
-      <button type="button" className="buy-round-btn" onClick={getNewRound}>
+
+      <button type="button" className="new-round-btn" onClick={getNewRound}>
         BUY ROUND{' '}
       </button>
-    </section>
+    </div>
   );
 }
 NewRound.propTypes = {
@@ -140,6 +148,7 @@ NewRound.propTypes = {
   contacts: PropTypes.array.isRequired,
   getRoundName: PropTypes.func.isRequired,
   resetRound: PropTypes.func.isRequired,
+  user: PropTypes.object.isRequired,
   round: PropTypes.object.isRequired,
 };
 
