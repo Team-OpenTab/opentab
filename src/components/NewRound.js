@@ -21,6 +21,8 @@ function NewRound({
   getRoundName,
   user,
   round,
+  totalAmount,
+  recipients,
 }) {
   return (
     <div>
@@ -48,7 +50,7 @@ function NewRound({
             className="round-input-container__input"
             placeholder="Tab Name"
             value={round.roundName}
-            onChange={(event) => getRoundName(event.target.value)}
+            onChange={event => getRoundName(event.target.value)}
           />
         </div>
         <div className="round-split">
@@ -104,8 +106,8 @@ function NewRound({
         </div>
         {/* RECIPIENTS */}
         {Object.keys(round.recipients)
-          .filter((recipient) => Number(recipient) !== userId)
-          .map((recipient) => (
+          .filter(recipient => Number(recipient) !== userId)
+          .map(recipient => (
             <NewRoundRecipient
               key={recipient}
               counterparts={counterparts}
@@ -150,6 +152,8 @@ NewRound.propTypes = {
   resetRound: PropTypes.func.isRequired,
   user: PropTypes.object.isRequired,
   round: PropTypes.object.isRequired,
+  totalAmount: PropTypes.string.isRequired,
+  recipients: PropTypes.object.isRequired,
 };
 
 export default NewRound;
