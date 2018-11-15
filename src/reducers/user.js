@@ -28,7 +28,9 @@ function user(state = initialState, action) {
     case 'SET_USER_TYPE':
       return Object.assign({}, state, { userType: action.userType });
     case 'SET_VALIDATION_PASSWORD':
-      return Object.assign({}, state, { validationPassword: action.validationPassword });
+      return Object.assign({}, state, {
+        validationPassword: action.validationPassword,
+      });
     case 'SET_LOGIN_ERROR':
       return Object.assign({}, state, { loginError: action.loginError });
     case 'SET_NEW_USER_ERROR':

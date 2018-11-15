@@ -9,6 +9,7 @@ describe('round reducer', () => {
       totalAmount: '',
       splitType: 'even',
       roundHistory: [],
+      roundName: '',
     };
   });
   it('sets round buyer with provided userId', () => {
@@ -20,6 +21,15 @@ describe('round reducer', () => {
 
     const outputState = round(initialState, action);
     expect(outputState.buyerId).toEqual(expectedState.buyerId);
+  });
+  it('sets round name with provided string', () => {
+    const action = {
+      type: 'SET_ROUND_NAME',
+      roundName: 'test',
+    };
+    const expectedState = { roundName: 'test' };
+    const outputState = round(initialState, action);
+    expect(outputState.roundName).toEqual(expectedState.roundName);
   });
   it('adds totalAmount to store', () => {
     const action = {
@@ -57,6 +67,24 @@ describe('round reducer', () => {
     const outputState = round(initialStateWithCounterpart, action);
 
     expect(outputState.recipients).toEqual(expectedState.recipients);
+  });
+  it('sets split type in store', () => {
+    const action = {
+      type: 'SET_SPLIT_TYPE',
+      splitType: 'even',
+    };
+    const expectedState = { splitType: 'even' };
+    const outputState = round(initialState, action);
+    expect(outputState.splitType).toEqual(expectedState.splitType);
+  });
+  it('sets round history in state', () => {
+    const action = {
+      type: 'SET_ROUND_HISTORY',
+      roundHistory: [{ roundId: 1 }],
+    };
+    const expectedState = { roundHistory: [{ roundId: 1 }] };
+    const outputState = round(initialState, action);
+    expect(outputState.roundHistory).toEqual(expectedState.roundHistory);
   });
   it('resets round to initial object', () => {
     const action = {
