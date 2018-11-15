@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import '../../styles/components/NewRoundCounterpart.scss';
+import '../../styles/components/NewRound.scss';
 
 function NewRoundCounterpart({ counterpart, recipients, handleRoundCounterparts, contacts }) {
   // console.log(contacts[counterpart.counterpart_id].avatar);
@@ -9,20 +9,20 @@ function NewRoundCounterpart({ counterpart, recipients, handleRoundCounterparts,
     <div>
       {!Object.keys(recipients).includes(counterpart.counterpart_id.toString()) && (
         <div className="new-round-counterpart-container">
-          <div className="counterpart-contact">
+          <div className="user-container">
             <img
-              className="counterpart-contact__avatar"
+              className="user-container__avatar"
               src={
                 contacts[contacts.findIndex(x => x.contact_id === counterpart.counterpart_id)]
                   .avatar
               }
               alt="avatar"
             />
-            <h3 className="counterpart-contact__name">{counterpart.username}</h3>
+            <h3 className="user-container__name">{counterpart.username}</h3>
           </div>
 
           <button
-            className="new-round-counterpart-btn"
+            className="new-round-add-remove-btn"
             type="button"
             onClick={handleRoundCounterparts}
             value={counterpart.counterpart_id}
