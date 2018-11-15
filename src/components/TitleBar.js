@@ -29,9 +29,14 @@ function TitleBar({ title, previous, getStage, stage, resetRound }) {
   return (
     <div className="title-bar-container">
       <div className="title-bar">
-        <p className="title-bar__back" onClick={() => clickOnBack()}>
-          {'<'}
-        </p>
+        {stage === 'newRound' ? (
+          <p className="title-bar__back" onClick={() => clickOnBack()}>
+            {'<'}
+          </p>) :
+          (
+            <p className="title-bar__back">
+              {'Log out'}
+            </p>)}
         <h2 className="title-bar__title">{title}</h2>
         <p className="title-bar__menu" onClick={() => clickOnMenu()} />{' '}
       </div>
