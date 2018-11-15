@@ -23,6 +23,18 @@
     border: none;
   }
 
+  &__logout {
+    cursor: pointer;
+    font-size: 1.5em;
+    font-weight: 900;
+    padding-right: 1.25rem;
+    position: fixed;
+    top: 15px;
+    background: transparent;
+    border: none;
+    transform: rotate(180deg);
+  }
+
   &__title {
     flex: 1;
     text-align: center;
