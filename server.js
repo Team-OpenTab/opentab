@@ -56,29 +56,31 @@ app.post('/api/new-user', (req, res) => {
 
 app.post('/api/login', (req, res) => {
   const { email, password } = req.body;
-  db.oneOrNone('SELECT * FROM "user" WHERE email = $1', [email]).then((user) => {
-    if (!user) {
-      res.status(404).json({
-        status: 404,
-        message: 'Incorrect e-mail',
-      });
-    } else {
-      bcrypt.compare(password, user.password, (err, result) => {
-        if (result) {
-          res.json({
-            status: 200,
-            data: user,
-          });
-        } else {
-          res.status(401).json({
-            status: 401,
-            message: 'Incorrect password',
-            details: err,
-          });
-        }
-      });
-    }
-  });
+  db.oneOrNone('SELECT * FROM "user" WHERE email = $1', [email])
+    .then((user) => {
+      if (!user) {
+        res.status(404).json({
+          status: 404,
+          message: 'Incorrect e-mail',
+        });
+      } else {
+        bcrypt.compare(password, user.password, (err, result) => {
+          if (result) {
+            res.json({
+              status: 200,
+              data: user,
+            });
+          } else {
+            res.status(401).json({
+              status: 401,
+              message: 'Incorrect password',
+              details: err,
+            });
+          }
+        });
+      }
+    })
+    .catch((error) => console.log(error));
 });
 
 app.post('/api/new-round', (req, res) => {
@@ -132,12 +134,13 @@ app.post('/api/new-round', (req, res) => {
     })
     .then((data) => {
       const roundId = data[0].round_id;
-      io.emit('refresh');
       res.json({
         status: 200,
         data: { roundId },
       });
-    });
+    })
+    .then(() => io.emit('refresh'))
+    .catch((error) => console.log(error));
 });
 
 app.get('/api/get-balances/:userId', (req, res) => {
@@ -163,21 +166,23 @@ app.get('/api/get-balances/:userId', (req, res) => {
     )
     `,
     [userId],
-  ).then((data) => {
-    if (!data.length) {
-      res.status(404).json({
-        status: 404,
-        message: 'No data available',
-      });
-    } else {
-      const balances = {};
-      data.map((balance) => Object.assign(balances, { [balance.counterpart_id]: balance }));
-      res.json({
-        status: 200,
-        data: { balances },
-      });
-    }
-  });
+  )
+    .then((data) => {
+      if (!data.length) {
+        res.status(404).json({
+          status: 404,
+          message: 'No data available',
+        });
+      } else {
+        const balances = {};
+        data.map((balance) => Object.assign(balances, { [balance.counterpart_id]: balance }));
+        res.json({
+          status: 200,
+          data: { balances },
+        });
+      }
+    })
+    .catch((error) => console.log(error));
 });
 
 app.post('/api/approve-contact', (req, res) => {
@@ -191,12 +196,14 @@ app.post('/api/approve-contact', (req, res) => {
     RETURNING approved;
     `,
     [userId, contactId],
-  ).then((data) => {
-    res.json({
-      status: 200,
-      data,
-    });
-  });
+  )
+    .then((data) => {
+      res.json({
+        status: 200,
+        data,
+      });
+    })
+    .catch((error) => console.log(error));
 });
 
 app.get('/api/get-contacts/:userId', (req, res) => {
@@ -209,19 +216,21 @@ app.get('/api/get-contacts/:userId', (req, res) => {
     AND user_id = $1;
     `,
     [userId],
-  ).then((data) => {
-    if (!data.length) {
-      res.status(404).json({
-        status: 404,
-        message: 'No data available',
-      });
-    } else {
-      res.json({
-        status: 200,
-        data,
-      });
-    }
-  });
+  )
+    .then((data) => {
+      if (!data.length) {
+        res.status(404).json({
+          status: 404,
+          message: 'No data available',
+        });
+      } else {
+        res.json({
+          status: 200,
+          data,
+        });
+      }
+    })
+    .catch((error) => console.log(error));
 });
 
 app.get('/api/get-contact/:username', (req, res) => {
@@ -233,19 +242,21 @@ app.get('/api/get-contact/:username', (req, res) => {
     WHERE lower(username) LIKE $1;
     `,
     [username],
-  ).then((user) => {
-    if (!user.length) {
-      res.status(404).json({
-        status: 404,
-        message: 'User not found',
-      });
-    } else {
-      res.json({
-        status: 200,
-        data: { user },
-      });
-    }
-  });
+  )
+    .then((user) => {
+      if (!user.length) {
+        res.status(404).json({
+          status: 404,
+          message: 'User not found',
+        });
+      } else {
+        res.json({
+          status: 200,
+          data: { user },
+        });
+      }
+    })
+    .catch((error) => console.log(error));
 });
 
 app.post('/api/add-contact', (req, res) => {
@@ -267,7 +278,6 @@ app.post('/api/add-contact', (req, res) => {
     ),
   ])
     .then(() => {
-      io.emit('refresh');
       res.json({ status: 200 });
     })
     .catch((error) =>
@@ -296,9 +306,9 @@ app.post('/api/make-payment', (req, res) => {
     ),
   ])
     .then(() => {
-      io.emit('refresh');
       res.json({ status: 200 });
     })
+    .then(() => io.emit('refresh'))
     .catch((error) =>
       res.status(400).json({
         status: 400,
@@ -320,7 +330,7 @@ app.get('/api/get-rounds/:userId', (req, res) => {
       const promisesArray = response.map((round) =>
         db.any(
           `
-          SELECT transaction.id, transaction.user_id, transaction.counterpart_id, 
+          SELECT transaction.id, transaction.user_id, transaction.counterpart_id,
             transaction.round_id, transaction.amount, transaction.type, round.name, transaction.time
           FROM transaction, round
           WHERE round_id = ${round.round_id}
@@ -358,7 +368,8 @@ app.get('/api/get-rounds/:userId', (req, res) => {
         })
         .sort((a, b) => new Date(b.roundTime) - new Date(a.roundTime));
       res.json(roundStore);
-    });
+    })
+    .catch((error) => console.log(error));
 });
 
 server.listen(process.env.PORT || 8080, () => {

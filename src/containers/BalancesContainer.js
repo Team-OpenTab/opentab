@@ -9,15 +9,14 @@ import {
   addContact,
   approveContact,
   fetchRoundHistory,
+  logoutUser,
 } from '../actions';
 
 const mapStateToProps = state => ({
   balances: state.balances,
   payment: state.payment,
   userId: state.user.id,
-  contactList: state.contacts.contactList,
-  contactSearchResults: state.contacts.search.searchResults,
-  contactSearchString: state.contacts.search.searchString,
+  contacts: state.contacts,
   stage: state.stage,
 });
 
@@ -30,6 +29,7 @@ const mapDispatchToProps = dispatch => ({
   addContact: contactId => dispatch(addContact(contactId)),
   approveContact: contactId => dispatch(approveContact(contactId)),
   fetchRoundHistory: userId => dispatch(fetchRoundHistory(userId)),
+  logoutUser: () => dispatch(logoutUser()),
 });
 
 export default connect(

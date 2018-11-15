@@ -1,11 +1,24 @@
 @import "../main";
+@import "./NewRound";
+
+.balances-container {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.balances-content {
+  padding: $page-margin;
+  overflow: scroll;
+  flex: 1;
+}
 
 .balances__search {
   width: 100%;
   padding: 1em;
   font-size: 1em;
   border: 0;
-  border-bottom: 1px solid #d1d1d1;
+  border-bottom: 1px solid $line-color;
   text-align: center;
 }
 
@@ -48,16 +61,19 @@
   display: flex;
   justify-content: space-around;
   align-items: center;
-  padding: 1em;
-  background-color: $card-background-color;
-  border-bottom: 2px solid #d1d1d1;
+  border-bottom: 1px solid $line-color;
+
   &__name {
+    @extend .user-container;
     flex: 1;
+    flex-direction: row;
     font-weight: 600;
   }
+
   &__balance {
     padding: 0 15px;
     flex: 1;
+
     &--red {
       color: rgb(141, 34, 34);
     }
@@ -70,7 +86,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: $card-background-color;
+    background-color: $background-color;
     border: none;
     padding: 0;
     flex: 1;
@@ -79,11 +95,11 @@
     padding: 0;
     display: flex;
     align-items: center;
-    background-color: $card-background-color;
+    background-color: $background-color;
     border: none;
   }
   &__arrow {
-    height: 35px;
+    height: 30px;
   }
 }
 
@@ -118,18 +134,24 @@
 }
 
 .payment-btn {
-  // width: 100%;
   padding: 0rem;
   margin: 1.25rem 1.25rem 0 1.25rem;
   padding: 0.5rem;
   border: 1px solid $input-border-color;
-  background-color: $primary-color;
+  background-color: $secondary-color;
   color: white;
   text-align: center;
 }
 
 .payment--closed {
   display: unset;
+}
+
+.button-container {
+  display: inline-block;
+  margin: 0;
+  padding: 0;
+  width: 100%;
 }
 
 .new-round-btn {
@@ -139,8 +161,6 @@
   color: #fff;
   border: none;
   padding: 1em;
-  position: absolute;
-  bottom: 0;
 }
 
 @media screen and (min-width: 768px) {

@@ -159,6 +159,53 @@ export function createNewUser() {
   };
 }
 
+export function resetStage() {
+  return {
+    type: 'RESET_STAGE',
+  };
+}
+
+export function resetBalances() {
+  return {
+    type: 'RESET_BALANCES',
+  };
+}
+
+export function resetContacts() {
+  return {
+    type: 'RESET_CONTACTS',
+  };
+}
+
+export function resetPayment() {
+  return {
+    type: 'RESET_PAYMENT',
+  };
+}
+
+export function resetUser() {
+  return {
+    type: 'RESET_USER',
+  };
+}
+
+export function resetRound() {
+  return {
+    type: 'RESET_ROUND',
+  };
+}
+
+export function logoutUser() {
+  return (dispatch) => {
+    dispatch(resetStage());
+    dispatch(resetUser());
+    dispatch(resetContacts());
+    dispatch(resetBalances());
+    dispatch(resetPayment());
+    dispatch(resetRound());
+  };
+}
+
 // ROUND ACTIONS
 
 export function setRoundBuyer(buyerId) {
@@ -203,12 +250,6 @@ export function removeRecipient(recipient) {
   return {
     type: 'REMOVE_RECIPIENT',
     recipient,
-  };
-}
-
-export function resetRound() {
-  return {
-    type: 'RESET_ROUND',
   };
 }
 
@@ -272,7 +313,7 @@ export function refreshRecipientAmounts() {
           Math.round(
             (totalAmount -
               Object.values(newRecipients).reduce((a, b) => parseFloat(a) + parseFloat(b), 0)) *
-              100,
+            100,
           ) / 100;
         const recipientIds = Object.keys(newRecipients);
         const randomId = recipientIds[Math.floor(Math.random() * recipientIds.length)];
@@ -341,7 +382,10 @@ export function settleBalance() {
         'Content-Type': 'application/json',
       },
     })
-      .then((res) => res.json())
+      .then((res) => {
+        dispatch(fetchBalances(payerId));
+        res.json();
+      })
       .catch((error) => console.log(error));
   };
 }
@@ -446,6 +490,7 @@ export function reOrder(round) {
     dispatch(setRoundBuyer(userId));
     dispatch(setRecipients(counterparts));
     dispatch(setAmount(roundTotal));
+    dispatch(setRoundName(round.roundName));
     dispatch(setStage('newRound'));
   };
 }

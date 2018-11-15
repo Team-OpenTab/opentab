@@ -11,11 +11,16 @@ class Balances extends React.Component {
   componentDidMount() {
     this.props.fetchBalances(this.props.userId);
     this.props.fetchRoundHistory(this.props.userId);
-    const socket = io(window.location.origin);
-    socket.on('refresh', () => {
+    this.socket = io(window.location.origin);
+    this.socket.on('refresh', () => {
       this.props.fetchBalances(this.props.userId);
       this.props.fetchRoundHistory(this.props.userId);
     });
+  }
+
+  componentWillUnmount() {
+    console.log('disconnecting');
+    this.socket.disconnect(true);
   }
 
   paymentClassName(close) {
@@ -31,7 +36,6 @@ class Balances extends React.Component {
     }
   }
 
-  // TODO: Send post request to clear balances.
   markPaid() {
     this.props.settleBalance();
     this.props.showPayment(false, null);
@@ -41,86 +45,96 @@ class Balances extends React.Component {
 
   // Can payment modal be seperated into a new component?
   render() {
-    const friendRequests = this.props.contactList
+    const friendRequests = this.props.contacts.contactList
       .filter(contact => !contact.approved)
       .map(contact => contact.contact_id);
 
     return (
-      <div>
+      <div className="balances-container">
         <TitleBar
           title={`Balance: £${this.props.balances.userBalance.toFixed(2)}`}
           previous="login"
           getStage={this.props.getStage}
           stage={this.props.stage}
+          logoutUser={this.props.logoutUser}
         />
-        <div className="balances__add-contact">
-          <input
-            className="balances__search"
-            type="text"
-            placeholder="Search for contacts..."
-            onChange={this.props.handleContactSearch}
-            value={this.props.contactSearchString}
-          />
-          <ul className="balances__contact-list">
-            {this.props.contactSearchResults.map(result => (
-              <div key={result.id} className="balances__contact-item">
-                <li className="balances__contact-item__user">{result.username}</li>
-                <button
-                  className="balances__contact-item__button"
-                  type="button"
-                  onClick={() => this.props.addContact(result.id)}
-                >
-                  Add to contacts
-                </button>
-              </div>
-            ))}
-          </ul>
-        </div>
-        {!Object.keys(this.props.balances.counterpartBalances).length && (
-          <div className="lonely-message">
-            It feels lonely in here... Add your friends by searching above!
-          </div>
-        )}
-        <div className="counterpart-list">
-          {Object.keys(this.props.balances.counterpartBalances).map(key => (
-            <BalanceItem
-              key={key}
-              contactId={key}
-              contact={this.props.balances.counterpartBalances[key]}
-              friendRequests={friendRequests}
-              approveContact={this.props.approveContact}
-              showPayment={this.props.showPayment}
+        <div className="balances-content">
+          <div className="balances__add-contact">
+            <input
+              className="balances__search"
+              type="text"
+              placeholder="Search for contacts..."
+              onChange={this.props.handleContactSearch}
+              value={this.props.contacts.search.searchString}
             />
-          ))}
-        </div>
+            <ul className="balances__contact-list">
+              {this.props.contacts.search.searchResults.map(result => (
+                <div key={result.id} className="balances__contact-item">
+                  <li className="balances__contact-item__user">{result.username}</li>
+                  <button
+                    className="balances__contact-item__button"
+                    type="button"
+                    onClick={() => this.props.addContact(result.id)}
+                  >
+                    Add to contacts
+                  </button>
+                </div>
+              ))}
+            </ul>
+          </div>
+          {!Object.keys(this.props.balances.counterpartBalances).length && (
+            <div className="lonely-message">
+              It feels lonely in here... Add your friends by searching above!
+            </div>
+          )}
+          <div className="counterpart-list">
+            {Object.keys(this.props.balances.counterpartBalances).map(key => (
+              <BalanceItem
+                key={key}
+                contactId={key}
+                contact={this.props.balances.counterpartBalances[key]}
+                friendRequests={friendRequests}
+                approveContact={this.props.approveContact}
+                showPayment={this.props.showPayment}
+                contacts={this.props.contacts}
+              />
+            ))}
+          </div>
 
-        <div
-          className={this.paymentClassName()}
-          role="dialog"
-          onClick={event => this.showModal(event)}
-        >
-          <div className="payment__content">
-            <button className="payment-btn" type="button" onClick={() => this.markPaid()}>
-              Mark Paid
-            </button>
-            {this.props.payment.receiverId &&
-              this.props.balances.counterpartBalances[this.props.payment.receiverId].sum < 0 && (
-                <button className="payment-btn" type="button" onClick={() => this.requestPayment()}>
-                  Request Payment
-                </button>
-            )}
-            <p onClick={() => this.props.showPayment(false, null)}>CLOSE</p>
+          <div
+            className={this.paymentClassName()}
+            role="dialog"
+            onClick={event => this.showModal(event)}
+          >
+            <div className="payment__content">
+              <button className="payment-btn" type="button" onClick={() => this.markPaid()}>
+                Mark Paid
+              </button>
+              {this.props.payment.receiverId &&
+                this.props.balances.counterpartBalances[this.props.payment.receiverId].sum < 0 && (
+                  <button
+                    className="payment-btn"
+                    type="button"
+                    onClick={() => this.requestPayment()}
+                  >
+                    Request Payment
+                  </button>
+              )}
+              <p onClick={() => this.props.showPayment(false, null)}>CLOSE</p>
+            </div>
           </div>
         </div>
-
         {/* <CounterpartList users={users} balances={balances} /> */}
-        <button
-          type="button"
-          className="new-round-btn"
-          onClick={() => this.props.getStage('newRound')}
-        >
-          NEW ROUND
-        </button>
+        <div className="button-container">
+          {' '}
+          <button
+            type="button"
+            className="new-round-btn"
+            onClick={() => this.props.getStage('newRound')}
+          >
+            NEW TAB
+          </button>
+        </div>
       </div>
     );
   }
@@ -136,13 +150,12 @@ Balances.propTypes = {
   settleBalance: PropTypes.func.isRequired,
   fetchBalances: PropTypes.func.isRequired,
   handleContactSearch: PropTypes.func.isRequired,
-  contactSearchResults: PropTypes.array.isRequired,
   addContact: PropTypes.func.isRequired,
-  contactSearchString: PropTypes.string.isRequired,
   stage: PropTypes.string.isRequired,
-  contactList: PropTypes.array.isRequired,
+  contacts: PropTypes.object.isRequired,
   approveContact: PropTypes.func.isRequired,
   fetchRoundHistory: PropTypes.func.isRequired,
+  logoutUser: PropTypes.func.isRequired,
 };
 
 export default Balances;
