@@ -51,6 +51,7 @@ class Balances extends React.Component {
           previous="login"
           getStage={this.props.getStage}
           stage={this.props.stage}
+          logoutUser={this.props.logoutUser}
         />
         <div className="balances-content">
           <div className="balances__add-contact">
@@ -146,6 +147,7 @@ Balances.propTypes = {
   contacts: PropTypes.object.isRequired,
   approveContact: PropTypes.func.isRequired,
   fetchRoundHistory: PropTypes.func.isRequired,
+  logoutUser: PropTypes.func.isRequired,
 };
 
 export default Balances;

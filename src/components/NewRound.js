@@ -62,7 +62,9 @@ function NewRound({
               checked={round.splitType === 'even'}
               onChange={() => getSplitType('even')}
             />
-            <label htmlFor="radio1">Split Evenly</label>
+            <label className="split-label" htmlFor="radio1">
+              Split Evenly
+            </label>
           </div>
           <div className="round-split__manually">
             <input
@@ -72,7 +74,9 @@ function NewRound({
               checked={round.splitType === 'manual'}
               onChange={() => getSplitType('manual')}
             />
-            <label htmlFor="radio2">Split Manually</label>
+            <label className="split-label" htmlFor="radio2">
+              Split Manually
+            </label>
           </div>
         </div>
 

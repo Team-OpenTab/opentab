@@ -70,6 +70,7 @@
     min-width: 50px;
     border-radius: 50%;
     margin: auto;
+    margin-left: 0.5em;
   }
 
   &__name {
@@ -86,9 +87,14 @@
   flex: 1;
   height: 40px;
   max-width: 40px;
-  font-size: 1.2em;
+  font-size: 1.4em;
   font-weight: 900;
+  border-radius: 50%;
+  background-color: $secondary-color;
+  border: none;
+  color: $button-color-light;
   margin-left: $page-margin;
+  margin-right: 1em;
 }
 
 .new-round__input {

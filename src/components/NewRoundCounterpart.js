@@ -3,8 +3,6 @@ import PropTypes from 'prop-types';
 import '../../styles/components/NewRound.scss';
 
 function NewRoundCounterpart({ counterpart, recipients, handleRoundCounterparts, contacts }) {
-  // console.log(contacts[counterpart.counterpart_id].avatar);
-  console.log('@', contacts.findIndex(x => x.contact_id === 5));
   return (
     <div>
       {!Object.keys(recipients).includes(counterpart.counterpart_id.toString()) && (

@@ -24,6 +24,8 @@ function contacts(state = initialState, action) {
       });
     case 'RESET_CONTACT_SEARCH':
       return Object.assign({}, state, { search: { searchString: '', searchResults: [] } });
+    case 'RESET_CONTACTS':
+      return initialState;
     default:
       return state;
   }

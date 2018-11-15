@@ -26,7 +26,7 @@ function round(state = initialState, action) {
     case 'SET_RECIPIENTS':
       return Object.assign({}, state, { recipients: action.recipients });
     case 'RESET_ROUND':
-      return Object.assign({}, initialState);
+      return initialState;
     case 'SET_AMOUNT':
       return Object.assign({}, state, { totalAmount: action.totalAmount });
     case 'SET_SPLIT_TYPE':
@@ -34,7 +34,6 @@ function round(state = initialState, action) {
     case 'SET_ROUND_HISTORY':
       return Object.assign({}, state, { roundHistory: action.roundHistory });
     case 'REORDER_ROUND':
-      console.log(action.round);
       return state;
     default:
       return state;

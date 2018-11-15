@@ -9,6 +9,7 @@ import {
   addContact,
   approveContact,
   fetchRoundHistory,
+  logoutUser,
 } from '../actions';
 
 const mapStateToProps = state => ({
@@ -23,11 +24,12 @@ const mapDispatchToProps = dispatch => ({
   getStage: stage => dispatch(setStage(stage)),
   showPayment: (payment, receiverId) => dispatch(showPayment(payment, receiverId)),
   settleBalance: () => dispatch(settleBalance()),
-  fetchBalances: userId => dispatch(fetchBalances(userId)),
-  handleContactSearch: event => dispatch(handleContactSearch(event.target.value)),
-  addContact: contactId => dispatch(addContact(contactId)),
-  approveContact: contactId => dispatch(approveContact(contactId)),
-  fetchRoundHistory: userId => dispatch(fetchRoundHistory(userId)),
+  fetchBalances: (userId) => dispatch(fetchBalances(userId)),
+  handleContactSearch: (event) => dispatch(handleContactSearch(event.target.value)),
+  addContact: (contactId) => dispatch(addContact(contactId)),
+  approveContact: (contactId) => dispatch(approveContact(contactId)),
+  fetchRoundHistory: (userId) => dispatch(fetchRoundHistory(userId)),
+  logoutUser: () => dispatch(logoutUser()),
 });
 
 export default connect(
