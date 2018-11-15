@@ -35,6 +35,15 @@ function NewRound({
       />
       <div className="new-round-content">
         <div className="round-input-container">
+          <div className="round-input-container__icon">...</div>
+          <input
+            className="round-input-container__input"
+            placeholder="Tab Name"
+            value={round.roundName}
+            onChange={event => getRoundName(event.target.value)}
+          />
+        </div>
+        <div className="round-input-container">
           <div className="round-input-container__icon">£</div>
           <input
             className="round-input-container__input"
@@ -42,15 +51,6 @@ function NewRound({
             placeholder="Total Amount"
             type="number"
             onChange={event => getAmount(event.target.value)}
-          />
-        </div>
-        <div className="round-input-container">
-          <div className="round-input-container__icon">...</div>
-          <input
-            className="round-input-container__input"
-            placeholder="Tab Name"
-            value={round.roundName}
-            onChange={event => getRoundName(event.target.value)}
           />
         </div>
         <div className="round-split">
