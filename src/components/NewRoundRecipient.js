@@ -12,7 +12,7 @@ function NewRoundRecipient({
   contacts,
 }) {
   return (
-    <div className="new-round-recipient-container">
+    <div className="new-round-recipient-container user-added">
       <div className="user-container">
         <img
           className="user-container__avatar"
