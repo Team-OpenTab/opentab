@@ -64,10 +64,20 @@ function Tabs({ userId, balance, roundHistory, contactList, reOrderRound, getSta
               <p className="tab__payees">
                 {crossReference(round.counterparts, roundHistory.indexOf(round))}
               </p>
-              <p className="tab-footer__date" />
-              <button className="tab-footer__btn" onClick={() => reOrderRound(round)} type="button">
-                <img className="tab-reorder" alt="re-order" src="../../static/images/reorder.png" />
-              </button>
+              <span className="tab-footer-container">
+                <p className="tab-footer__date" />
+                <button
+                  className="tab-footer-container__btn"
+                  onClick={() => reOrderRound(round)}
+                  type="button"
+                >
+                  <img
+                    className="tab-reorder"
+                    alt="re-order"
+                    src="../../static/images/reorder.png"
+                  />
+                </button>
+              </span>
             </div>
           );
         })}
