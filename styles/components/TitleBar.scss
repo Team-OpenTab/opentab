@@ -17,11 +17,36 @@
     font-size: 1.5em;
     font-weight: 900;
     padding-left: 1.25rem;
+    position: fixed;
+    top: 15px;
+    background: transparent;
+    border: none;
+
+    &:focus {
+      outline: 0;
+    }
+  }
+
+  &__logout {
+    cursor: pointer;
+    font-size: 1.5em;
+    font-weight: 900;
+    padding-right: 1.25rem;
+    position: fixed;
+    top: 15px;
+    background: transparent;
+    border: none;
+    transform: rotate(180deg);
+
+    &:focus {
+      outline: 0;
+    }
   }
 
   &__title {
     flex: 1;
     text-align: center;
+    font-size: 1.3rem;
   }
 
   &__menu {
@@ -46,7 +71,8 @@
   }
 
   &__balances--active {
-    border-bottom: 2px solid #ffdf8c;
+    border-bottom: 2px solid #f5ac68;
+    font-weight: 800;
   }
 
   &__tabs {
@@ -58,6 +84,7 @@
   }
 
   &__tabs--active {
-    border-bottom: 2px solid #ffdf8c;
+    border-bottom: 2px solid #f5ac68;
+    font-weight: 800;
   }
 }
