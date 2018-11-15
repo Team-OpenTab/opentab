@@ -23,7 +23,11 @@ function BalanceItem({
           src={
             contacts.contactList[
               contacts.contactList.findIndex(x => x.contact_id === Number(contactId))
-            ].avatar
+            ] !== undefined
+              ? contacts.contactList[
+                contacts.contactList.findIndex(x => x.contact_id === Number(contactId))
+              ].avatar
+              : null
           }
           alt="avatar"
         />
