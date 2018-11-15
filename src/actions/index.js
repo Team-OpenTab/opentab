@@ -272,7 +272,7 @@ export function refreshRecipientAmounts() {
           Math.round(
             (totalAmount -
               Object.values(newRecipients).reduce((a, b) => parseFloat(a) + parseFloat(b), 0)) *
-              100,
+            100,
           ) / 100;
         const recipientIds = Object.keys(newRecipients);
         const randomId = recipientIds[Math.floor(Math.random() * recipientIds.length)];
@@ -446,6 +446,7 @@ export function reOrder(round) {
     dispatch(setRoundBuyer(userId));
     dispatch(setRecipients(counterparts));
     dispatch(setAmount(roundTotal));
+    dispatch(setRoundName(round.roundName));
     dispatch(setStage('newRound'));
   };
 }
