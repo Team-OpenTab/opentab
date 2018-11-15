@@ -1,4 +1,4 @@
-@import "../main";
+@import '../main';
 
 .tabs-container {
   height: 100vh;
@@ -21,25 +21,48 @@
 
   &__name {
     margin: 0;
+    font-size: 1.2rem;
   }
 
   &__title {
     margin: 0;
   }
-}
 
-.tab-footer-container {
-  padding-top: 1rem;
-  align-items: center;
-  display: flex;
-  justify-content: space-between;
-  border-top: 1px solid $line-color;
-
-  &__date {
-    margin: 0;
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid $line-color;
   }
 
-  &__btn {
+  &__payer {
+    margin-bottom: 0.5rem;
+    font-size: 0.9rem;
+  }
+
+  &__payees {
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+    font-size: 0.9rem;
+  }
+
+  &__label {
+    margin-top: 3px;
+  }
+
+  &__date {
+    padding: 3px 0 3px 0;
+    margin: 0;
+    font-size: 0.8rem;
+  }
+
+  &__reorder {
+    max-height: 35px;
+    max-width: 35px;
+  }
+
+  &__button {
     border: none;
     background: $secondary-color;
     color: $text-color-light;
@@ -49,9 +72,4 @@
     justify-content: center;
     border-radius: 50%;
   }
-}
-
-.tab-reorder {
-  max-height: 35px;
-  max-width: 35px;
 }
