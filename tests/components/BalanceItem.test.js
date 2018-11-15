@@ -13,6 +13,7 @@ function setup() {
     friendRequests: [1],
     approveContact: jest.fn(),
     showPayment: jest.fn(),
+    contacts: {},
   };
   const wrapper = shallow(<BalanceItem {...props} />);
 

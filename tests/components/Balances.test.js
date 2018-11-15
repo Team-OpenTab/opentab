@@ -22,7 +22,8 @@ function setup() {
     addContact: jest.fn(),
     approveContact: jest.fn(),
     fetchRoundHistory: jest.fn(),
-    contactList: [],
+    logoutUser: jest.fn(),
+    contacts: { search: { searchString: '', searchResults: [] }, contactList: [] },
   };
 
   const wrapper = shallow(<Balances {...props} />);
