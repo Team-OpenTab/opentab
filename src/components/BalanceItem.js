@@ -23,11 +23,16 @@ function BalanceItem({
           src={
             contacts.contactList[
               contacts.contactList.findIndex(x => x.contact_id === Number(contactId))
-            ] !== undefined
-              ? contacts.contactList[
+            ].avatar === undefined ||
+            contacts.contactList[
+              contacts.contactList.findIndex(x => x.contact_id === Number(contactId))
+            ].avatar === ''
+              ? `https://ui-avatars.com/api/rounded=true?name=${
+                contact.username
+              }&size=50&background=eaae60`
+              : contacts.contactList[
                 contacts.contactList.findIndex(x => x.contact_id === Number(contactId))
               ].avatar
-              : null
           }
           alt="avatar"
         />
