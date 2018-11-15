@@ -54,6 +54,7 @@ function Tabs({ userId, balance, roundHistory, contactList, reOrderRound, getSta
         }
         return (
           <div className="tab" key={round.roundId}>
+            <h2>{round.roundName}</h2>
             <p className="tab__payer">
               {Object.values(contactList).map(
                 (contact) => (contact.contact_id === round.userId ? contact.username : null),
