@@ -83,7 +83,7 @@ function Login({
               className="form__field"
               type="text"
               value={email}
-              onChange={(event) => getEmail(event.target.value)}
+              onChange={(event) => getEmail(event.target.value.toLowerCase())}
               placeholder="Email*"
             />
             <input
