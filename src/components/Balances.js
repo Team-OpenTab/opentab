@@ -45,7 +45,7 @@ class Balances extends React.Component {
       .map(contact => contact.contact_id);
 
     return (
-      <div>
+      <div className="balances-container">
         <TitleBar
           title={`Balance: £${this.props.balances.userBalance.toFixed(2)}`}
           previous="login"
@@ -120,13 +120,16 @@ class Balances extends React.Component {
           </div>
         </div>
         {/* <CounterpartList users={users} balances={balances} /> */}
-        <button
-          type="button"
-          className="new-round-btn"
-          onClick={() => this.props.getStage('newRound')}
-        >
-          NEW ROUND
-        </button>
+        <div className="button-container">
+          {' '}
+          <button
+            type="button"
+            className="new-round-btn"
+            onClick={() => this.props.getStage('newRound')}
+          >
+            NEW TAB
+          </button>
+        </div>
       </div>
     );
   }

@@ -25,7 +25,7 @@ function NewRound({
   recipients,
 }) {
   return (
-    <div>
+    <div className="new-round-container">
       <TitleBar
         title="New Round"
         previous="balances"
@@ -135,10 +135,11 @@ function NewRound({
           />
         ))}
       </div>
-
-      <button type="button" className="new-round-btn" onClick={getNewRound}>
-        BUY ROUND{' '}
-      </button>
+      <div className="button-container">
+        <button type="button" className="new-round-btn" onClick={getNewRound}>
+          OPEN TAB{' '}
+        </button>
+      </div>
     </div>
   );
 }

@@ -1,7 +1,15 @@
 @import "../main";
 
+.new-round-container {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
 .new-round-content {
-  margin: $page-margin;
+  padding: $page-margin;
+  overflow: scroll;
+  flex: 1;
 }
 
 .round-input-container {
@@ -94,7 +102,6 @@
   border: none;
   color: $button-color-light;
   margin-left: $page-margin;
-  margin-right: 1em;
 }
 
 .new-round__input {

@@ -1,8 +1,16 @@
 @import "../main";
 @import "./NewRound";
 
+.balances-container {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
 .balances-content {
-  margin: $page-margin;
+  padding: $page-margin;
+  overflow: scroll;
+  flex: 1;
 }
 
 .balances__search {
@@ -139,6 +147,13 @@
   display: unset;
 }
 
+.button-container {
+  display: inline-block;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+}
+
 .new-round-btn {
   width: 100%;
   text-align: center;
@@ -146,8 +161,6 @@
   color: #fff;
   border: none;
   padding: 1em;
-  position: absolute;
-  bottom: 0;
 }
 
 @media screen and (min-width: 768px) {
