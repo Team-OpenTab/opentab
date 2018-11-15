@@ -82,8 +82,17 @@ function NewRound({
 
         <div className="new-round-recipient-container">
           <div className="user-container">
-            <img className="user-container__avatar" src={user.avatar} alt="avatar" />
-
+            <img
+              className="user-container__avatar"
+              src={
+                user.avatar === undefined || user.avatar === ''
+                  ? `https://ui-avatars.com/api/rounded=true?name=${
+                    user.username
+                  }&size=50&background=eaae60`
+                  : user.avatar
+              }
+              alt=""
+            />
             <h3 className="user-container__name">You</h3>
           </div>
 
