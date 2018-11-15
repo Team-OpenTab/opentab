@@ -134,12 +134,12 @@ app.post('/api/new-round', (req, res) => {
     })
     .then((data) => {
       const roundId = data[0].round_id;
-      io.emit('refresh');
       res.json({
         status: 200,
         data: { roundId },
       });
     })
+    .then(() => io.emit('refresh'))
     .catch((error) => console.log(error));
 });
 
@@ -278,7 +278,6 @@ app.post('/api/add-contact', (req, res) => {
     ),
   ])
     .then(() => {
-      io.emit('refresh');
       res.json({ status: 200 });
     })
     .catch((error) =>
@@ -307,9 +306,9 @@ app.post('/api/make-payment', (req, res) => {
     ),
   ])
     .then(() => {
-      io.emit('refresh');
       res.json({ status: 200 });
     })
+    .then(() => io.emit('refresh'))
     .catch((error) =>
       res.status(400).json({
         status: 400,
