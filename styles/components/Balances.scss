@@ -10,6 +10,7 @@
 .balances-content {
   padding: $page-margin;
   overflow: scroll;
+  overflow-x: hidden;
   flex: 1;
 }
 
