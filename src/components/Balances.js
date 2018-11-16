@@ -98,17 +98,26 @@ class Balances extends React.Component {
             </div>
           )}
           <div className="counterpart-list">
-            {Object.keys(this.props.balances.counterpartBalances).map((key) => (
-              <BalanceItem
-                key={key}
-                contactId={key}
-                contact={this.props.balances.counterpartBalances[key]}
-                friendRequests={friendRequests}
-                approveContact={this.props.approveContact}
-                showPayment={this.props.showPayment}
-                contacts={this.props.contacts}
-              />
-            ))}
+            {Object.keys(this.props.balances.counterpartBalances)
+              .sort(
+                (a, b) =>
+                  (this.props.balances.counterpartBalances[a].sum >
+                  this.props.balances.counterpartBalances[b].sum
+                    ? 1
+                    : -1),
+              )
+              .sort((a) => (this.props.balances.counterpartBalances[a].sum === '0.00' ? 1 : -1))
+              .map((key) => (
+                <BalanceItem
+                  key={key}
+                  contactId={key}
+                  contact={this.props.balances.counterpartBalances[key]}
+                  friendRequests={friendRequests}
+                  approveContact={this.props.approveContact}
+                  showPayment={this.props.showPayment}
+                  contacts={this.props.contacts}
+                />
+              ))}
           </div>
 
           <div

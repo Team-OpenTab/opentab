@@ -11,7 +11,6 @@ function NewRoundRecipient({
   getRecipientAmount,
   contacts,
 }) {
-  console.log(contacts);
   return (
     <div className="new-round-recipient-container user-added">
       <div className="user-container">
