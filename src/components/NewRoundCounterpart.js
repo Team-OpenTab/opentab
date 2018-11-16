@@ -11,19 +11,18 @@ function NewRoundCounterpart({ counterpart, recipients, handleRoundCounterparts,
             <img
               className="user-container__avatar"
               src={
-                contacts[contacts.findIndex(x => x.contact_id === counterpart.counterpart_id)]
-                  .avatar === undefined ||
-                contacts[contacts.findIndex(x => x.contact_id === counterpart.counterpart_id)]
-                  .avatar === ''
-                  ? `https://ui-avatars.com/api/rounded=true?name=${
-                    counterpart.username
-                  }&size=50&background=eaae60`
-                  : contacts[contacts.findIndex(x => x.contact_id === counterpart.counterpart_id)]
-                    .avatar
+                contacts.filter((item) => item.contact_id === counterpart.counterpart_id).length
+                  ? contacts.filter((item) => item.contact_id === counterpart.counterpart_id)[0]
+                    .avatar === ''
+                    ? `https://ui-avatars.com/api/rounded=true?name=${
+                      counterpart.username
+                    }&size=50&background=eaae60`
+                    : contacts.filter((item) => item.contact_id === counterpart.counterpart_id)[0]
+                      .avatar
+                  : ''
               }
               alt=""
             />
-
             <h3 className="user-container__name">{counterpart.username}</h3>
           </div>
 
