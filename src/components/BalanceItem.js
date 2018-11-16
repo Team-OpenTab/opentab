@@ -41,26 +41,29 @@ function BalanceItem({
         {contact.sum < 0 ? <div>Owes you</div> : contact.sum === '0.00' ? null : <div>You owe</div>}
         £{contact.sum[0] === '-' ? (-contact.sum).toFixed(2) : contact.sum}
       </div>
-      {friendRequests.includes(Number(contactId)) && (
-        <button
-          className="counterpart__btn approve-btn"
-          type="button"
-          onClick={() => approveContact(contactId)}
-        >
-          Approve
-        </button>
-      )}
-      {contact.sum !== '0.00' && (
-        <div className="counterpart__btn">
-          <img
-            className="counterpart__btn__img"
-            alt="Pay"
-            src="../../static/images/payBtn.png"
-            id={contactId}
-            onClick={() => showPayment(true, Number(contactId))}
-          />
-        </div>
-      )}
+      <div className="counterpart__btn">
+        {friendRequests.includes(Number(contactId)) && (
+          <button
+            className="counterpart__btn approve-btn"
+            type="button"
+            onClick={() => approveContact(contactId)}
+          >
+            Approve
+          </button>
+        )}
+        {contact.sum !== '0.00' &&
+          !friendRequests.includes(Number(contactId)) && (
+            <div className="counterpart__btn">
+              <img
+                className="counterpart__btn__img"
+                alt="Pay"
+                src="../../static/images/payBtn.png"
+                id={contactId}
+                onClick={() => showPayment(true, Number(contactId))}
+              />
+            </div>
+        )}
+      </div>
     </div>
   );
 }
