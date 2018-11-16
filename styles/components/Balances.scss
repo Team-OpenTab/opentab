@@ -109,6 +109,17 @@
   }
 }
 
+.approve-btn {
+  padding: 0.5rem;
+  border: 1px solid $input-border-color;
+  background-color: $secondary-color;
+  color: white;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+  border-radius: 8px;
+}
+
 .payment {
   display: none;
   position: fixed;
