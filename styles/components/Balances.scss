@@ -1,5 +1,5 @@
-@import "../main";
-@import "./NewRound";
+@import '../main';
+@import './NewRound';
 
 .balances-container {
   height: 100vh;
@@ -31,20 +31,32 @@
   display: flex;
   justify-content: space-around;
   align-items: center;
-  padding: 1em;
+  padding: 0.5em;
   background-color: $card-background-color;
   &__user {
     flex: 1;
     margin-left: 2em;
   }
-  &__button {
-    flex: 1;
-    margin-right: 2em;
-    border: none;
-    padding: 0.6em;
-    background-color: $secondary-color;
-    color: $button-color-light;
-  }
+}
+
+.balances__contact-details {
+  display: flex;
+  flex-direction: column;
+}
+
+.balances__contact-item__user {
+  font-weight: 600;
+}
+
+.balances__contact-item__email {
+  font-size: 0.7rem;
+}
+
+.balances-search__avatar {
+  height: 40px;
+  min-width: 40px;
+  border-radius: 50%;
+  margin-left: 0.5em;
 }
 
 .lonely-message {
