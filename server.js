@@ -44,13 +44,13 @@ app.post('/api/new-user', (req, res) => {
       `,
       [username, hash, email, phone, avatar],
     )
-      .then((userId) => {
+      .then(userId => {
         res.json({
           status: 200,
           data: userId,
         });
       })
-      .catch((error) => {
+      .catch(error => {
         res.status(401).json({
           status: 401,
           message: 'E-mail address already registered to another user',
@@ -64,7 +64,7 @@ app.post('/api/new-user', (req, res) => {
 app.post('/api/login', (req, res) => {
   const { email, password } = req.body;
   db.oneOrNone('SELECT * FROM "user" WHERE email = $1', [email])
-    .then((user) => {
+    .then(user => {
       if (!user) {
         res.status(404).json({
           status: 404,
@@ -87,7 +87,10 @@ app.post('/api/login', (req, res) => {
         });
       }
     })
-    .catch((error) => console.log(error));
+    .catch(error => {
+      console.log(error);
+      res.json({ error });
+    });
 });
 
 // Create a new round instance.
@@ -101,11 +104,11 @@ app.post('/api/new-round', (req, res) => {
     `,
     [buyerId, roundName],
   )
-    .then((data) => {
+    .then(data => {
       const roundId = data.id;
       return Promise.all(
         Object.keys(recipients)
-          .map((recipientId) => [
+          .map(recipientId => [
             db.one(
               `
               INSERT INTO transaction (user_id, counterpart_id, round_id, amount, type, time)
@@ -140,7 +143,7 @@ app.post('/api/new-round', (req, res) => {
           .reduce((a, b) => a.concat(b)),
       );
     })
-    .then((data) => {
+    .then(data => {
       const roundId = data[0].round_id;
       res.json({
         status: 200,
@@ -148,7 +151,10 @@ app.post('/api/new-round', (req, res) => {
       });
     })
     .then(() => io.emit('refresh'))
-    .catch((error) => console.log(error));
+    .catch(error => {
+      console.log(error);
+      res.json({ error });
+    });
 });
 
 // Get relevent balances of a users contacts.
@@ -176,7 +182,7 @@ app.get('/api/get-balances/:userId', (req, res) => {
     `,
     [userId],
   )
-    .then((data) => {
+    .then(data => {
       if (!data.length) {
         res.status(404).json({
           status: 404,
@@ -184,14 +190,17 @@ app.get('/api/get-balances/:userId', (req, res) => {
         });
       } else {
         const balances = {};
-        data.map((balance) => Object.assign(balances, { [balance.counterpart_id]: balance }));
+        data.map(balance => Object.assign(balances, { [balance.counterpart_id]: balance }));
         res.json({
           status: 200,
           data: { balances },
         });
       }
     })
-    .catch((error) => console.log(error));
+    .catch(error => {
+      console.log(error);
+      res.json({ error });
+    });
 });
 
 // Approve a new contact.
@@ -207,13 +216,16 @@ app.post('/api/approve-contact', (req, res) => {
     `,
     [userId, contactId],
   )
-    .then((data) => {
+    .then(data => {
       res.json({
         status: 200,
         data,
       });
     })
-    .catch((error) => console.log(error));
+    .catch(error => {
+      console.log(error);
+      res.json({ error });
+    });
 });
 
 // Import a users contacts.
@@ -228,7 +240,7 @@ app.get('/api/get-contacts/:userId', (req, res) => {
     `,
     [userId],
   )
-    .then((data) => {
+    .then(data => {
       if (!data.length) {
         res.status(404).json({
           status: 404,
@@ -241,7 +253,10 @@ app.get('/api/get-contacts/:userId', (req, res) => {
         });
       }
     })
-    .catch((error) => console.log(error));
+    .catch(error => {
+      console.log(error);
+      res.json({ error });
+    });
 });
 
 // Search for a user to add as a contact.
@@ -255,7 +270,7 @@ app.get('/api/get-contact/:username', (req, res) => {
     `,
     [username],
   )
-    .then((user) => {
+    .then(user => {
       if (!user.length) {
         res.status(404).json({
           status: 404,
@@ -268,7 +283,10 @@ app.get('/api/get-contact/:username', (req, res) => {
         });
       }
     })
-    .catch((error) => console.log(error));
+    .catch(error => {
+      console.log(error);
+      res.json({ error });
+    });
 });
 
 // Add a new contact.
@@ -293,7 +311,7 @@ app.post('/api/add-contact', (req, res) => {
     .then(() => {
       res.json({ status: 200 });
     })
-    .catch((error) =>
+    .catch(error =>
       res.status(400).json({
         status: 400,
         message: 'Error while adding user to contacts',
@@ -323,7 +341,7 @@ app.post('/api/make-payment', (req, res) => {
       res.json({ status: 200 });
     })
     .then(() => io.emit('refresh'))
-    .catch((error) =>
+    .catch(error =>
       res.status(400).json({
         status: 400,
         message: 'Error while making payment',
@@ -341,8 +359,8 @@ app.get('/api/get-rounds/:userId', (req, res) => {
      SELECT id FROM "round" WHERE user_id = $1 `,
     [userId],
   )
-    .then((response) => {
-      const promisesArray = response.map((round) =>
+    .then(response => {
+      const promisesArray = response.map(round =>
         db.any(
           `
           SELECT transaction.id, transaction.user_id, transaction.counterpart_id,
@@ -356,9 +374,9 @@ app.get('/api/get-rounds/:userId', (req, res) => {
       );
       return Promise.all(promisesArray);
     })
-    .then((response) => {
+    .then(response => {
       const roundStore = response
-        .map((round) => {
+        .map(round => {
           const reducedRound = round.reduce((acc, curr) => {
             const counterparts = !acc.counterparts
               ? { [curr.counterpart_id]: curr.amount }
@@ -384,7 +402,10 @@ app.get('/api/get-rounds/:userId', (req, res) => {
         .sort((a, b) => new Date(b.roundTime) - new Date(a.roundTime));
       res.json(roundStore);
     })
-    .catch((error) => console.log(error));
+    .catch(error => {
+      console.log(error);
+      res.json({ error });
+    });
 });
 
 server.listen(process.env.PORT || 8080, () => {
