@@ -4,10 +4,6 @@ import cx from 'classnames';
 import '../../styles/components/TitleBar.scss';
 
 function TitleBar({ title, getStage, stage, logoutUser }) {
-  function clickOnMenu() {
-    console.log('clicked on menu');
-  }
-
   function balancesClassName() {
     return cx('navigation-bar__balances', {
       'navigation-bar__balances--active': stage === 'balances',
@@ -26,8 +22,8 @@ function TitleBar({ title, getStage, stage, logoutUser }) {
         <button className="title-bar__logout" type="button" onClick={logoutUser}>
           <i className="fas fa-sign-out-alt" />
         </button>
+        <div className="title-bar__gap" />
         <h2 className="title-bar__title">{title}</h2>
-        <p className="title-bar__menu" onClick={() => clickOnMenu()} />{' '}
       </div>
       <div className="navigation-bar">
         <p className={balancesClassName()} onClick={() => getStage('balances')}>
