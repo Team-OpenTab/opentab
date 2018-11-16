@@ -253,6 +253,13 @@ export function removeRecipient(recipient) {
   };
 }
 
+export function setAmount(totalAmount) {
+  return {
+    type: 'SET_AMOUNT',
+    totalAmount,
+  };
+}
+
 export function handleRoundCounterparts(recipient) {
   return (dispatch, getState) => {
     const { recipients } = getState().round;
@@ -260,14 +267,12 @@ export function handleRoundCounterparts(recipient) {
       dispatch(addRecipient(recipient));
     } else {
       dispatch(removeRecipient(recipient));
+      const newTotal = Object.keys(recipients)
+        .filter((id) => id !== recipient)
+        .map((id) => parseFloat(recipients[id]))
+        .reduce((a, b) => a + b, 0);
+      dispatch(setAmount(newTotal.toFixed(2)));
     }
-  };
-}
-
-export function setAmount(totalAmount) {
-  return {
-    type: 'SET_AMOUNT',
-    totalAmount,
   };
 }
 
@@ -313,7 +318,7 @@ export function refreshRecipientAmounts() {
           Math.round(
             (totalAmount -
               Object.values(newRecipients).reduce((a, b) => parseFloat(a) + parseFloat(b), 0)) *
-            100,
+              100,
           ) / 100;
         const recipientIds = Object.keys(newRecipients);
         const randomId = recipientIds[Math.floor(Math.random() * recipientIds.length)];
