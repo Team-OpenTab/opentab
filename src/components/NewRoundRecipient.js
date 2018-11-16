@@ -11,20 +11,19 @@ function NewRoundRecipient({
   getRecipientAmount,
   contacts,
 }) {
+  console.log(contacts);
   return (
     <div className="new-round-recipient-container user-added">
       <div className="user-container">
         <img
           className="user-container__avatar"
           src={
-            contacts.contactList.filter((item) => item.contact_id === Number(recipient)).length
-              ? contacts.contactList.filter((item) => item.contact_id === Number(recipient))[0]
-                .avatar === ''
+            contacts.filter((item) => item.contact_id === Number(recipient)).length
+              ? contacts.filter((item) => item.contact_id === Number(recipient))[0].avatar === ''
                 ? `https://ui-avatars.com/api/rounded=true?name=${
                   counterparts[recipient].username
                 }&size=50&background=eaae60`
-                : contacts.contactList.filter((item) => item.contact_id === Number(recipient))[0]
-                  .avatar
+                : contacts.filter((item) => item.contact_id === Number(recipient))[0].avatar
               : ''
           }
           alt=""
