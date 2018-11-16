@@ -1,5 +1,5 @@
-@import '../main';
-@import './NewRound';
+@import "../main";
+@import "./NewRound";
 
 .balances-container {
   height: 100vh;
@@ -10,6 +10,7 @@
 .balances-content {
   padding: $page-margin;
   overflow: scroll;
+  overflow-x: hidden;
   flex: 1;
 }
 
