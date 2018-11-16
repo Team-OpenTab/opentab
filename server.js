@@ -1,3 +1,5 @@
+// Dependencies.
+
 const express = require('express');
 const http = require('http');
 const socketIo = require('socket.io');
@@ -6,10 +8,12 @@ const pgp = require('pg-promise')();
 const bcrypt = require('bcrypt');
 require('dotenv').config();
 
+// Server and socket.io.
 const app = express();
 const server = http.Server(app);
 const io = socketIo(server);
 
+// Heroku and localhost database.
 const db = pgp({
   host: process.env.DB_HOST || 'localhost',
   port: 5432,
@@ -18,6 +22,7 @@ const db = pgp({
   password: process.env.DB_PASSWORD,
 });
 
+// bcrypt salt rounds.
 const saltRounds = 10;
 app.use(bodyParser.json());
 app.use('/static', express.static('static'));
@@ -27,6 +32,7 @@ app.get('/', (req, res) => {
   res.render('index');
 });
 
+// Create user endpoint.
 app.post('/api/new-user', (req, res) => {
   const { username, password, email, phone, avatar } = req.body;
   bcrypt.hash(password, saltRounds, (err, hash) => {
@@ -54,6 +60,7 @@ app.post('/api/new-user', (req, res) => {
   });
 });
 
+// User login endpoint.
 app.post('/api/login', (req, res) => {
   const { email, password } = req.body;
   db.oneOrNone('SELECT * FROM "user" WHERE email = $1', [email])
@@ -83,6 +90,7 @@ app.post('/api/login', (req, res) => {
     .catch((error) => console.log(error));
 });
 
+// Create a new round instance.
 app.post('/api/new-round', (req, res) => {
   const { buyerId, recipients, roundName } = req.body;
   db.one(
@@ -143,6 +151,7 @@ app.post('/api/new-round', (req, res) => {
     .catch((error) => console.log(error));
 });
 
+// Get relevent balances of a users contacts.
 app.get('/api/get-balances/:userId', (req, res) => {
   const userId = parseInt(req.params.userId);
   db.any(
@@ -185,6 +194,7 @@ app.get('/api/get-balances/:userId', (req, res) => {
     .catch((error) => console.log(error));
 });
 
+// Approve a new contact.
 app.post('/api/approve-contact', (req, res) => {
   const { userId, contactId } = req.body;
   db.one(
@@ -206,6 +216,7 @@ app.post('/api/approve-contact', (req, res) => {
     .catch((error) => console.log(error));
 });
 
+// Import a users contacts.
 app.get('/api/get-contacts/:userId', (req, res) => {
   const { userId } = req.params;
   db.any(
@@ -233,6 +244,7 @@ app.get('/api/get-contacts/:userId', (req, res) => {
     .catch((error) => console.log(error));
 });
 
+// Search for a user to add as a contact.
 app.get('/api/get-contact/:username', (req, res) => {
   const username = `${req.params.username.toLowerCase()}%`;
   db.any(
@@ -259,6 +271,7 @@ app.get('/api/get-contact/:username', (req, res) => {
     .catch((error) => console.log(error));
 });
 
+// Add a new contact.
 app.post('/api/add-contact', (req, res) => {
   const { userId, contactId } = req.body;
   Promise.all([
@@ -289,6 +302,7 @@ app.post('/api/add-contact', (req, res) => {
     );
 });
 
+// Make a payment to a contact - currently sets balance between two contacts to £0.00.
 app.post('/api/make-payment', (req, res) => {
   const payerId = parseInt(req.body.payerId);
   const receiverId = parseInt(req.body.receiverId);
@@ -318,6 +332,7 @@ app.post('/api/make-payment', (req, res) => {
     );
 });
 
+// Fetches all rounds that the user has bought and rounds in which they have been a counterpart.
 app.get('/api/get-rounds/:userId', (req, res) => {
   const { userId } = req.params;
   db.any(
