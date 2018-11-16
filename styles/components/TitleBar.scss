@@ -1,4 +1,4 @@
-@import '../main';
+@import "../main";
 
 .title-bar-container {
   padding: 0;
@@ -17,11 +17,40 @@
     font-size: 1.5em;
     font-weight: 900;
     padding-left: 1.25rem;
+    position: fixed;
+    top: 15px;
+    background: transparent;
+    border: none;
+
+    &:focus {
+      outline: 0;
+    }
+  }
+  &__gap {
+    display: inline;
+    width: 20px;
+  }
+
+  &__logout {
+    cursor: pointer;
+    display: flex;
+    order: 1;
+    font-size: 1.5em;
+    font-weight: 900;
+    padding-right: 1rem;
+    padding-left: 0;
+    background: transparent;
+    border: none;
+
+    &:focus {
+      outline: 0;
+    }
   }
 
   &__title {
     flex: 1;
     text-align: center;
+    font-size: 1.3rem;
   }
 
   &__menu {
@@ -46,7 +75,8 @@
   }
 
   &__balances--active {
-    border-bottom: 2px solid #ffdf8c;
+    border-bottom: 2px solid #f5ac68;
+    font-weight: 800;
   }
 
   &__tabs {
@@ -58,6 +88,7 @@
   }
 
   &__tabs--active {
-    border-bottom: 2px solid #ffdf8c;
+    border-bottom: 2px solid #f5ac68;
+    font-weight: 800;
   }
 }

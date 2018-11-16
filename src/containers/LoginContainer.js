@@ -10,28 +10,33 @@ import {
   setUserType,
   setValidationPassword,
   setAvatar,
+  resetUser,
 } from '../actions';
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   user: state.user,
 });
 
-const mapDispatchToProps = dispatch => ({
-  getLogin: event => {
+const mapDispatchToProps = (dispatch) => ({
+  getLogin: (event) => {
     event.preventDefault();
     dispatch(loginUser());
   },
-  getEmail: email => dispatch(setEmail(email)),
-  getPassword: password => dispatch(setPassword(password)),
-  getNewUser: event => {
+  getEmail: (email) => dispatch(setEmail(email)),
+  getPassword: (password) => dispatch(setPassword(password)),
+  getNewUser: (event) => {
     event.preventDefault();
     dispatch(createNewUser());
   },
-  getUsername: username => dispatch(setUsername(username)),
-  getPhone: phone => dispatch(setUserPhone(phone)),
-  getUserType: userType => dispatch(setUserType(userType)),
-  getValidationPassword: validationPassword => dispatch(setValidationPassword(validationPassword)),
-  getAvatar: avatar => dispatch(setAvatar(avatar)),
+  getUsername: (username) => dispatch(setUsername(username)),
+  getPhone: (phone) => dispatch(setUserPhone(phone)),
+  getUserType: (userType) => {
+    dispatch(resetUser());
+    dispatch(setUserType(userType));
+  },
+  getValidationPassword: (validationPassword) =>
+    dispatch(setValidationPassword(validationPassword)),
+  getAvatar: (avatar) => dispatch(setAvatar(avatar)),
 });
 
 export default connect(

@@ -5,13 +5,22 @@ import '../../styles/components/Tabs.scss';
 
 const dateFormat = require('dateformat');
 
-function Tabs({ userId, balance, roundHistory, contactList, reOrderRound, getStage, stage }) {
+function Tabs({
+  userId,
+  balance,
+  roundHistory,
+  contactList,
+  reOrderRound,
+  getStage,
+  stage,
+  logoutUser,
+}) {
   function crossReference(roundCounterparts) {
-    return Object.keys(roundCounterparts).map(recipientId => (
-      <label key={recipientId}>
+    return Object.keys(roundCounterparts).map((recipientId) => (
+      <label className="tab__label" key={recipientId}>
         {recipientId === userId.toString()
           ? 'Myself'
-          : contactList.filter(contact => contact.contact_id.toString() === recipientId)[0]
+          : contactList.filter((contact) => contact.contact_id.toString() === recipientId)[0]
             .username}
         : £{(-roundCounterparts[recipientId]).toFixed(2)}
       </label>
@@ -24,60 +33,35 @@ function Tabs({ userId, balance, roundHistory, contactList, reOrderRound, getSta
         previous="balances"
         getStage={getStage}
         stage={stage}
+        logoutUser={logoutUser}
       />
       <div className="tabs-content">
-        {roundHistory.map(round => {
-          if (round.userId === userId) {
-            return (
-              <div className="tab" key={round.roundTime}>
-                <h2 className="tab__name">{round.roundName}</h2>
-                <p className="tab__payer">I paid £{(-round.roundTotal).toFixed(2)}, split as:</p>
-                <p className="tab__payees">{crossReference(round.counterparts)}</p>
-                <span className="tab-footer-container">
-                  <p className="tab-footer-container__date">
-                    {dateFormat(new Date(round.roundTime), 'ddd dS mmm, HH:MM')}
-                  </p>
-                  <button
-                    className="tab-footer-container__btn"
-                    onClick={() => reOrderRound(round)}
-                    type="button"
-                  >
-                    <img
-                      className="tab-reorder"
-                      alt="re-order"
-                      src="../../static/images/reorder.png"
-                    />
-                  </button>
-                </span>
-              </div>
-            );
-          }
+        {roundHistory.map((round) => {
+          const roundBuyer =
+            round.userId === userId
+              ? 'I'
+              : contactList.filter((contact) => contact.contact_id === round.userId)[0].username;
           return (
             <div className="tab" key={round.roundId}>
-              <h2 className="tab__name">{round.roundName}</h2>
-              <p className="tab__payer">
-                {Object.values(contactList).map(
-                  contact => (contact.contact_id === round.userId ? contact.username : null),
-                )}{' '}
-                paid: {round.roundTotal}
-              </p>
-              <p className="tab__payees">
-                {crossReference(round.counterparts, roundHistory.indexOf(round))}
-              </p>
-              <span className="tab-footer-container">
-                <p className="tab-footer__date" />
-                <button
-                  className="tab-footer-container__btn"
-                  onClick={() => reOrderRound(round)}
-                  type="button"
-                >
+              <div className="tab__header">
+                <div className="tab__wrapper">
+                  <h2 className="tab__name">{round.roundName}</h2>
+                  <p className="tab__date">
+                    {dateFormat(new Date(round.roundTime), 'ddd dS mmm, HH:MM')}
+                  </p>
+                </div>
+                <button className="tab__button" onClick={() => reOrderRound(round)} type="button">
                   <img
-                    className="tab-reorder"
+                    className="tab__reorder"
                     alt="re-order"
                     src="../../static/images/reorder.png"
                   />
                 </button>
-              </span>
+              </div>
+              <p className="tab__payer">
+                {roundBuyer} paid <b>£{(-round.roundTotal).toFixed(2)}</b>, split as:
+              </p>
+              <p className="tab__payees">{crossReference(round.counterparts)}</p>
             </div>
           );
         })}
@@ -99,6 +83,7 @@ Tabs.propTypes = {
   getStage: PropTypes.func.isRequired,
   stage: PropTypes.string.isRequired,
   balance: PropTypes.number.isRequired,
+  logoutUser: PropTypes.func.isRequired,
 };
 
 export default Tabs;

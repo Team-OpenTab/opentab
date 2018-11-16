@@ -5,7 +5,6 @@ import io from 'socket.io-client';
 import TitleBar from './TitleBar';
 import BalanceItem from './BalanceItem';
 import '../../styles/components/Balances.scss';
-// import CounterpartList from './CounterpartList';
 
 class Balances extends React.Component {
   componentDidMount() {
@@ -19,7 +18,6 @@ class Balances extends React.Component {
   }
 
   componentWillUnmount() {
-    console.log('disconnecting');
     this.socket.disconnect(true);
   }
 
@@ -29,7 +27,6 @@ class Balances extends React.Component {
     });
   }
 
-  // closes payment modal if user clicks on background or close button.
   showModal(event, close) {
     if (event.target.className === 'payment payment--closed' || close) {
       this.props.showPayment(false, null);
@@ -43,11 +40,10 @@ class Balances extends React.Component {
 
   // TODO: show payment options for example Paypal link or sms notification
 
-  // Can payment modal be seperated into a new component?
   render() {
     const friendRequests = this.props.contacts.contactList
-      .filter(contact => !contact.approved)
-      .map(contact => contact.contact_id);
+      .filter((contact) => !contact.approved)
+      .map((contact) => contact.contact_id);
 
     return (
       <div className="balances-container">
@@ -68,17 +64,31 @@ class Balances extends React.Component {
               value={this.props.contacts.search.searchString}
             />
             <ul className="balances__contact-list">
-              {this.props.contacts.search.searchResults.map(result => (
-                <div key={result.id} className="balances__contact-item">
-                  <li className="balances__contact-item__user">{result.username}</li>
-                  <button
-                    className="balances__contact-item__button"
-                    type="button"
+              {this.props.contacts.search.searchResults.map((result) => (
+                <li key={result.id}>
+                  <div
+                    className="balances__contact-item"
                     onClick={() => this.props.addContact(result.id)}
+                    role="button"
+                    tabIndex={0}
                   >
-                    Add to contacts
-                  </button>
-                </div>
+                    <img
+                      className="balances-search__avatar"
+                      src={
+                        result.avatar === ''
+                          ? `https://ui-avatars.com/api/rounded=true?name=${
+                            result.username
+                          }&size=50&background=eaae60`
+                          : result.avatar
+                      }
+                      alt="avatar"
+                    />
+                    <div className="balances__contact-details">
+                      <div className="balances__contact-item__user">{result.username}</div>
+                      <div className="balances__contact-item__email">{result.email}</div>
+                    </div>
+                  </div>
+                </li>
               ))}
             </ul>
           </div>
@@ -88,23 +98,32 @@ class Balances extends React.Component {
             </div>
           )}
           <div className="counterpart-list">
-            {Object.keys(this.props.balances.counterpartBalances).map(key => (
-              <BalanceItem
-                key={key}
-                contactId={key}
-                contact={this.props.balances.counterpartBalances[key]}
-                friendRequests={friendRequests}
-                approveContact={this.props.approveContact}
-                showPayment={this.props.showPayment}
-                contacts={this.props.contacts}
-              />
-            ))}
+            {Object.keys(this.props.balances.counterpartBalances)
+              .sort(
+                (a, b) =>
+                  (this.props.balances.counterpartBalances[a].sum >
+                  this.props.balances.counterpartBalances[b].sum
+                    ? 1
+                    : -1),
+              )
+              .sort((a) => (this.props.balances.counterpartBalances[a].sum === '0.00' ? 1 : -1))
+              .map((key) => (
+                <BalanceItem
+                  key={key}
+                  contactId={key}
+                  contact={this.props.balances.counterpartBalances[key]}
+                  friendRequests={friendRequests}
+                  approveContact={this.props.approveContact}
+                  showPayment={this.props.showPayment}
+                  contacts={this.props.contacts}
+                />
+              ))}
           </div>
 
           <div
             className={this.paymentClassName()}
             role="dialog"
-            onClick={event => this.showModal(event)}
+            onClick={(event) => this.showModal(event)}
           >
             <div className="payment__content">
               <button className="payment-btn" type="button" onClick={() => this.markPaid()}>
