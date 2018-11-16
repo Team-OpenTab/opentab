@@ -1,4 +1,4 @@
-@import '../main';
+@import "../main";
 
 .title-bar-container {
   padding: 0;
@@ -26,17 +26,21 @@
       outline: 0;
     }
   }
+  &__gap {
+    display: inline;
+    width: 20px;
+  }
 
   &__logout {
     cursor: pointer;
+    display: flex;
+    order: 1;
     font-size: 1.5em;
     font-weight: 900;
-    padding-right: 1.25rem;
-    position: fixed;
-    top: 15px;
+    padding-right: 1rem;
+    padding-left: 0;
     background: transparent;
     border: none;
-    transform: rotate(180deg);
 
     &:focus {
       outline: 0;
