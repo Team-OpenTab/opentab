@@ -29,7 +29,7 @@ CREATE TABLE transaction (
   user_id INT NOT NULL,
   counterpart_id INT NOT NULL,
   round_id INT,
-  amount NUMERIC(6,2) NOT NULL,
+  amount NUMERIC(10,2) NOT NULL,
   type TEXT NOT NULL,
   time TIMESTAMP WITH TIME ZONE NOT NULL,
   FOREIGN KEY (user_id) REFERENCES "user" (id),
