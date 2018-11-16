@@ -19,7 +19,7 @@ function NewRoundRecipient({
           src={
             contacts[contacts.findIndex(x => x.contact_id === Number(recipient))].avatar ===
               undefined ||
-            contacts[contacts.findIndex(x => x.contact_id === Number(recipient))].avatar === ''
+              contacts[contacts.findIndex(x => x.contact_id === Number(recipient))].avatar === ''
               ? `https://ui-avatars.com/api/rounded=true?name=${
                 counterparts[recipient].username
               }&size=50&background=eaae60`
