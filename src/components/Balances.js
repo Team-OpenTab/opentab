@@ -65,16 +65,30 @@ class Balances extends React.Component {
             />
             <ul className="balances__contact-list">
               {this.props.contacts.search.searchResults.map((result) => (
-                <div key={result.id} className="balances__contact-item">
-                  <li className="balances__contact-item__user">{result.username}</li>
-                  <button
-                    className="balances__contact-item__button"
-                    type="button"
+                <li key={result.id}>
+                  <div
+                    className="balances__contact-item"
                     onClick={() => this.props.addContact(result.id)}
+                    role="button"
+                    tabIndex={0}
                   >
-                    Add to contacts
-                  </button>
-                </div>
+                    <img
+                      className="balances-search__avatar"
+                      src={
+                        result.avatar === ''
+                          ? `https://ui-avatars.com/api/rounded=true?name=${
+                            result.username
+                          }&size=50&background=eaae60`
+                          : result.avatar
+                      }
+                      alt="avatar"
+                    />
+                    <div className="balances__contact-details">
+                      <div className="balances__contact-item__user">{result.username}</div>
+                      <div className="balances__contact-item__email">{result.email}</div>
+                    </div>
+                  </div>
+                </li>
               ))}
             </ul>
           </div>

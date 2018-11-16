@@ -59,7 +59,7 @@ function Tabs({
                 </button>
               </div>
               <p className="tab__payer">
-                {roundBuyer} paid £{(-round.roundTotal).toFixed(2)}, split as:
+                {roundBuyer} paid <b>£{(-round.roundTotal).toFixed(2)}</b>, split as:
               </p>
               <p className="tab__payees">{crossReference(round.counterparts)}</p>
             </div>

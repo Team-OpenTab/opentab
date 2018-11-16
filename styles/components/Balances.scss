@@ -10,15 +10,15 @@
 .balances-content {
   padding: $page-margin;
   overflow: scroll;
+  overflow-x: hidden;
   flex: 1;
 }
 
 .balances__search {
   width: 100%;
-  padding: 1em;
+  padding: 0.5rem;
   font-size: 1em;
   border: 0;
-  border-bottom: 1px solid $line-color;
   text-align: center;
 }
 
@@ -31,20 +31,32 @@
   display: flex;
   justify-content: space-around;
   align-items: center;
-  padding: 1em;
+  padding: 0.5em;
   background-color: $card-background-color;
   &__user {
     flex: 1;
     margin-left: 2em;
   }
-  &__button {
-    flex: 1;
-    margin-right: 2em;
-    border: none;
-    padding: 0.6em;
-    background-color: $secondary-color;
-    color: $button-color-light;
-  }
+}
+
+.balances__contact-details {
+  display: flex;
+  flex-direction: column;
+}
+
+.balances__contact-item__user {
+  font-weight: 600;
+}
+
+.balances__contact-item__email {
+  font-size: 0.7rem;
+}
+
+.balances-search__avatar {
+  height: 40px;
+  min-width: 40px;
+  border-radius: 50%;
+  margin-left: 0.5em;
 }
 
 .lonely-message {
@@ -53,6 +65,7 @@
 }
 
 .counterpart-list {
+  border-top: 1px solid $line-color;
   display: flex;
   flex-direction: column;
 }
@@ -65,14 +78,14 @@
 
   &__name {
     @extend .user-container;
-    flex: 1;
+    flex: 3;
     flex-direction: row;
     font-weight: 600;
   }
 
   &__balance {
-    padding: 0 15px;
-    flex: 1;
+    flex: 3;
+    text-align: center;
 
     &--red {
       color: rgb(141, 34, 34);
@@ -82,24 +95,17 @@
       color: rgb(23, 124, 23);
     }
   }
-  &__container {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: $background-color;
-    border: none;
-    padding: 0;
-    flex: 1;
-  }
+
   &__btn {
-    padding: 0;
+    flex: 2;
     display: flex;
-    align-items: center;
-    background-color: $background-color;
-    border: none;
-  }
-  &__arrow {
-    height: 30px;
+    justify-content: flex-end;
+
+    &__img {
+      width: 2.5rem;
+      height: 2.5em;
+      cursor: pointer;
+    }
   }
 }
 
@@ -157,7 +163,7 @@
 .new-round-btn {
   width: 100%;
   text-align: center;
-  background-color: #0875a5;
+  background-color: $primary-color;
   color: #fff;
   border: none;
   padding: 1em;

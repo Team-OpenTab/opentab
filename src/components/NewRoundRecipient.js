@@ -11,19 +11,20 @@ function NewRoundRecipient({
   getRecipientAmount,
   contacts,
 }) {
+  console.log(contacts);
   return (
     <div className="new-round-recipient-container user-added">
       <div className="user-container">
         <img
           className="user-container__avatar"
           src={
-            contacts[contacts.findIndex(x => x.contact_id === Number(recipient))].avatar ===
-              undefined ||
-              contacts[contacts.findIndex(x => x.contact_id === Number(recipient))].avatar === ''
-              ? `https://ui-avatars.com/api/rounded=true?name=${
-                counterparts[recipient].username
-              }&size=50&background=eaae60`
-              : contacts[contacts.findIndex(x => x.contact_id === Number(recipient))].avatar
+            contacts.filter((item) => item.contact_id === Number(recipient)).length
+              ? contacts.filter((item) => item.contact_id === Number(recipient))[0].avatar === ''
+                ? `https://ui-avatars.com/api/rounded=true?name=${
+                  counterparts[recipient].username
+                }&size=50&background=eaae60`
+                : contacts.filter((item) => item.contact_id === Number(recipient))[0].avatar
+              : ''
           }
           alt=""
         />
@@ -36,7 +37,7 @@ function NewRoundRecipient({
           className="new-round__input"
           value={recipients[recipient]}
           type="number"
-          onChange={event => getRecipientAmount(recipient, event.target.value)}
+          onChange={(event) => getRecipientAmount(recipient, event.target.value)}
         />
       ) : (
         <div className="new-round__input">{recipients[recipient]}</div>
