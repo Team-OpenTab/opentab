@@ -237,7 +237,7 @@ app.get('/api/get-contact/:username', (req, res) => {
   const username = `${req.params.username.toLowerCase()}%`;
   db.any(
     `
-    SELECT id, username
+    SELECT id, username, avatar, email
     FROM "user"
     WHERE lower(username) LIKE $1;
     `,
