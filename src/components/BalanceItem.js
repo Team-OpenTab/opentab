@@ -21,18 +21,15 @@ function BalanceItem({
         <img
           className="user-container__avatar"
           src={
-            contacts.contactList[
-              contacts.contactList.findIndex(x => x.contact_id === Number(contactId))
-            ].avatar === undefined ||
-            contacts.contactList[
-              contacts.contactList.findIndex(x => x.contact_id === Number(contactId))
-            ].avatar === ''
-              ? `https://ui-avatars.com/api/rounded=true?name=${
-                contact.username
-              }&size=50&background=eaae60`
-              : contacts.contactList[
-                contacts.contactList.findIndex(x => x.contact_id === Number(contactId))
-              ].avatar
+            contacts.contactList.filter((item) => item.contact_id === Number(contactId)).length
+              ? contacts.contactList.filter((item) => item.contact_id === Number(contactId))[0]
+                .avatar === ''
+                ? `https://ui-avatars.com/api/rounded=true?name=${
+                  contact.username
+                }&size=50&background=eaae60`
+                : contacts.contactList.filter((item) => item.contact_id === Number(contactId))[0]
+                  .avatar
+              : ''
           }
           alt="avatar"
         />
