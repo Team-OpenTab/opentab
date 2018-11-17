@@ -1,179 +1,153 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
-import io from 'socket.io-client';
 import TitleBar from './TitleBar';
 import BalanceItem from './BalanceItem';
 import '../../styles/components/Balances.scss';
 
-class Balances extends React.Component {
-  componentDidMount() {
-    this.props.fetchBalances(this.props.userId);
-    this.props.fetchRoundHistory(this.props.userId);
-    this.socket = io(window.location.origin);
-    this.socket.on('refresh', () => {
-      this.props.fetchBalances(this.props.userId);
-      this.props.fetchRoundHistory(this.props.userId);
-    });
-  }
-
-  componentWillUnmount() {
-    this.socket.disconnect(true);
-  }
-
-  paymentClassName(close) {
+function Balances({
+  balances,
+  getStage,
+  showPayment,
+  payment,
+  settleBalance,
+  handleContactSearch,
+  addContact,
+  stage,
+  contacts,
+  approveContact,
+  logoutUser,
+}) {
+  function paymentClassName(close) {
     return cx('payment', {
-      'payment--closed': this.props.payment.payment || close,
+      'payment--closed': payment.payment || close,
     });
   }
 
-  showModal(event, close) {
+  function showModal(event, close) {
     if (event.target.className === 'payment payment--closed' || close) {
-      this.props.showPayment(false, null);
+      showPayment(false, null);
     }
   }
 
-  markPaid() {
-    this.props.settleBalance();
-    this.props.showPayment(false, null);
+  function markPaid() {
+    settleBalance();
+    showPayment(false, null);
   }
 
-  // TODO: show payment options for example Paypal link or sms notification
+  const friendRequests = contacts.contactList
+    .filter((contact) => !contact.approved)
+    .map((contact) => contact.contact_id);
 
-  render() {
-    const friendRequests = this.props.contacts.contactList
-      .filter((contact) => !contact.approved)
-      .map((contact) => contact.contact_id);
-
-    return (
-      <div className="balances-container">
-        <TitleBar
-          title={`Balance: £${this.props.balances.userBalance.toFixed(2)}`}
-          previous="login"
-          getStage={this.props.getStage}
-          stage={this.props.stage}
-          logoutUser={this.props.logoutUser}
-        />
-        <div className="balances-content">
-          <div className="balances__add-contact">
-            <input
-              className="balances__search"
-              type="text"
-              placeholder="Search for contacts..."
-              onChange={this.props.handleContactSearch}
-              value={this.props.contacts.search.searchString}
-            />
-            <ul className="balances__contact-list">
-              {this.props.contacts.search.searchResults.map((result) => (
-                <li key={result.id}>
-                  <div
-                    className="balances__contact-item"
-                    onClick={() => this.props.addContact(result.id)}
-                    role="button"
-                    tabIndex={0}
-                  >
-                    <img
-                      className="balances-search__avatar"
-                      src={
-                        result.avatar === ''
-                          ? `https://ui-avatars.com/api/rounded=true?name=${
-                            result.username
-                          }&size=50&background=eaae60`
-                          : result.avatar
-                      }
-                      alt="avatar"
-                    />
-                    <div className="balances__contact-details">
-                      <div className="balances__contact-item__user">{result.username}</div>
-                      <div className="balances__contact-item__email">{result.email}</div>
-                    </div>
+  return (
+    <div className="balances-container">
+      <TitleBar
+        title={`Balance: £${balances.userBalance.toFixed(2)}`}
+        previous="login"
+        getStage={getStage}
+        stage={stage}
+        logoutUser={logoutUser}
+      />
+      <div className="balances-content">
+        <div className="balances__add-contact">
+          <input
+            className="balances__search"
+            type="text"
+            placeholder="Search for contacts..."
+            onChange={handleContactSearch}
+            value={contacts.search.searchString}
+          />
+          <ul className="balances__contact-list">
+            {contacts.search.searchResults.map((result) => (
+              <li key={result.id}>
+                <div
+                  className="balances__contact-item"
+                  onClick={() => addContact(result.id)}
+                  role="button"
+                  tabIndex={0}
+                >
+                  <img
+                    className="balances-search__avatar"
+                    src={
+                      result.avatar === ''
+                        ? `https://ui-avatars.com/api/rounded=true?name=${
+                          result.username
+                        }&size=50&background=eaae60`
+                        : result.avatar
+                    }
+                    alt="avatar"
+                  />
+                  <div className="balances__contact-details">
+                    <div className="balances__contact-item__user">{result.username}</div>
+                    <div className="balances__contact-item__email">{result.email}</div>
                   </div>
-                </li>
-              ))}
-            </ul>
-          </div>
-          {!Object.keys(this.props.balances.counterpartBalances).length && (
-            <div className="lonely-message">
-              It feels lonely in here... Add your friends by searching above!
-            </div>
-          )}
-          <div className="counterpart-list">
-            {Object.keys(this.props.balances.counterpartBalances)
-              .sort(
-                (a, b) =>
-                  (this.props.balances.counterpartBalances[a].sum >
-                  this.props.balances.counterpartBalances[b].sum
-                    ? 1
-                    : -1),
-              )
-              .sort((a) => (this.props.balances.counterpartBalances[a].sum === '0.00' ? 1 : -1))
-              .map((key) => (
-                <BalanceItem
-                  key={key}
-                  contactId={key}
-                  contact={this.props.balances.counterpartBalances[key]}
-                  friendRequests={friendRequests}
-                  approveContact={this.props.approveContact}
-                  showPayment={this.props.showPayment}
-                  contacts={this.props.contacts}
-                />
-              ))}
-          </div>
-
-          <div
-            className={this.paymentClassName()}
-            role="dialog"
-            onClick={(event) => this.showModal(event)}
-          >
-            <div className="payment__content">
-              <button className="payment-btn" type="button" onClick={() => this.markPaid()}>
-                Mark Paid
-              </button>
-              {this.props.payment.receiverId &&
-                this.props.balances.counterpartBalances[this.props.payment.receiverId].sum < 0 && (
-                  <button
-                    className="payment-btn"
-                    type="button"
-                    onClick={() => this.requestPayment()}
-                  >
-                    Request Payment
-                  </button>
-              )}
-              <p onClick={() => this.props.showPayment(false, null)}>CLOSE</p>
-            </div>
-          </div>
+                </div>
+              </li>
+            ))}
+          </ul>
         </div>
-        {/* <CounterpartList users={users} balances={balances} /> */}
-        <div className="button-container">
-          {' '}
-          <button
-            type="button"
-            className="new-round-btn"
-            onClick={() => this.props.getStage('newRound')}
-          >
-            NEW TAB
-          </button>
+        {!Object.keys(balances.counterpartBalances).length && (
+          <div className="lonely-message">
+            It feels lonely in here... Add your friends by searching above!
+          </div>
+        )}
+        <div className="counterpart-list">
+          {Object.keys(balances.counterpartBalances)
+            .sort((a, b) => {
+              const aSum = balances.counterpartBalances[a].sum;
+              const bSum = balances.counterpartBalances[b].sum;
+              return aSum > bSum ? 1 : -1;
+            })
+            .sort((a) => (balances.counterpartBalances[a].sum === '0.00' ? 1 : -1))
+            .map((key) => (
+              <BalanceItem
+                key={key}
+                contactId={key}
+                contact={balances.counterpartBalances[key]}
+                friendRequests={friendRequests}
+                approveContact={approveContact}
+                showPayment={showPayment}
+                contacts={contacts}
+              />
+            ))}
+        </div>
+
+        <div className={paymentClassName()} role="dialog" onClick={(event) => showModal(event)}>
+          <div className="payment__content">
+            <button className="payment-btn" type="button" onClick={() => markPaid()}>
+              Mark Paid
+            </button>
+            {payment.receiverId &&
+              balances.counterpartBalances[payment.receiverId].sum < 0 && (
+                <button className="payment-btn" type="button">
+                  Request Payment
+                </button>
+            )}
+            <p onClick={() => showPayment(false, null)}>CLOSE</p>
+          </div>
         </div>
       </div>
-    );
-  }
+      <div className="button-container">
+        {' '}
+        <button type="button" className="new-round-btn" onClick={() => getStage('newRound')}>
+          NEW TAB
+        </button>
+      </div>
+    </div>
+  );
 }
 
 Balances.propTypes = {
-  userId: PropTypes.number.isRequired,
-  users: PropTypes.object,
   balances: PropTypes.object.isRequired,
   getStage: PropTypes.func.isRequired,
   showPayment: PropTypes.func.isRequired,
   payment: PropTypes.object.isRequired,
   settleBalance: PropTypes.func.isRequired,
-  fetchBalances: PropTypes.func.isRequired,
   handleContactSearch: PropTypes.func.isRequired,
   addContact: PropTypes.func.isRequired,
   stage: PropTypes.string.isRequired,
   contacts: PropTypes.object.isRequired,
   approveContact: PropTypes.func.isRequired,
-  fetchRoundHistory: PropTypes.func.isRequired,
   logoutUser: PropTypes.func.isRequired,
 };
 
