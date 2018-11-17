@@ -47,10 +47,13 @@ function NewRoundRecipient({
       <button
         className="new-round-add-remove-btn"
         type="button"
-        onClick={handleRoundCounterparts}
-        value={recipient}
+        onClick={() => handleRoundCounterparts(recipient)}
       >
-        {!Object.keys(recipients).includes(recipient.toString()) ? '+' : '-'}
+        {!Object.keys(recipients).includes(recipient.toString()) ? (
+          <i className="fas fa-plus-circle" />
+        ) : (
+          <i className="fas fa-minus-circle" />
+        )}
       </button>
     </div>
   );

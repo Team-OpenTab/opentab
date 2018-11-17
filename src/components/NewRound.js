@@ -116,10 +116,13 @@ function NewRound({
           <button
             className="new-round-add-remove-btn"
             type="button"
-            onClick={handleRoundCounterparts}
-            value={userId}
+            onClick={() => handleRoundCounterparts(userId)}
           >
-            {!Object.keys(recipients).includes(userId.toString()) ? '+' : '-'}
+            {!Object.keys(recipients).includes(userId.toString())
+              ?
+                <i className="fas fa-plus-circle" />
+              :
+                <i className="fas fa-minus-circle" />}
           </button>
         </div>
         {/* RECIPIENTS */}

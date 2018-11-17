@@ -1,4 +1,4 @@
-@import "../main";
+@import '../main';
 
 .tabs-container {
   background-color: $card-background-color;
@@ -60,20 +60,10 @@
     font-size: 0.8rem;
   }
 
-  &__reorder {
-    max-height: 30px;
-    max-width: 30px;
-  }
-
   &__button {
-    align-self: flex-start;
     border: none;
-    background: $secondary-color;
-    color: $text-color-light;
-    height: 30px;
-    width: 30px;
-    display: flex;
-    justify-content: center;
-    border-radius: 50%;
+    background: transparent;
+    color: $text-color-grey;
+    font-size: 1.3rem;
   }
 }

@@ -92,16 +92,10 @@
 }
 
 .new-round-add-remove-btn {
-  flex: 1;
-  height: 2.5rem;
-  max-width: 2.5rem;
-  font-size: 1.4em;
-  font-weight: 900;
-  border-radius: 50%;
-  background-color: $secondary-color;
+  background: transparent;
   border: none;
-  color: $button-color-light;
-  margin-left: $page-margin;
+  color: $text-color-grey;
+  font-size: 1.2rem;
 }
 
 .new-round__input {
