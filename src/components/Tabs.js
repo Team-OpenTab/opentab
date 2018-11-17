@@ -15,17 +15,23 @@ function Tabs({
   stage,
   logoutUser,
 }) {
-  function crossReference(roundCounterparts) {
-    return Object.keys(roundCounterparts).map((recipientId) => (
-      <label className="tab__label" key={recipientId}>
-        {recipientId === userId.toString()
-          ? 'Myself'
-          : contactList.filter((contact) => contact.contact_id.toString() === recipientId)[0]
-            .username}
-        : £{(-roundCounterparts[recipientId]).toFixed(2)}
-      </label>
-    ));
+  function tabRecipientsList(roundCounterparts) {
+    return Object.values(roundCounterparts).map(counterpart => {
+      if (userId === counterpart.id) {
+        return (
+          <label key={counterpart.id}>
+            {'Me'}: {(-counterpart.amount).toFixed(2)}
+          </label>
+        );
+      }
+      return (
+        <label key={counterpart.id}>
+          {counterpart.username}: {(-counterpart.amount).toFixed(2)}
+        </label>
+      );
+    });
   }
+
   return (
     <div className="tabs-container">
       <TitleBar
@@ -36,11 +42,11 @@ function Tabs({
         logoutUser={logoutUser}
       />
       <div className="tabs-content">
-        {roundHistory.map((round) => {
+        {roundHistory.map(round => {
           const roundBuyer =
             round.userId === userId
               ? 'I'
-              : contactList.filter((contact) => contact.contact_id === round.userId)[0].username;
+              : contactList.filter(contact => contact.contact_id === round.userId)[0].username;
           return (
             <div className="tab" key={round.roundId}>
               <div className="tab__header">
@@ -61,7 +67,7 @@ function Tabs({
               <p className="tab__payer">
                 {roundBuyer} paid <b>£{(-round.roundTotal).toFixed(2)}</b>, split as:
               </p>
-              <p className="tab__payees">{crossReference(round.counterparts)}</p>
+              <p className="tab__payees">{tabRecipientsList(round.counterparts)}</p>
             </div>
           );
         })}
