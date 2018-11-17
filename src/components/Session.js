@@ -10,11 +10,9 @@ class Session extends React.Component {
     this.props.fetchBalances(this.props.userId);
     this.props.fetchRoundHistory(this.props.userId);
     this.socket = io(window.location.origin);
-    console.log('session mounted');
     this.socket.on('refresh', () => {
       this.props.fetchBalances(this.props.userId);
       this.props.fetchRoundHistory(this.props.userId);
-      console.log('refresh received');
     });
   }
 
