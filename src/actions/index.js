@@ -299,7 +299,7 @@ export function setRecipientAmount(id, amount) {
     newRecipients[id] = { amount: (Math.round(parseFloat(amount) * 100) / 100).toFixed(2) };
     const totalAmount = Object.values(newRecipients)
       .map((recipient) => recipient.amount)
-      .reduce((a, b) => parseFloat(a) + parseFloat(b))
+      .reduce((a, b) => parseFloat(a) + parseFloat(b), 0)
       .toFixed(2);
     dispatch(setAmount(totalAmount));
     dispatch(setRecipients(newRecipients));
