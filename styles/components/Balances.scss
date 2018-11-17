@@ -1,5 +1,5 @@
-@import "../main";
-@import "./NewRound";
+@import '../main';
+@import './NewRound';
 
 .balances-container {
   height: 100vh;
@@ -53,8 +53,8 @@
 }
 
 .balances-search__avatar {
-  height: 40px;
-  min-width: 40px;
+  height: 30px;
+  min-width: 30px;
   border-radius: 50%;
   margin-left: 0.5em;
 }
