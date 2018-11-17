@@ -115,7 +115,7 @@ app.post('/api/new-round', (req, res) => {
               VALUES ($1, $2, $3, $4, 'round', now())
               RETURNING round_id
               `,
-              [buyerId, recipientId, roundId, -recipients[recipientId]],
+              [buyerId, recipientId, roundId, -recipients[recipientId].amount],
             ),
             db.one(
               `
@@ -127,7 +127,7 @@ app.post('/api/new-round', (req, res) => {
                 recipientId,
                 buyerId,
                 roundId,
-                recipients[recipientId],
+                recipients[recipientId].amount,
                 buyerId === parseInt(recipientId) ? 'self' : 'round',
               ],
             ),

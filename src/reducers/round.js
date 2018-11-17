@@ -15,7 +15,7 @@ function round(state = initialState, action) {
       return Object.assign({}, state, { roundName: action.roundName });
     case 'ADD_RECIPIENT': {
       const newRecipients = Object.assign({}, state.recipients);
-      newRecipients[action.recipient] = 0;
+      newRecipients[action.recipient] = { amount: '0.00' };
       return Object.assign({}, state, { recipients: newRecipients });
     }
     case 'REMOVE_RECIPIENT': {
