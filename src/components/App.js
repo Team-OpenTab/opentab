@@ -1,10 +1,8 @@
 import React from 'react';
 import '../../styles/components/App.scss';
 import PropTypes from 'prop-types';
-import BalancesContainer from '../containers/BalancesContainer';
-import NewRoundContainer from '../containers/NewRoundContainer';
 import LoginContainer from '../containers/LoginContainer';
-import TabsContainer from '../containers/TabsContainer';
+import SessionContainer from '../containers/SessionContainer';
 
 class App extends React.Component {
   constructor(props, context) {
@@ -39,9 +37,7 @@ class App extends React.Component {
     return (
       <div className="app">
         {stage === 'login' && <LoginContainer />}
-        {stage === 'balances' && <BalancesContainer />}
-        {stage === 'newRound' && <NewRoundContainer />}
-        {stage === 'tabs' && <TabsContainer />}
+        {stage !== 'login' && <SessionContainer />}
       </div>
     );
   }

@@ -1,25 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
-import io from 'socket.io-client';
 import TitleBar from './TitleBar';
 import BalanceItem from './BalanceItem';
 import '../../styles/components/Balances.scss';
 
 class Balances extends React.Component {
-  componentDidMount() {
-    this.props.fetchBalances(this.props.userId);
-    this.props.fetchRoundHistory(this.props.userId);
-    this.socket = io(window.location.origin);
-    this.socket.on('refresh', () => {
-      this.props.fetchBalances(this.props.userId);
-      this.props.fetchRoundHistory(this.props.userId);
-    });
-  }
-
-  componentWillUnmount() {
-    this.socket.disconnect(true);
-  }
+  // componentDidMount() {
+  //   this.props.fetchBalances(this.props.userId);
+  //   this.props.fetchRoundHistory(this.props.userId);
+  // }
 
   paymentClassName(close) {
     return cx('payment', {
