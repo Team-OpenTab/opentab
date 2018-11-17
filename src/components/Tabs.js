@@ -16,7 +16,7 @@ function Tabs({
   logoutUser,
 }) {
   function tabRecipientsList(roundCounterparts) {
-    return Object.values(roundCounterparts).map(counterpart => {
+    return Object.values(roundCounterparts).map((counterpart) => {
       if (userId === counterpart.id) {
         return (
           <label key={counterpart.id}>
@@ -42,11 +42,11 @@ function Tabs({
         logoutUser={logoutUser}
       />
       <div className="tabs-content">
-        {roundHistory.map(round => {
+        {roundHistory.map((round) => {
           const roundBuyer =
             round.userId === userId
               ? 'I'
-              : contactList.filter(contact => contact.contact_id === round.userId)[0].username;
+              : contactList.filter((contact) => contact.contact_id === round.userId)[0].username;
           return (
             <div className="tab" key={round.roundId}>
               <div className="tab__header">
@@ -57,11 +57,7 @@ function Tabs({
                   </p>
                 </div>
                 <button className="tab__button" onClick={() => reOrderRound(round)} type="button">
-                  <img
-                    className="tab__reorder"
-                    alt="re-order"
-                    src="../../static/images/reorder.png"
-                  />
+                  <i className="fas fa-retweet" />
                 </button>
               </div>
               <p className="tab__payer">

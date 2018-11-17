@@ -53,15 +53,14 @@ function BalanceItem({
         )}
         {contact.sum !== '0.00' &&
           !friendRequests.includes(Number(contactId)) && (
-            <div className="counterpart__btn">
-              <img
-                className="counterpart__btn__img"
-                alt="Pay"
-                src="../../static/images/payBtn.png"
-                id={contactId}
-                onClick={() => showPayment(true, Number(contactId))}
-              />
-            </div>
+            <button
+              className="counterpart__btn"
+              type="button"
+              id={contactId}
+              onClick={() => showPayment(true, Number(contactId))}
+            >
+              <i className="fas fa-chevron-right" />
+            </button>
         )}
       </div>
     </div>

@@ -2,7 +2,7 @@ const initialState = {
   buyerId: '',
   roundName: '',
   recipients: {},
-  totalAmount: '',
+  totalAmount: '0.00',
   splitType: 'even',
   roundHistory: [],
 };

@@ -263,7 +263,7 @@ export function setAmount(totalAmount) {
 export function handleRoundCounterparts(recipient) {
   return (dispatch, getState) => {
     const { recipients, splitType } = getState().round;
-    if (!Object.keys(recipients).includes(recipient)) {
+    if (!Object.keys(recipients).includes(recipient.toString())) {
       dispatch(addRecipient(recipient));
     } else {
       dispatch(removeRecipient(recipient));

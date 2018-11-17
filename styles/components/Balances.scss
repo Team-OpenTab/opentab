@@ -100,12 +100,9 @@
     flex: 2;
     display: flex;
     justify-content: flex-end;
-
-    &__img {
-      width: 2.5rem;
-      height: 2.5em;
-      cursor: pointer;
-    }
+    background: transparent;
+    border: none;
+    color: $text-color-grey;
   }
 }
 
