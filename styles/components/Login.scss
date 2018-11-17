@@ -10,7 +10,7 @@
 }
 
 .login--existing-user {
-  background-color: $primary-color;
+  background: linear-gradient(to bottom, #06a78a, #13a5d1);
 
   & button {
     color: $primary-color;
@@ -18,7 +18,7 @@
 }
 
 .login--new-user {
-  background-color: $secondary-color;
+  background: linear-gradient(to bottom, #06a78a, #13a5d1);
 
   & button {
     color: $secondary-color;
@@ -48,12 +48,13 @@
   display: flex;
   flex: 5;
   justify-content: center;
+  align-items: center;
   width: 100%;
   flex-direction: column;
   padding: 0 2rem;
 
   &__field {
-    width: 100%;
+    width: 230px;
     padding: 0.5rem;
     margin-top: 0.5rem;
     border: 1px solid $input-border-color;
