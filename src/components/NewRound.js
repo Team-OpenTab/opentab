@@ -32,7 +32,7 @@ function NewRound({
           <button className="title-bar__back" type="button" onClick={handleClick}>
             <i className="fas fa-chevron-left" />
           </button>
-          <h2 className="title-bar__title">New Round</h2>
+          <h2 className="title-bar__title">New Tab</h2>
         </div>
       </div>
       <div className="new-round-content">
