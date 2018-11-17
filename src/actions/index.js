@@ -262,16 +262,18 @@ export function setAmount(totalAmount) {
 
 export function handleRoundCounterparts(recipient) {
   return (dispatch, getState) => {
-    const { recipients } = getState().round;
+    const { recipients, splitType } = getState().round;
     if (!Object.keys(recipients).includes(recipient)) {
       dispatch(addRecipient(recipient));
     } else {
       dispatch(removeRecipient(recipient));
-      const newTotal = Object.keys(recipients)
-        .filter((id) => id !== recipient)
-        .map((id) => parseFloat(recipients[id]))
-        .reduce((a, b) => a + b, 0);
-      dispatch(setAmount(newTotal.toFixed(2)));
+      if (splitType === 'manual') {
+        const newTotal = Object.keys(recipients)
+          .filter((id) => id !== recipient)
+          .map((id) => parseFloat(recipients[id].amount))
+          .reduce((a, b) => a + b, 0);
+        dispatch(setAmount(newTotal.toFixed(2)));
+      }
     }
   };
 }
@@ -294,8 +296,9 @@ export function setRecipientAmount(id, amount) {
   return (dispatch, getState) => {
     const { recipients } = getState().round;
     const newRecipients = Object.assign({}, recipients);
-    newRecipients[id] = (Math.round(parseFloat(amount) * 100) / 100).toFixed(2);
+    newRecipients[id] = { amount: (Math.round(parseFloat(amount) * 100) / 100).toFixed(2) };
     const totalAmount = Object.values(newRecipients)
+      .map((recipient) => recipient.amount)
       .reduce((a, b) => parseFloat(a) + parseFloat(b))
       .toFixed(2);
     dispatch(setAmount(totalAmount));
@@ -309,20 +312,26 @@ export function refreshRecipientAmounts() {
     if (splitType === 'even') {
       const newRecipients = Object.assign({}, recipients);
       Object.keys(newRecipients).forEach((recipientId) => {
-        newRecipients[recipientId] = (
-          Math.round((totalAmount / Object.keys(newRecipients).length) * 100) / 100
-        ).toFixed(2);
+        newRecipients[recipientId] = {
+          amount: (
+            Math.round((parseFloat(totalAmount) / Object.keys(newRecipients).length) * 100) / 100
+          ).toFixed(2),
+        };
       });
       if (Object.values(newRecipients).length) {
         const residual =
           Math.round(
-            (totalAmount -
-              Object.values(newRecipients).reduce((a, b) => parseFloat(a) + parseFloat(b), 0)) *
+            (parseFloat(totalAmount) -
+              Object.values(newRecipients)
+                .map((recipient) => recipient.amount)
+                .reduce((a, b) => parseFloat(a) + parseFloat(b), 0)) *
               100,
           ) / 100;
         const recipientIds = Object.keys(newRecipients);
         const randomId = recipientIds[Math.floor(Math.random() * recipientIds.length)];
-        newRecipients[randomId] = (parseFloat(newRecipients[randomId]) + residual).toFixed(2);
+        newRecipients[randomId] = {
+          amount: (parseFloat(newRecipients[randomId].amount) + residual).toFixed(2),
+        };
         dispatch(setRecipients(newRecipients));
       }
     }
@@ -486,9 +495,11 @@ export function reOrder(round) {
     const userId = getState().user.id;
     const counterparts = Object.assign({}, round.counterparts);
     Object.keys(counterparts).forEach((key) => {
-      counterparts[key] = (counterparts[key] * -1).toFixed(2);
+      counterparts[key] = { amount: (-parseFloat(counterparts[key].amount)).toFixed(2) };
     });
-    const roundAmounts = Object.values(counterparts).map((amount) => parseFloat(amount));
+    const roundAmounts = Object.values(counterparts).map(
+      (counterpart) => parseFloat(counterpart.amount),
+    );
     const roundTotal = roundAmounts.reduce((acc, val) => acc + val).toFixed(2);
     const splitEven = roundAmounts.every((val, i, arr) => Math.abs(val - arr[0]) < 0.02);
     dispatch(setSplitType(splitEven ? 'even' : 'manual'));

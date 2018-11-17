@@ -104,11 +104,13 @@ function NewRound({
             (round.splitType === 'manual' ? (
               <input
                 className="new-round__input"
-                value={round.recipients[userId]}
+                value={parseFloat(round.recipients[userId].amount).toFixed(2)}
                 onChange={(event) => getRecipientAmount(userId, event.target.value)}
               />
             ) : (
-              <div className="new-round__input">{round.recipients[userId]}</div>
+              <div className="new-round__input">
+                {parseFloat(round.recipients[userId].amount).toFixed(2)}
+              </div>
             ))}
 
           <button
