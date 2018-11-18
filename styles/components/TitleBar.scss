@@ -1,4 +1,4 @@
-@import "../main";
+@import '../main';
 
 .title-bar-container {
   padding: 0;
@@ -75,8 +75,8 @@
   }
 
   &__balances--active {
-    border-bottom: 2px solid #f5ac68;
-    font-weight: 800;
+    border-bottom: 3px solid #f5ac68;
+    font-weight: 900;
   }
 
   &__tabs {
@@ -88,7 +88,7 @@
   }
 
   &__tabs--active {
-    border-bottom: 2px solid #f5ac68;
-    font-weight: 800;
+    border-bottom: 3px solid #f5ac68;
+    font-weight: 900;
   }
 }
