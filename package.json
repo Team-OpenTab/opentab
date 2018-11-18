@@ -56,7 +56,8 @@
     "redux-persist": "^5.10.0",
     "redux-thunk": "^2.3.0",
     "socket.io": "^2.1.1",
-    "socket.io-client": "^2.1.1"
+    "socket.io-client": "^2.1.1",
+    "vh-check": "^2.0.5"
   },
   "devDependencies": {
     "@babel/core": "^7.1.2",

@@ -1,12 +1,13 @@
-@import '../main';
+@import "../main";
 
 * {
   box-sizing: border-box;
-  font-family: 'Open Sans', sans-serif;
+  font-family: "Open Sans", sans-serif;
 }
 
 html {
   background-color: $background-color;
   color: $text-color-dark;
   height: 100vh;
+  height: calc(100vh - var(--vh-offset, 0px));
 }

@@ -1,6 +1,7 @@
 import React from 'react';
 import '../../styles/components/App.scss';
 import PropTypes from 'prop-types';
+import vhCheck from 'vh-check';
 import LoginContainer from '../containers/LoginContainer';
 import SessionContainer from '../containers/SessionContainer';
 
@@ -17,6 +18,7 @@ class App extends React.Component {
   }
 
   componentDidMount() {
+    vhCheck();
     const { store } = this.context;
     store.subscribe(() => {
       this.updateFromStore();
