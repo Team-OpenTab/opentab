@@ -1,16 +1,28 @@
 @import '../main';
 
-.tabs-container {
-  background-color: $card-background-color;
-  display: flex;
-  flex-direction: column;
-  margin-top: 80px;
-}
+.tabs {
+  &-container {
+    background-color: $card-background-color;
+    display: flex;
+    flex-direction: column;
+    margin-top: 80px;
+  }
 
-.tabs-content {
-  padding: $page-margin $page-margin 0 $page-margin;
-  overflow: scroll;
-  flex: 1;
+  &-content {
+    padding: $page-margin $page-margin 0 $page-margin;
+    overflow: scroll;
+    flex: 1;
+  }
+
+  &__lonely-message {
+    text-align: center;
+    color: $text-color-grey;
+    position: fixed;
+    top: 130px;
+    left: 0;
+    width: 100%;
+    padding: 1rem;
+  }
 }
 
 .tab {

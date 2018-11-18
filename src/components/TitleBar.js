@@ -38,8 +38,6 @@ function TitleBar({ getStage, stage, logoutUser }) {
 }
 
 TitleBar.propTypes = {
-  title: PropTypes.string.isRequired,
-  previous: PropTypes.string.isRequired,
   getStage: PropTypes.func.isRequired,
   stage: PropTypes.string.isRequired,
   logoutUser: PropTypes.func,

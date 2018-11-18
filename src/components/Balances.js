@@ -4,17 +4,7 @@ import cx from 'classnames';
 import BalanceItem from './BalanceItem';
 import '../../styles/components/Balances.scss';
 
-function Balances({
-  balances,
-  getStage,
-  showPayment,
-  payment,
-  settleBalance,
-  handleContactSearch,
-  addContact,
-  contacts,
-  approveContact,
-}) {
+function Balances({ balances, getStage, showPayment, payment, settleBalance, contacts }) {
   function paymentClassName(close) {
     return cx('payment', {
       'payment--closed': payment.payment || close,
@@ -32,62 +22,16 @@ function Balances({
     showPayment(false, null);
   }
 
-  const friendRequests = contacts.contactList
-    .filter((contact) => !contact.approved)
-    .map((contact) => contact.contact_id);
-
   return (
     <div className="balances-container">
       <div className="balances-content">
-        <div className="balances__add-contact">
-          <input
-            className="balances__search"
-            type="text"
-            placeholder="Search for contacts..."
-            onChange={handleContactSearch}
-            value={contacts.search.searchString}
-          />
-          <ul className="balances__contact-list">
-            {contacts.search.searchResults.map((result) => (
-              <li key={result.id}>
-                <div
-                  className="balances__contact-item"
-                  onClick={() => addContact(result.id)}
-                  role="button"
-                  tabIndex={0}
-                >
-                  <img
-                    className="balances-search__avatar"
-                    src={
-                      result.avatar === ''
-                        ? `https://ui-avatars.com/api/rounded=true?name=${
-                          result.username
-                        }&size=50&background=eaae60`
-                        : result.avatar
-                    }
-                    alt="avatar"
-                  />
-                  <div className="balances__contact-details">
-                    <div className="balances__contact-item__user">{result.username}</div>
-                    <div className="balances__contact-item__email">{result.email}</div>
-                  </div>
-                </div>
-              </li>
-            ))}
-          </ul>
-        </div>
-        {!Object.keys(balances.counterpartBalances).length && (
-          <div className="lonely-message">
-            It feels lonely in here... Add your friends by searching above!
+        {balances.userBalance !== 0 && (
+          <div className="balances__text">
+            {balances.userBalance < 0
+              ? `You are owed £${(-balances.userBalance).toFixed(2)} in total`
+              : `You owe £${balances.userBalance.toFixed(2)} in total`}
           </div>
         )}
-        <div className="balances__text">
-          {balances.userBalance < 0
-            ? `You are owed £${(-balances.userBalance).toFixed(2)} in total`
-            : balances.userBalance > 0
-              ? `You owe £${(-balances.userBalance).toFixed(2)} in total`
-              : ''}
-        </div>
         <div className="counterpart-list">
           {Object.keys(balances.counterpartBalances)
             .sort((a, b) => {
@@ -96,13 +40,17 @@ function Balances({
               return aSum > bSum ? 1 : -1;
             })
             .sort((a) => (balances.counterpartBalances[a].sum === '0.00' ? 1 : -1))
+            .filter((id) =>
+              contacts.contactList
+                .filter((contact) => contact.approved)
+                .map((contact) => contact.contact_id)
+                .includes(Number(id)),
+            )
             .map((key) => (
               <BalanceItem
                 key={key}
                 contactId={key}
                 contact={balances.counterpartBalances[key]}
-                friendRequests={friendRequests}
-                approveContact={approveContact}
                 showPayment={showPayment}
                 contacts={contacts}
               />
@@ -140,10 +88,7 @@ Balances.propTypes = {
   showPayment: PropTypes.func.isRequired,
   payment: PropTypes.object.isRequired,
   settleBalance: PropTypes.func.isRequired,
-  handleContactSearch: PropTypes.func.isRequired,
-  addContact: PropTypes.func.isRequired,
   contacts: PropTypes.object.isRequired,
-  approveContact: PropTypes.func.isRequired,
 };
 
 export default Balances;
