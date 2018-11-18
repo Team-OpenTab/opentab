@@ -1,32 +1,18 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import TitleBar from './TitleBar';
 import '../../styles/components/Tabs.scss';
 
 const dateFormat = require('dateformat');
 
-function Tabs({
-  userId,
-  balance,
-  roundHistory,
-  contactList,
-  reOrderRound,
-  getStage,
-  stage,
-  logoutUser,
-}) {
+function Tabs({ userId, roundHistory, contactList, reOrderRound, getStage }) {
   function tabRecipientsList(roundCounterparts) {
     return Object.values(roundCounterparts).map((counterpart) => {
       if (userId === counterpart.id) {
-        return (
-          <label key={counterpart.id}>
-            {'Me'}: {(-counterpart.amount).toFixed(2)}
-          </label>
-        );
+        return <label key={counterpart.id}>Me: £{(-counterpart.amount).toFixed(2)}</label>;
       }
       return (
         <label key={counterpart.id}>
-          {counterpart.username}: {(-counterpart.amount).toFixed(2)}
+          {counterpart.username}: £{(-counterpart.amount).toFixed(2)}
         </label>
       );
     });
@@ -34,13 +20,6 @@ function Tabs({
 
   return (
     <div className="tabs-container">
-      <TitleBar
-        title={`Balance: £${balance.toFixed(2)}`}
-        previous="balances"
-        getStage={getStage}
-        stage={stage}
-        logoutUser={logoutUser}
-      />
       <div className="tabs-content">
         {roundHistory.map((round) => {
           const roundBuyer =
@@ -83,9 +62,6 @@ Tabs.propTypes = {
   contactList: PropTypes.array.isRequired,
   reOrderRound: PropTypes.func.isRequired,
   getStage: PropTypes.func.isRequired,
-  stage: PropTypes.string.isRequired,
-  balance: PropTypes.number.isRequired,
-  logoutUser: PropTypes.func.isRequired,
 };
 
 export default Tabs;
