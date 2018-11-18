@@ -4,6 +4,7 @@ import io from 'socket.io-client';
 import BalancesContainer from '../containers/BalancesContainer';
 import NewRoundContainer from '../containers/NewRoundContainer';
 import TabsContainer from '../containers/TabsContainer';
+import TitleBarContainer from '../containers/TitleBarContainer';
 
 class Session extends React.Component {
   componentDidMount() {
@@ -25,6 +26,7 @@ class Session extends React.Component {
 
     return (
       <div className="session">
+        <TitleBarContainer />
         {stage === 'balances' && <BalancesContainer />}
         {stage === 'newRound' && <NewRoundContainer />}
         {stage === 'tabs' && <TabsContainer />}
