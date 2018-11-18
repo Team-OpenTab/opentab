@@ -1,7 +1,8 @@
-@import '../main';
+@import "../main";
 
 .new-round-container {
   height: 100vh;
+  height: calc(100vh - var(--vh-offset, 0px));
   display: flex;
   flex-direction: column;
   margin-top: 80px;

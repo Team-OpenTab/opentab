@@ -1,5 +1,5 @@
-@import '../main';
-@import './NewRound';
+@import "../main";
+@import "./NewRound";
 
 .balances-container {
   display: flex;
@@ -133,6 +133,7 @@
   overflow: auto;
   background-color: rgba(0, 0, 0, 0.4);
   height: 100vh;
+  height: calc(100vh - var(--vh-offset, 0px));
 
   &__content {
     background-color: white;
@@ -168,7 +169,8 @@
 }
 
 .button-container {
-  display: inline-block;
+  justify-content: flex-end;
+  display: flex;
   margin: 0;
   padding: 0;
   width: 100%;
@@ -182,7 +184,8 @@
   border: none;
   padding: 1em;
   position: fixed;
-  bottom: 0px;
+  bottom: 0;
+  transform: translate3d(0, 0, 0);
 }
 
 @media screen and (min-width: 768px) {
