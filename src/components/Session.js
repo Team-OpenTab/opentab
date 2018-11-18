@@ -5,6 +5,7 @@ import BalancesContainer from '../containers/BalancesContainer';
 import NewRoundContainer from '../containers/NewRoundContainer';
 import TabsContainer from '../containers/TabsContainer';
 import TitleBarContainer from '../containers/TitleBarContainer';
+import FriendsContainer from '../containers/FriendsContainer';
 
 class Session extends React.Component {
   componentDidMount() {
@@ -27,6 +28,7 @@ class Session extends React.Component {
     return (
       <div className="session">
         <TitleBarContainer />
+        {stage === 'friends' && <FriendsContainer />}
         {stage === 'balances' && <BalancesContainer />}
         {stage === 'newRound' && <NewRoundContainer />}
         {stage === 'tabs' && <TabsContainer />}

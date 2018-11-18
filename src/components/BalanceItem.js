@@ -2,14 +2,7 @@ import React from 'react';
 import cx from 'classnames';
 import PropTypes from 'prop-types';
 
-function BalanceItem({
-  contactId,
-  contact,
-  friendRequests,
-  approveContact,
-  showPayment,
-  contacts,
-}) {
+function BalanceItem({ contactId, contact, showPayment, contacts }) {
   const balanceClasses = cx('counterpart__balance', {
     'counterpart__balance--red': contact.sum > 0,
     'counterpart__balance--green': contact.sum < 0,
@@ -21,13 +14,13 @@ function BalanceItem({
         <img
           className="user-container__avatar"
           src={
-            contacts.contactList.filter(item => item.contact_id === Number(contactId)).length
-              ? contacts.contactList.filter(item => item.contact_id === Number(contactId))[0]
+            contacts.contactList.filter((item) => item.contact_id === Number(contactId)).length
+              ? contacts.contactList.filter((item) => item.contact_id === Number(contactId))[0]
                 .avatar === ''
                 ? `https://ui-avatars.com/api/rounded=true?name=${
                   contact.username
                 }&size=50&background=eaae60`
-                : contacts.contactList.filter(item => item.contact_id === Number(contactId))[0]
+                : contacts.contactList.filter((item) => item.contact_id === Number(contactId))[0]
                   .avatar
               : ''
           }
@@ -42,25 +35,15 @@ function BalanceItem({
         £{contact.sum[0] === '-' ? (-contact.sum).toFixed(2) : contact.sum}
       </div>
       <div className="counterpart__btn">
-        {friendRequests.includes(Number(contactId)) && (
+        {contact.sum !== '0.00' && (
           <button
-            className="counterpart__btn approve-btn"
+            className="counterpart__btn"
             type="button"
-            onClick={() => approveContact(contactId)}
+            id={contactId}
+            onClick={() => showPayment(true, Number(contactId))}
           >
-            Approve
+            <i className="fas fa-chevron-right" />
           </button>
-        )}
-        {contact.sum !== '0.00' &&
-          !friendRequests.includes(Number(contactId)) && (
-            <button
-              className="counterpart__btn"
-              type="button"
-              id={contactId}
-              onClick={() => showPayment(true, Number(contactId))}
-            >
-              <i className="fas fa-chevron-right" />
-            </button>
         )}
       </div>
     </div>
@@ -70,8 +53,6 @@ function BalanceItem({
 BalanceItem.propTypes = {
   contactId: PropTypes.string.isRequired,
   contact: PropTypes.object.isRequired,
-  friendRequests: PropTypes.array.isRequired,
-  approveContact: PropTypes.func.isRequired,
   showPayment: PropTypes.func.isRequired,
   contacts: PropTypes.object.isRequired,
 };

@@ -21,6 +21,11 @@ function Tabs({ userId, roundHistory, contactList, reOrderRound, getStage }) {
   return (
     <div className="tabs-container">
       <div className="tabs-content">
+        {!roundHistory.length && (
+          <div className="tabs__lonely-message">
+            No tabs to display... Click the New Tab button below and start your order!
+          </div>
+        )}
         {roundHistory.map((round) => {
           const roundBuyer =
             round.userId === userId
