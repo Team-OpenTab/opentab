@@ -24,6 +24,7 @@ const db = pgp({
 
 // bcrypt salt rounds.
 const saltRounds = 10;
+
 app.use(bodyParser.json());
 app.use('/static', express.static('static'));
 app.set('view engine', 'hbs');
