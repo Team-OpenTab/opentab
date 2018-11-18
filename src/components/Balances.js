@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
-import TitleBar from './TitleBar';
 import BalanceItem from './BalanceItem';
 import '../../styles/components/Balances.scss';
 
@@ -13,10 +12,8 @@ function Balances({
   settleBalance,
   handleContactSearch,
   addContact,
-  stage,
   contacts,
   approveContact,
-  logoutUser,
 }) {
   function paymentClassName(close) {
     return cx('payment', {
@@ -41,13 +38,6 @@ function Balances({
 
   return (
     <div className="balances-container">
-      <TitleBar
-        title={`Balance: £${balances.userBalance.toFixed(2)}`}
-        previous="login"
-        getStage={getStage}
-        stage={stage}
-        logoutUser={logoutUser}
-      />
       <div className="balances-content">
         <div className="balances__add-contact">
           <input
@@ -91,6 +81,13 @@ function Balances({
             It feels lonely in here... Add your friends by searching above!
           </div>
         )}
+        <div className="balances__text">
+          {balances.userBalance < 0
+            ? `You are owed £${(-balances.userBalance).toFixed(2)} in total`
+            : balances.userBalance > 0
+              ? `You owe £${(-balances.userBalance).toFixed(2)} in total`
+              : ''}
+        </div>
         <div className="counterpart-list">
           {Object.keys(balances.counterpartBalances)
             .sort((a, b) => {
@@ -145,10 +142,8 @@ Balances.propTypes = {
   settleBalance: PropTypes.func.isRequired,
   handleContactSearch: PropTypes.func.isRequired,
   addContact: PropTypes.func.isRequired,
-  stage: PropTypes.string.isRequired,
   contacts: PropTypes.object.isRequired,
   approveContact: PropTypes.func.isRequired,
-  logoutUser: PropTypes.func.isRequired,
 };
 
 export default Balances;

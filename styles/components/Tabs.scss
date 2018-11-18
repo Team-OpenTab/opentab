@@ -2,9 +2,9 @@
 
 .tabs-container {
   background-color: $card-background-color;
-  height: 100vh;
   display: flex;
   flex-direction: column;
+  margin-top: 80px;
 }
 
 .tabs-content {

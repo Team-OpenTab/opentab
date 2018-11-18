@@ -2,9 +2,15 @@
 @import './NewRound';
 
 .balances-container {
-  height: 100vh;
   display: flex;
   flex-direction: column;
+  margin-top: 80px;
+}
+
+.balances__text {
+  padding: 1rem 0 1rem 0;
+  font-weight: 800;
+  color: $text-color-grey;
 }
 
 .balances-content {
@@ -175,6 +181,8 @@
   color: #fff;
   border: none;
   padding: 1em;
+  position: fixed;
+  bottom: 0px;
 }
 
 @media screen and (min-width: 768px) {

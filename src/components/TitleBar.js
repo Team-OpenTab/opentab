@@ -3,18 +3,16 @@ import PropTypes from 'prop-types';
 import cx from 'classnames';
 import '../../styles/components/TitleBar.scss';
 
-function TitleBar({ title, getStage, stage, logoutUser }) {
-  function balancesClassName() {
-    return cx('navigation-bar__balances', {
-      'navigation-bar__balances--active': stage === 'balances',
-    });
-  }
-
-  function tabsClassName() {
-    return cx('navigation-bar__tabs', {
-      'navigation-bar__tabs--active': stage === 'tabs',
-    });
-  }
+function TitleBar({ getStage, stage, logoutUser }) {
+  const tabsClasses = cx('navigation-bar__tabs', {
+    'navigation-bar__tabs--active': stage === 'tabs',
+  });
+  const balancesClasses = cx('navigation-bar__balances', {
+    'navigation-bar__balances--active': stage === 'balances',
+  });
+  const friendsClasses = cx('navigation-bar__friends', {
+    'navigation-bar__friends--active': stage === 'friends',
+  });
 
   return (
     <div className="title-bar-container">
@@ -22,16 +20,18 @@ function TitleBar({ title, getStage, stage, logoutUser }) {
         <button className="title-bar__logout" type="button" onClick={logoutUser}>
           <i className="fas fa-sign-out-alt" />
         </button>
-        <div className="title-bar__gap" />
-        <h2 className="title-bar__title">{title}</h2>
+        <h2 className="title-bar__title">OpenTab</h2>
       </div>
       <div className="navigation-bar">
-        <p className={balancesClassName()} onClick={() => getStage('balances')}>
+        <button type="button" className={friendsClasses} onClick={() => getStage('friends')}>
+          FRIENDS
+        </button>
+        <button type="button" className={balancesClasses} onClick={() => getStage('balances')}>
           BALANCES
-        </p>
-        <p className={tabsClassName()} onClick={() => getStage('tabs')}>
+        </button>
+        <button type="button" className={tabsClasses} onClick={() => getStage('tabs')}>
           TABS
-        </p>
+        </button>
       </div>
     </div>
   );
