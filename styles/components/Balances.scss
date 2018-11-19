@@ -2,9 +2,10 @@
 @import "./NewRound";
 
 .balances-container {
-  height: 100vh;
   display: flex;
   flex-direction: column;
+  margin-top: 85px;
+  margin-bottom: 40px;
 }
 
 .balances-content {
@@ -14,54 +15,11 @@
   flex: 1;
 }
 
-.balances__search {
-  width: 100%;
-  padding: 0.5rem;
-  font-size: 1em;
-  border: 0;
+.balances__text {
+  padding-bottom: 1rem;
+  font-weight: 800;
+  color: $text-color-grey;
   text-align: center;
-}
-
-.balances__contact-list {
-  list-style: none;
-  padding: 0;
-}
-
-.balances__contact-item {
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  padding: 0.5em;
-  background-color: $card-background-color;
-  &__user {
-    flex: 1;
-    margin-left: 2em;
-  }
-}
-
-.balances__contact-details {
-  display: flex;
-  flex-direction: column;
-}
-
-.balances__contact-item__user {
-  font-weight: 600;
-}
-
-.balances__contact-item__email {
-  font-size: 0.7rem;
-}
-
-.balances-search__avatar {
-  height: 40px;
-  min-width: 40px;
-  border-radius: 50%;
-  margin-left: 0.5em;
-}
-
-.lonely-message {
-  text-align: center;
-  color: $text-color-dark;
 }
 
 .counterpart-list {
@@ -100,24 +58,10 @@
     flex: 2;
     display: flex;
     justify-content: flex-end;
-
-    &__img {
-      width: 2.5rem;
-      height: 2.5em;
-      cursor: pointer;
-    }
+    background: transparent;
+    border: none;
+    color: $text-color-grey;
   }
-}
-
-.approve-btn {
-  padding: 0.5rem;
-  border: 1px solid $input-border-color;
-  background-color: $secondary-color;
-  color: white;
-  text-align: center;
-  justify-content: center;
-  align-items: center;
-  border-radius: 8px;
 }
 
 .payment {
@@ -130,6 +74,7 @@
   overflow: auto;
   background-color: rgba(0, 0, 0, 0.4);
   height: 100vh;
+  height: calc(100vh - var(--vh-offset, 0px));
 
   &__content {
     background-color: white;
@@ -165,7 +110,8 @@
 }
 
 .button-container {
-  display: inline-block;
+  justify-content: flex-end;
+  display: flex;
   margin: 0;
   padding: 0;
   width: 100%;
@@ -178,6 +124,9 @@
   color: #fff;
   border: none;
   padding: 1em;
+  position: fixed;
+  bottom: 0;
+  transform: translate3d(0, 0, 0);
 }
 
 @media screen and (min-width: 768px) {

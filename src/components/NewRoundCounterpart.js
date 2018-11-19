@@ -29,10 +29,13 @@ function NewRoundCounterpart({ counterpart, recipients, handleRoundCounterparts,
           <button
             className="new-round-add-remove-btn"
             type="button"
-            onClick={handleRoundCounterparts}
-            value={counterpart.counterpart_id}
+            onClick={() => handleRoundCounterparts(counterpart.counterpart_id)}
           >
-            {!Object.keys(recipients).includes(counterpart.counterpart_id.toString()) ? '+' : '-'}
+            {!Object.keys(recipients).includes(counterpart.counterpart_id.toString()) ? (
+              <i className="fas fa-plus-circle" />
+            ) : (
+              <i className="fas fa-minus-circle" />
+            )}
           </button>
         </div>
       )}

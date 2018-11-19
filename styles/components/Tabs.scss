@@ -1,23 +1,34 @@
 @import "../main";
 
-.tabs-container {
-  background-color: $card-background-color;
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
-}
+.tabs {
+  &-container {
+    background-color: $card-background-color;
+    display: flex;
+    flex-direction: column;
+    margin-top: 85px;
+    margin-bottom: 50px;
+  }
 
-.tabs-content {
-  padding: $page-margin $page-margin 0 $page-margin;
-  overflow: scroll;
-  flex: 1;
+  &-content {
+    overflow: scroll;
+  }
+
+  &__lonely-message {
+    text-align: center;
+    color: $text-color-grey;
+    position: fixed;
+    top: 130px;
+    left: 0;
+    width: 100%;
+    padding: 1rem;
+  }
 }
 
 .tab {
   background-color: $card-foreground-color;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
   padding: 1.25rem;
-  margin-bottom: 1.25rem;
+  margin: $page-margin $page-margin 0 $page-margin;
 
   &__name {
     margin: 0;
@@ -60,20 +71,10 @@
     font-size: 0.8rem;
   }
 
-  &__reorder {
-    max-height: 30px;
-    max-width: 30px;
-  }
-
   &__button {
-    align-self: flex-start;
     border: none;
-    background: $secondary-color;
-    color: $text-color-light;
-    height: 30px;
-    width: 30px;
-    display: flex;
-    justify-content: center;
-    border-radius: 50%;
+    background: transparent;
+    color: $text-color-grey;
+    font-size: 1.3rem;
   }
 }

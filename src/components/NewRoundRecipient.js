@@ -34,21 +34,26 @@ function NewRoundRecipient({
       {splitType === 'manual' ? (
         <input
           className="new-round__input"
-          value={recipients[recipient]}
+          value={parseFloat(recipients[recipient].amount).toFixed(2)}
           type="number"
           onChange={(event) => getRecipientAmount(recipient, event.target.value)}
         />
       ) : (
-        <div className="new-round__input">{recipients[recipient]}</div>
+        <div className="new-round__input">
+          {parseFloat(recipients[recipient].amount).toFixed(2)}
+        </div>
       )}
 
       <button
         className="new-round-add-remove-btn"
         type="button"
-        onClick={handleRoundCounterparts}
-        value={recipient}
+        onClick={() => handleRoundCounterparts(recipient)}
       >
-        {!Object.keys(recipients).includes(recipient.toString()) ? '+' : '-'}
+        {!Object.keys(recipients).includes(recipient.toString()) ? (
+          <i className="fas fa-plus-circle" />
+        ) : (
+          <i className="fas fa-minus-circle" />
+        )}
       </button>
     </div>
   );

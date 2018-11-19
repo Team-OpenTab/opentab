@@ -2,9 +2,17 @@ const initialState = {
   buyerId: '',
   roundName: '',
   recipients: {},
-  totalAmount: '',
+  totalAmount: '0.00',
   splitType: 'even',
   roundHistory: [],
+};
+
+const resetWithRoundHistory = {
+  buyerId: '',
+  roundName: '',
+  recipients: {},
+  totalAmount: '0.00',
+  splitType: 'even',
 };
 
 function round(state = initialState, action) {
@@ -15,7 +23,7 @@ function round(state = initialState, action) {
       return Object.assign({}, state, { roundName: action.roundName });
     case 'ADD_RECIPIENT': {
       const newRecipients = Object.assign({}, state.recipients);
-      newRecipients[action.recipient] = 0;
+      newRecipients[action.recipient] = { amount: '0.00' };
       return Object.assign({}, state, { recipients: newRecipients });
     }
     case 'REMOVE_RECIPIENT': {
@@ -26,7 +34,7 @@ function round(state = initialState, action) {
     case 'SET_RECIPIENTS':
       return Object.assign({}, state, { recipients: action.recipients });
     case 'RESET_ROUND':
-      return initialState;
+      return Object.assign({}, state, resetWithRoundHistory);
     case 'SET_AMOUNT':
       return Object.assign({}, state, { totalAmount: action.totalAmount });
     case 'SET_SPLIT_TYPE':

@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import Balances from '../components/Balances';
+import Friends from '../components/Friends';
 import {
   setStage,
   showPayment,
@@ -31,4 +31,4 @@ const mapDispatchToProps = dispatch => ({
 export default connect(
   mapStateToProps,
   mapDispatchToProps,
-)(Balances);
+)(Friends);

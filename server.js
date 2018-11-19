@@ -24,6 +24,7 @@ const db = pgp({
 
 // bcrypt salt rounds.
 const saltRounds = 10;
+
 app.use(bodyParser.json());
 app.use('/static', express.static('static'));
 app.set('view engine', 'hbs');
@@ -115,7 +116,7 @@ app.post('/api/new-round', (req, res) => {
               VALUES ($1, $2, $3, $4, 'round', now())
               RETURNING round_id
               `,
-              [buyerId, recipientId, roundId, -recipients[recipientId]],
+              [buyerId, recipientId, roundId, -recipients[recipientId].amount],
             ),
             db.one(
               `
@@ -127,7 +128,7 @@ app.post('/api/new-round', (req, res) => {
                 recipientId,
                 buyerId,
                 roundId,
-                recipients[recipientId],
+                recipients[recipientId].amount,
                 buyerId === parseInt(recipientId) ? 'self' : 'round',
               ],
             ),
@@ -364,11 +365,13 @@ app.get('/api/get-rounds/:userId', (req, res) => {
         db.any(
           `
           SELECT transaction.id, transaction.user_id, transaction.counterpart_id,
-            transaction.round_id, transaction.amount, transaction.type, round.name, transaction.time
-          FROM transaction, round
+          transaction.round_id, transaction.amount, transaction.type, round.name,
+          transaction.time, "user".username
+          FROM transaction, round, "user"
           WHERE round_id = ${round.round_id}
           AND amount < 0
-          AND transaction.round_id = round.id;
+          AND transaction.round_id = round.id
+          AND "user".id = transaction.counterpart_id
           `,
         ),
       );
@@ -379,21 +382,28 @@ app.get('/api/get-rounds/:userId', (req, res) => {
         .map(round => {
           const reducedRound = round.reduce((acc, curr) => {
             const counterparts = !acc.counterparts
-              ? { [curr.counterpart_id]: curr.amount }
+              ? { [curr.counterpart_id]: { username: curr.username, amount: curr.amount } }
               : acc.counterparts;
             acc = {
               roundId: curr.round_id,
               roundName: curr.name,
               userId: curr.user_id,
-              counterparts: Object.assign({}, counterparts, { [curr.counterpart_id]: curr.amount }),
+              counterparts: Object.assign({}, counterparts, {
+                [curr.counterpart_id]: {
+                  username: curr.username,
+                  id: curr.counterpart_id,
+                  amount: curr.amount,
+                },
+              }),
               roundTime: curr.time,
             };
             return acc;
           }, {});
           const roundTotal = Object.values(reducedRound.counterparts).reduce(
-            (acc, item) => parseFloat(acc) + parseFloat(item),
+            (acc, item) => parseFloat(acc) + parseFloat(item.amount),
             0,
           );
+
           const roundWithTotal = Object.assign({}, reducedRound, {
             roundTotal: roundTotal.toFixed(2),
           });
