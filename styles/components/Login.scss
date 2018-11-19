@@ -1,7 +1,6 @@
 @import "../main";
 
 .container {
-  background-color: red;
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
@@ -15,19 +14,31 @@
   min-height: calc(100vh - var(--vh-offset, 0px));
 }
 
-.login--existing-user {
-  background: linear-gradient(to bottom, #06a78a, #13a5d1);
-
-  & button {
-    color: $primary-color;
-  }
+.login {
+  background: linear-gradient(-45deg, #06a78a, #30b9e2, #0875a5, #23d5ab);
+  background-size: 400% 400%;
+  animation: Gradient 15s ease infinite;
 }
 
-.login--new-user {
-  background: linear-gradient(to bottom, #06a78a, #13a5d1);
+.login--existing-user__button {
+  border: #06bd9b;
+  background-color: $primary-color;
+  color: #ffffff;
+}
 
-  & button {
-    color: $secondary-color;
+.login--new-user__button {
+  background-color: $primary-color;
+  color: #ffffff;
+}
+@keyframes Gradient {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
   }
 }
 
@@ -68,11 +79,11 @@
 }
 
 .button {
-  color: $primary-color;
+  border: 1px solid #037e67;
+  background-color: $primary-color;
+  color: #ffffff;
   margin-top: 2rem;
-  border: 1px solid $input-border-color;
   text-align: center;
-  background-color: $button-color-light;
 }
 
 .sign-up {

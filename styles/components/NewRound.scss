@@ -75,13 +75,13 @@
   box-sizing: border-box;
 }
 .onoffswitch-inner:before {
-  content: 'Even Split';
+  content: "Even Split";
   padding-left: 10px;
   background-color: $secondary-color;
   color: #ffffff;
 }
 .onoffswitch-inner:after {
-  content: 'Manual Split';
+  content: "Manual Split";
   padding-right: 10px;
   background-color: #c44545;
   color: #ffffff;
@@ -148,7 +148,7 @@
   background: transparent;
   border: none;
   color: $text-color-grey;
-  font-size: 1.2rem;
+  font-size: 1.5rem;
 }
 
 .new-round__input {
