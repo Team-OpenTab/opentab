@@ -41,33 +41,22 @@ function NewRound({
             onChange={(event) => getAmount(event.target.value)}
           />
         </div>
-        <div className="round-split">
-          <div className="round-split__evenly">
+        <div className="switch-container">
+          <div className="onoffswitch">
             <input
-              type="radio"
-              name="splitType"
-              id="radio1"
+              type="checkbox"
+              name="onoffswitch"
+              className="onoffswitch-checkbox"
+              id="myonoffswitch"
               checked={round.splitType === 'even'}
-              onChange={() => getSplitType('even')}
+              onChange={() => getSplitType(round.splitType === 'even' ? 'manual' : 'even')}
             />
-            <label className="split-label" htmlFor="radio1">
-              Split Evenly
-            </label>
-          </div>
-          <div className="round-split__manually">
-            <input
-              type="radio"
-              name="splitType"
-              id="radio2"
-              checked={round.splitType === 'manual'}
-              onChange={() => getSplitType('manual')}
-            />
-            <label className="split-label" htmlFor="radio2">
-              Split Manually
+            <label className="onoffswitch-label" htmlFor="myonoffswitch">
+              <span className="onoffswitch-inner" />
+              <span className="onoffswitch-switch" />
             </label>
           </div>
         </div>
-
         <div className="new-round-recipient-container">
           <div className="user-container">
             <img
@@ -104,11 +93,11 @@ function NewRound({
             type="button"
             onClick={() => handleRoundCounterparts(userId)}
           >
-            {!Object.keys(recipients).includes(userId.toString())
-              ?
-                <i className="fas fa-plus-circle" />
-              :
-                <i className="fas fa-minus-circle" />}
+            {!Object.keys(recipients).includes(userId.toString()) ? (
+              <i className="fas fa-plus-circle" />
+            ) : (
+              <i className="fas fa-minus-circle" />
+            )}
           </button>
         </div>
         {/* RECIPIENTS */}
