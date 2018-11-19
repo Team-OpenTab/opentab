@@ -9,32 +9,18 @@ function NewRound({
   getAmount,
   getSplitType,
   getNewRound,
-  getStage,
   getRecipientAmount,
   handleRoundCounterparts,
   userId,
   contacts,
-  resetRound,
   getRoundName,
   user,
   round,
   totalAmount,
   recipients,
 }) {
-  function handleClick() {
-    getStage('balances');
-    resetRound();
-  }
   return (
     <div className="new-round-container">
-      <div className="title-bar-container">
-        <div className="title-bar">
-          <button className="title-bar__back" type="button" onClick={handleClick}>
-            <i className="fas fa-chevron-left" />
-          </button>
-          <h2 className="title-bar__title">New Tab</h2>
-        </div>
-      </div>
       <div className="new-round-content">
         <div className="round-input-container">
           <div className="round-input-container__icon">...</div>
@@ -165,7 +151,6 @@ function NewRound({
 }
 NewRound.propTypes = {
   counterparts: PropTypes.object.isRequired,
-  getStage: PropTypes.func.isRequired,
   getAmount: PropTypes.func.isRequired,
   getSplitType: PropTypes.func.isRequired,
   getNewRound: PropTypes.func.isRequired,
@@ -175,7 +160,6 @@ NewRound.propTypes = {
   stage: PropTypes.string.isRequired,
   contacts: PropTypes.array.isRequired,
   getRoundName: PropTypes.func.isRequired,
-  resetRound: PropTypes.func.isRequired,
   user: PropTypes.object.isRequired,
   round: PropTypes.object.isRequired,
   totalAmount: PropTypes.string.isRequired,
