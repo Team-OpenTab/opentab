@@ -2,9 +2,9 @@
 
 OpenTab is a web application for tracking and settling rounds between friends.
 
-![login page](https://www.dropbox.com/s/0pq54ov5vgvszdm/team-open-tab.herokuapp.com_%28iPhone%206_7_8%29%20%283%29.png?dl=0 "Login")
-![open tab page](https://www.dropbox.com/s/bl4t76rbvab037l/team-open-tab.herokuapp.com_%28iPhone%206_7_8%29%20%2811%29.pngdl=0 "Open Tab")
-![balances page](https://www.dropbox.com/s/zbzb5anwg0ot8dj/team-open-tab.herokuapp.com_%28iPhone%206_7_8%29%20%2812%29.png?dl=0 "Balances")
+![login page](https://www.dropbox.com/s/y6kkud54r0wlv37/Screenshot%202018-11-19%2014.22.53.png?dl=0 "Login")
+![open tab page](https://www.dropbox.com/s/uacs1oxht0m1crr/Screenshot%202018-11-19%2014.23.59.png?dl=0"Open Tab")
+![balances page](https://www.dropbox.com/s/x6bc3frzoiej7gj/Screenshot%202018-11-19%2014.25.12.png?dl=0 "Balances")
 
 ## The Team:
 
