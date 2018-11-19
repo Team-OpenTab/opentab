@@ -1,8 +1,8 @@
-@import "../main";
+@import '../main';
 
 * {
   box-sizing: border-box;
-  font-family: "Open Sans", sans-serif;
+  font-family: 'Open Sans', sans-serif;
 }
 
 html {
@@ -10,4 +10,10 @@ html {
   color: $text-color-dark;
   height: 100vh;
   height: calc(100vh - var(--vh-offset, 0px));
+}
+
+body {
+  -webkit-user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-touch-callout: none;
 }
