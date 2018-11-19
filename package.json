@@ -14,7 +14,8 @@
     "prettier": "prettier --write src/**/*.js",
     "lint": "eslint --fix src/",
     "lint:write": "eslint --fix src/",
-    "start": "nodemon server.js",
+    "start": "node server.js",
+
     "heroku-postbuild": "npm run build"
   },
   "babel": {
