@@ -4,7 +4,7 @@
   "lang": "en-GB",
   "start_url": "http://localhost:8080",
   "display": "standalone",
-  "theme_color": "#eeeeee",
+  "theme_color": "#06a78a",
   "background_color": "#06a78a",
   "icons": [
     {
