@@ -5,7 +5,8 @@
   height: calc(100vh - var(--vh-offset, 0px));
   display: flex;
   flex-direction: column;
-  margin-top: 80px;
+  margin-top: 85px;
+  margin-bottom: 40px;
 }
 
 .new-round-content {
@@ -17,7 +18,7 @@
 .round-input-container {
   display: flex;
   width: 100%;
-  padding-bottom: $page-margin;
+  padding-bottom: 5px;
 
   &__icon {
     display: flex;
