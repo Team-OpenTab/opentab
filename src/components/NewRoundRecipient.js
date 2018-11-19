@@ -33,7 +33,7 @@ class NewRoundRecipient extends React.Component {
 
   handleBlur(event) {
     this.setState({
-      value: event.target.value.toFixed(2),
+      value: parseFloat(event.target.value).toFixed(2),
     });
   }
 
@@ -78,6 +78,7 @@ class NewRoundRecipient extends React.Component {
             className="new-round__input"
             value={this.state.value}
             type="number"
+            onBlur={this.handleBlur}
             onChange={this.handleChange}
             onFocus={this.handleFocus}
           />
