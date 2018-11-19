@@ -2,9 +2,9 @@
 
 OpenTab is a web application for tracking and settling rounds between friends.
 
-![login page](https://www.dropbox.com/s/y6kkud54r0wlv37/Screenshot%202018-11-19%2014.22.53.png?dl=0 "Login")
-![open tab page](https://www.dropbox.com/s/uacs1oxht0m1crr/Screenshot%202018-11-19%2014.23.59.png?dl=0"Open Tab")
-![balances page](https://www.dropbox.com/s/x6bc3frzoiej7gj/Screenshot%202018-11-19%2014.25.12.png?dl=0 "Balances")
+![login page](https://www.dropbox.com/s/y6kkud54r0wlv37/Screenshot%202018-11-19%2014.22.53.png?dl=1 "Login")
+![open tab page](https://www.dropbox.com/s/uacs1oxht0m1crr/Screenshot%202018-11-19%2014.23.59.png?dl=1 "Open Tab")
+![balances page](https://www.dropbox.com/s/x6bc3frzoiej7gj/Screenshot%202018-11-19%2014.25.12.png?dl=1 "Balances")
 
 ## The Team:
 
