@@ -46,6 +46,7 @@ function Balances({ balances, getStage, showPayment, payment, settleBalance, con
                 .map((contact) => contact.contact_id)
                 .includes(Number(id)),
             )
+            .filter((id) => balances.counterpartBalances[id].sum !== '0.00')
             .map((key) => (
               <BalanceItem
                 key={key}
