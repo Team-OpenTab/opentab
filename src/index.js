@@ -10,6 +10,17 @@ import { Provider } from 'react-redux';
 import App from './components/App';
 import rootReducer from './reducers';
 
+window.addEventListener('load', () => {
+  if ('serviceWorker' in navigator) {
+    try {
+      navigator.serviceWorker.register('/static/worker.js')
+        .then(() => console.log('Service worker registered!'));
+    } catch (err) {
+      console.error(`Failed to register service worker: ${err}`);
+    }
+  }
+});
+
 const persistConfig = {
   key: 'root',
   storage,
