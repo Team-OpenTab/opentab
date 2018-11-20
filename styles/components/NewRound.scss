@@ -1,4 +1,4 @@
-@import "../main";
+@import '../main';
 
 .new-round-container {
   height: 100vh;
@@ -7,6 +7,7 @@
   flex-direction: column;
   margin-top: 85px;
   margin-bottom: 40px;
+  background: $background-color;
 }
 
 .new-round-content {
@@ -77,13 +78,13 @@
   box-sizing: border-box;
 }
 .onoffswitch-inner:before {
-  content: "Even Split";
+  content: 'Even Split';
   padding-left: 10px;
   background-color: $secondary-color;
   color: #ffffff;
 }
 .onoffswitch-inner:after {
-  content: "Manual Split";
+  content: 'Manual Split';
   padding-right: 10px;
   background-color: #c44545;
   color: #ffffff;
