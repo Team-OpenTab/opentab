@@ -1,11 +1,13 @@
-@import "../main";
+@import '../main';
 
 .title-bar-container {
   padding: 0;
   position: fixed;
-  top: 0;
+  top: -20px;
   width: 100%;
   z-index: 100;
+  padding-top: 20px;
+  background-color: $primary-color;
 }
 
 .title-bar {
@@ -14,7 +16,6 @@
   justify-content: center;
   align-items: center;
   height: 50px;
-  background-color: $primary-color;
   color: $text-color-light;
 
   &__logout {
@@ -37,7 +38,7 @@
 
   &__title {
     flex: 1;
-    font-family: "Nova Round";
+    font-family: 'Nova Round';
     font-weight: 100;
     text-align: center;
     font-size: 2rem;
