@@ -1,11 +1,12 @@
-@import "../main";
-@import "./NewRound";
+@import '../main';
+@import './NewRound';
 
 .balances-container {
   display: flex;
   flex-direction: column;
   margin-top: 85px;
   margin-bottom: 40px;
+  background: $background-color;
 }
 
 .balances-content {
