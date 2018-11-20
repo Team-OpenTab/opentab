@@ -1,29 +1,28 @@
-@import "../main";
-@import "./NewRound";
+@import '../main';
+@import './NewRound';
 
 .balances-container {
   display: flex;
   flex-direction: column;
   margin-top: 85px;
   margin-bottom: 40px;
+  background: $background-color;
 }
 
 .balances-content {
-  padding: $page-margin;
-  overflow: scroll;
+  padding-bottom: $page-margin;
   overflow-x: hidden;
   flex: 1;
 }
 
 .balances__text {
-  padding-bottom: 1rem;
+  padding: 1rem;
   font-weight: 800;
   color: $text-color-grey;
   text-align: center;
 }
 
 .counterpart-list {
-  border-top: 1px solid $line-color;
   display: flex;
   flex-direction: column;
 }
@@ -33,6 +32,11 @@
   justify-content: space-around;
   align-items: center;
   border-bottom: 1px solid $line-color;
+  padding: 0 $page-margin;
+
+  &:first-of-type {
+    border-top: 1px solid $line-color;
+  }
 
   &__name {
     @extend .user-container;
@@ -45,12 +49,21 @@
     flex: 3;
     text-align: center;
 
+    &__title {
+      font-size: 0.7em;
+      font-weight: 100;
+    }
+
     &--red {
       color: rgb(141, 34, 34);
+      font-size: 1.1em;
+      font-weight: 700;
     }
 
     &--green {
       color: rgb(23, 124, 23);
+      font-size: 1.1em;
+      font-weight: 700;
     }
   }
 
@@ -110,7 +123,7 @@
 }
 
 .button-container {
-  justify-content: flex-end;
+  // justify-content: flex-end;
   display: flex;
   margin: 0;
   padding: 0;
