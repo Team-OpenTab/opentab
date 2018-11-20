@@ -312,6 +312,7 @@ app.post('/api/add-contact', (req, res) => {
     .then(() => {
       res.json({ status: 200 });
     })
+    .then(() => io.emit('refresh'))
     .catch(error =>
       res.status(400).json({
         status: 400,

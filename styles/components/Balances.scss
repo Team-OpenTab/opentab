@@ -1,25 +1,37 @@
 @import '../main';
 @import './NewRound';
 
-.balances-container {
-  display: flex;
-  flex-direction: column;
-  margin-top: 95px;
-  margin-bottom: 40px;
-  background: $background-color;
-}
+.balances {
+  &-container {
+    display: flex;
+    flex-direction: column;
+    margin-top: 95px;
+    margin-bottom: 40px;
+    background: $background-color;
+  }
 
-.balances-content {
-  padding-bottom: $page-margin;
-  overflow-x: hidden;
-  flex: 1;
-}
+  &-content {
+    padding-bottom: $page-margin;
+    overflow-x: hidden;
+    flex: 1;
+  }
 
-.balances__text {
-  padding: 1rem;
-  font-weight: 800;
-  color: $text-color-grey;
-  text-align: center;
+  &__lonely-message {
+    text-align: center;
+    color: $text-color-grey;
+    position: fixed;
+    top: 130px;
+    left: 0;
+    width: 100%;
+    padding: 1rem;
+  }
+
+  &__text {
+    padding: 1rem;
+    font-weight: 800;
+    color: $text-color-grey;
+    text-align: center;
+  }
 }
 
 .counterpart-list {
