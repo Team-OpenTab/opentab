@@ -34,7 +34,7 @@ function BalanceItem({ contactId, contact, showPayment, contacts }) {
         {contact.sum < 0 ? (
           <div className="counterpart__balance__title">owes you</div>
         ) : contact.sum === '0.00' ? null : (
-          <div>you owe</div>
+          <div className="counterpart__balance__title">you owe</div>
         )}
         £{contact.sum[0] === '-' ? (-contact.sum).toFixed(2) : contact.sum}
       </div>
