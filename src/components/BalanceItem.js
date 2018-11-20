@@ -14,13 +14,13 @@ function BalanceItem({ contactId, contact, showPayment, contacts }) {
         <img
           className="user-container__avatar"
           src={
-            contacts.contactList.filter((item) => item.contact_id === Number(contactId)).length
-              ? contacts.contactList.filter((item) => item.contact_id === Number(contactId))[0]
+            contacts.contactList.filter(item => item.contact_id === Number(contactId)).length
+              ? contacts.contactList.filter(item => item.contact_id === Number(contactId))[0]
                 .avatar === ''
                 ? `https://ui-avatars.com/api/rounded=true?name=${
                   contact.username
                 }&size=50&background=eaae60`
-                : contacts.contactList.filter((item) => item.contact_id === Number(contactId))[0]
+                : contacts.contactList.filter(item => item.contact_id === Number(contactId))[0]
                   .avatar
               : ''
           }
@@ -31,7 +31,11 @@ function BalanceItem({ contactId, contact, showPayment, contacts }) {
       </div>
 
       <div className={balanceClasses}>
-        {contact.sum < 0 ? <div>Owes you</div> : contact.sum === '0.00' ? null : <div>You owe</div>}
+        {contact.sum < 0 ? (
+          <div className="counterpart__balance__title">owes you</div>
+        ) : contact.sum === '0.00' ? null : (
+          <div>you owe</div>
+        )}
         £{contact.sum[0] === '-' ? (-contact.sum).toFixed(2) : contact.sum}
       </div>
       <div className="counterpart__btn">

@@ -2,15 +2,15 @@
 
 .tabs {
   &-container {
-    background-color: $card-background-color;
+    // background-color: $card-background-color;
     display: flex;
     flex-direction: column;
     margin-top: 85px;
-    margin-bottom: 50px;
   }
 
   &-content {
     overflow: hidden;
+    margin-bottom: 50px;
   }
 
   &__lonely-message {
@@ -25,10 +25,10 @@
 }
 
 .tab {
-  background-color: $card-foreground-color;
+  background-color: #eeeff0;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
   padding: 1.25rem;
-  margin: $page-margin $page-margin 0 $page-margin;
+  margin: $page-margin $page-margin $page-margin $page-margin;
 
   &__name {
     margin: 0;
@@ -48,6 +48,7 @@
   }
 
   &__payer {
+    margin-top: 0.5rem;
     margin-bottom: 0.5rem;
     font-size: 0.875rem;
   }
@@ -72,6 +73,7 @@
   }
 
   &__button {
+    margin-bottom: auto;
     border: none;
     background: transparent;
     color: $text-color-grey;
