@@ -1,4 +1,4 @@
-@import '../main';
+@import "../main";
 
 .friends {
   &__container {
@@ -8,7 +8,7 @@
   }
 
   &__content {
-    padding: $page-margin;
+    // padding: $page-margin;
     overflow: scroll;
     overflow-x: hidden;
     flex: 1;
@@ -16,7 +16,7 @@
   &__add-contact {
     width: 100%;
     position: absolute;
-    top: 100px;
+    top: 97px;
     left: 0;
     display: flex;
     flex-direction: column;
@@ -50,7 +50,6 @@
     display: flex;
     justify-content: left;
     align-items: center;
-    padding: 0.5em;
     background-color: $card-background-color;
     font-weight: 400;
     border-bottom: 0.5px solid $line-color;
@@ -93,8 +92,7 @@
     display: flex;
     flex-direction: column;
     width: 100%;
-    padding: 10px 20px;
-    margin-top: 50px;
+    margin-top: 60px;
   }
 }
 
@@ -104,23 +102,27 @@
   flex: 3;
   color: $text-color-grey;
   border-top: 1px solid $line-color;
-  padding: 3px;
+  padding: 0 $page-margin;
+  height: 4rem;
+
+  &:last-of-type {
+    border-bottom: 1px solid $line-color;
+  }
 
   &__avatar {
     height: 40px;
     min-width: 40px;
     border-radius: 50%;
-    margin: 0.5em;
+    margin-right: 1rem;
   }
 
   &__details {
     display: flex;
     flex-direction: column;
-    margin-left: 0.5em;
   }
 
   &__name {
-    font-size: 1.2rem;
+    color: $text-color-dark;
     font-weight: 600;
   }
 

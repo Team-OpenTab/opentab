@@ -18,7 +18,7 @@
 .round-input-container {
   display: flex;
   width: 100%;
-  padding-bottom: 5px;
+  padding-bottom: 0.5rem;
 
   &__icon {
     display: flex;
@@ -40,6 +40,8 @@
   width: 100%;
   display: flex;
   justify-content: center;
+  padding-top: 0.5rem;
+  padding-bottom: 1rem;
 }
 
 .onoffswitch {
@@ -120,23 +122,26 @@
 
 .new-round-user-container {
   @extend .new-round-counterpart-container;
+  border-top: 1px solid $line-color;
 }
 
 .user-container {
   display: flex;
   flex: 3;
+  height: 4rem;
 
   &__avatar {
     height: 40px;
     min-width: 40px;
     border-radius: 50%;
     margin: auto;
-    margin-left: 0.5em;
   }
 
   &__name {
+    margin: auto;
+    font-size: 1em;
     flex: 1;
-    padding: 0.5rem;
+    padding-left: 1rem;
   }
 }
 
@@ -152,11 +157,11 @@
 }
 
 .new-round__input {
-  padding: 0.5rem 0.25rem;
   padding: 0.5rem;
   display: flex;
   text-align: left;
   border: 0;
   max-width: 5em;
   width: 5em;
+  height: 2.5rem;
 }
