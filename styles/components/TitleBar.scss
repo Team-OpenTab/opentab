@@ -1,4 +1,4 @@
-@import '../main';
+@import "../main";
 
 .title-bar-container {
   padding: 0;
@@ -37,7 +37,8 @@
 
   &__title {
     flex: 1;
-    font-family: 'Lobster';
+    font-family: "Nova Round";
+    font-weight: 100;
     text-align: center;
     font-size: 2rem;
     padding: 0;

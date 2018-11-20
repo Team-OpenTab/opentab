@@ -57,7 +57,7 @@ function NewRound({
             </label>
           </div>
         </div>
-        <div className="new-round-recipient-container">
+        <div className="new-round-user-container">
           <div className="user-container">
             <img
               className="user-container__avatar"
