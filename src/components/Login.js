@@ -34,24 +34,25 @@ function Login({
             <div className="logo__container">
               <img
                 className="logo__container__img"
-                src="../static/images/logoPlaceholder.png"
+                src="../static/images/logo4.png"
                 alt="Open Tab"
               />
             </div>
+            <h1 className="logo__name">Open Tab</h1>
           </div>
           <form className="form" onSubmit={getLogin}>
             <input
               className="form__field"
               type="text"
               value={email}
-              onChange={(event) => getEmail(event.target.value.toLowerCase())}
+              onChange={event => getEmail(event.target.value.toLowerCase())}
               placeholder="Email"
             />
             <input
               className="form__field"
               type="password"
               value={password}
-              onChange={(event) => getPassword(event.target.value)}
+              onChange={event => getPassword(event.target.value)}
               placeholder="Password"
             />
             <div>{loginError}</div>
@@ -73,52 +74,53 @@ function Login({
             <div className="logo__container">
               <img
                 className="logo__container__img"
-                src="../static/images/logoPlaceholder.png"
+                src="../static/images/logo4.png"
                 alt="Open Tab"
               />
             </div>
+            <h1 className="logo__name">Open Tab</h1>
           </div>
           <form className="form" onSubmit={getNewUser}>
             <input
               className="form__field"
               type="text"
               value={email}
-              onChange={(event) => getEmail(event.target.value.toLowerCase())}
+              onChange={event => getEmail(event.target.value.toLowerCase())}
               placeholder="Email*"
             />
             <input
               className="form__field"
               type="text"
               value={username}
-              onChange={(event) => getUsername(event.target.value)}
+              onChange={event => getUsername(event.target.value)}
               placeholder="Username*"
             />
             <input
               className="form__field"
               type="text"
               value={phone}
-              onChange={(event) => getPhone(event.target.value)}
+              onChange={event => getPhone(event.target.value)}
               placeholder="Phone"
             />
             <input
               className="form__field"
               type="text"
               value={avatar}
-              onChange={(event) => getAvatar(event.target.value)}
+              onChange={event => getAvatar(event.target.value)}
               placeholder="Avatar URL"
             />
             <input
               className="form__field"
               type="password"
               value={password}
-              onChange={(event) => getPassword(event.target.value)}
+              onChange={event => getPassword(event.target.value)}
               placeholder="Password*"
             />
             <input
               className="form__field"
               type="password"
               value={validationPassword}
-              onChange={(event) => getValidationPassword(event.target.value)}
+              onChange={event => getValidationPassword(event.target.value)}
               placeholder="Re-enter Password*"
             />
             <div>{newUserError}</div>
