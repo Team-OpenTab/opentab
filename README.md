@@ -2,9 +2,9 @@
 
 OpenTab is a web application for tracking and settling rounds between friends.
 
-![login page](https://www.dropbox.com/s/y6kkud54r0wlv37/Screenshot%202018-11-19%2014.22.53.png?raw=1 "Login")
-![open tab page](https://www.dropbox.com/s/uacs1oxht0m1crr/Screenshot%202018-11-19%2014.23.59.png?raw=1 "Open Tab")
-![balances page](https://www.dropbox.com/s/x6bc3frzoiej7gj/Screenshot%202018-11-19%2014.25.12.png?raw=1 "Balances")
+![login page](https://www.dropbox.com/s/250nu4wjpyis1f8/login%20existing.png?raw=1 "Login")
+![open tab page](https://www.dropbox.com/s/nh7dkgvgkvdc1vb/new%20tab%20even.png?raw=1 "Open Tab")
+![balances page](https://www.dropbox.com/s/rdg79n0mlj2njxe/balances.png?raw=1 "Balances")
 
 ## The Team:
 
@@ -61,3 +61,17 @@ Someone has to leave the party early? No problem, OpenTab retains the informatio
 - Run `npm test` to execute the test suite.
 
 ## Features
+
+- Create a user account, find your friends, family and collegues and add them to your contacts.
+
+- When you go for your next coffee, grab a drink after work or get lunch with your friends, open
+  a tab add those involved
+
+- Enter the name of your tab and the total amount that it cost.
+
+- Work out your split: split evenly to divide the bill equally amongst your group, or split manually if paying individually seems fairer.
+
+- View your previous tabs, including those that have been ordered
+  for you, and reorder that tab when it's your turn to get the coffees.
+
+- When it's time to settle up with your contacts, the person who has been paid can mark their tab as paid and return their balance with their contact to £0.00.
