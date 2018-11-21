@@ -22,9 +22,30 @@ function Balances({ balances, getStage, showPayment, payment, settleBalance, con
     showPayment(false, null);
   }
 
+  const balancesList = Object.keys(balances.counterpartBalances)
+    .sort((a, b) => {
+      const aSum = balances.counterpartBalances[a].sum;
+      const bSum = balances.counterpartBalances[b].sum;
+      return aSum > bSum ? 1 : -1;
+    })
+    .sort((a) => (balances.counterpartBalances[a].sum === '0.00' ? 1 : -1))
+    .filter((id) =>
+      contacts.contactList
+        .filter((contact) => contact.approved)
+        .map((contact) => contact.contact_id)
+        .includes(Number(id)),
+    )
+    .filter((id) => balances.counterpartBalances[id].sum !== '0.00');
+
   return (
+
     <div className="balances-container">
       <div className="balances-content">
+        {!balancesList.length && (
+          <div className="balances__lonely-message">
+            No balances to display... Click the New Tab button below and start your order!
+          </div>
+        )}
         {balances.userBalance !== 0 && (
           <div className="balances__text">
             {balances.userBalance < 0
@@ -33,20 +54,7 @@ function Balances({ balances, getStage, showPayment, payment, settleBalance, con
           </div>
         )}
         <div className="counterpart-list">
-          {Object.keys(balances.counterpartBalances)
-            .sort((a, b) => {
-              const aSum = balances.counterpartBalances[a].sum;
-              const bSum = balances.counterpartBalances[b].sum;
-              return aSum > bSum ? 1 : -1;
-            })
-            .sort((a) => (balances.counterpartBalances[a].sum === '0.00' ? 1 : -1))
-            .filter((id) =>
-              contacts.contactList
-                .filter((contact) => contact.approved)
-                .map((contact) => contact.contact_id)
-                .includes(Number(id)),
-            )
-            .filter((id) => balances.counterpartBalances[id].sum !== '0.00')
+          {balancesList
             .map((key) => (
               <BalanceItem
                 key={key}

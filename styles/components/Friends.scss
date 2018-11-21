@@ -1,10 +1,11 @@
-@import "../main";
+@import '../main';
 
 .friends {
   &__container {
     display: flex;
     flex-direction: column;
-    margin-top: 85px;
+    margin-top: 95px;
+    background: $background-color;
   }
 
   &__content {
@@ -16,7 +17,7 @@
   &__add-contact {
     width: 100%;
     position: absolute;
-    top: 97px;
+    top: 107px;
     left: 0;
     display: flex;
     flex-direction: column;
