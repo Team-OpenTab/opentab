@@ -41,7 +41,7 @@ function BalanceItem({ contactId, contact, showPayment, contacts }) {
       <div className="counterpart__btn">
         {contact.sum !== '0.00' && (
           <button
-            className="counterpart__btn"
+            className="counterpart__btn show-modal"
             type="button"
             id={contactId}
             onClick={() => showPayment(true, Number(contactId))}

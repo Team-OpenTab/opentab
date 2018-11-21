@@ -8,7 +8,10 @@ describe('user reducer', () => {
     password: '',
     validationPassword: '',
     phone: '',
+    avatar: '',
     userType: 'existingUser',
+    loginError: '',
+    newUserError: '',
   };
   it('sets email in state', () => {
     const action = {
@@ -104,5 +107,34 @@ describe('user reducer', () => {
     const outputState = user(initialState, action);
 
     expect(outputState.validationPassword).toEqual(expectedState.validationPassword);
+  });
+  it('sets login error', () => {
+    const action = {
+      type: 'SET_LOGIN_ERROR',
+      loginError: true,
+    };
+    const expectedState = {
+      loginError: true,
+    };
+    const outputState = user(initialState, action);
+    expect(outputState.loginError).toEqual(expectedState.loginError);
+  });
+  it('sets new user error', () => {
+    const action = {
+      type: 'SET_NEW_USER_ERROR',
+      newUserError: true,
+    };
+    const expectedState = {
+      newUserError: true,
+    };
+    const outputState = user(initialState, action);
+    expect(outputState.newUserError).toEqual(expectedState.newUserError);
+  });
+  it('resets user state', () => {
+    const action = {
+      type: 'RESET_USER',
+    };
+    const outputState = user(initialState, action);
+    expect(outputState.newUserError).toEqual(initialState.newUserError);
   });
 });
