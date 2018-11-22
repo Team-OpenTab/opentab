@@ -1,6 +1,6 @@
 FROM node:10
 
-ENV DB_HOST 172.17.0.1
+ENV DB_HOST 127.17.0.1
 
 # Create app directory
 WORKDIR /usr/src/app
