@@ -74,7 +74,7 @@ describe('Login component - form entry', () => {
       .find('.form__field')
       .at(0)
       .simulate('change', event);
-    expect(props.getEmail).toHaveBeenCalledWith('TEST');
+    expect(props.getEmail).toHaveBeenCalledWith('test');
   });
   it('target value is passed as arg to getPassword function', () => {
     wrapper

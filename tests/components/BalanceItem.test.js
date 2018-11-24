@@ -13,7 +13,26 @@ function setup() {
     friendRequests: [1],
     approveContact: jest.fn(),
     showPayment: jest.fn(),
-    contacts: {},
+    contacts: {
+      contactList: [
+        {
+          contact_id: 1,
+          username: 'Yetkin',
+          email: 'yetkin@gmail.com',
+          phone: '07998777666',
+          avatar: 'https://avatars0.githubusercontent.com/u/42815334?s=400&v=4',
+          approved: true,
+        },
+        {
+          contact_id: 3,
+          username: 'Dan',
+          email: 'dan@gmail.com',
+          phone: '07998444333',
+          avatar: 'https://avatars2.githubusercontent.com/u/38405106?s=400&v=4',
+          approved: true,
+        },
+      ],
+    },
   };
   const wrapper = shallow(<BalanceItem {...props} />);
 
@@ -32,19 +51,6 @@ describe('BalanceItem component', () => {
     expect(owedBalance.exists()).toBe(true);
     expect(owedBalance.text()).toContain('10.00');
   });
-  it('renders approve button if contact friend request is not approved', () => {
-    expect(wrapper.find('.approve-btn').exists()).toBe(true);
-  });
-  it('calls approveContact when approve button is clicked', () => {
-    wrapper.find('.approve-btn').simulate('click');
-    expect(props.approveContact).toHaveBeenCalledWith(props.contactId);
-  });
-  it('does not render approve button when contact has been approved', () => {
-    wrapper.setProps({
-      friendRequests: [],
-    });
-    expect(wrapper.find('.approve-btn').exists()).toBe(false);
-  });
   it('renders balance of contact correctly - user owes contact', () => {
     wrapper.setProps({
       contact: {
@@ -57,10 +63,10 @@ describe('BalanceItem component', () => {
     expect(owedBalance.exists()).toBe(true);
   });
   it('renders options button if there is an unsettled balance', () => {
-    expect(wrapper.find('.pay-btn').exists()).toBe(true);
+    expect(wrapper.find('.show-modal').exists()).toBe(true);
   });
   it('calls showPayment when options button is clicked', () => {
-    wrapper.find('.pay-btn').simulate('click');
+    wrapper.find('.show-modal').simulate('click');
     expect(props.showPayment).toHaveBeenCalled();
   });
   it('does not render options button if balance is settled', () => {

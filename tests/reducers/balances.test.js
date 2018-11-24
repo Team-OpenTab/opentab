@@ -39,4 +39,21 @@ describe('balances reducer', () => {
     const output = balances(initialState, action);
     expect(output).toEqual(expectedState);
   });
+  it('reset balances in store', () => {
+    const initialState = {
+      userBalance: {},
+      counterpartBalances: { 2: 10.0, 3: 20.0 },
+    };
+
+    const action = {
+      type: 'RESET_BALANCES',
+    };
+
+    const expectedState = {
+      userBalance: 0,
+      counterpartBalances: {},
+    };
+    const output = balances(initialState, action);
+    expect(output).toEqual(expectedState);
+  });
 });
