@@ -47,18 +47,25 @@ Someone has to leave the party early? No problem, OpenTab retains the informatio
 
 - webpack
 
-## Installastion
+## Installation
 
 - Fork and clone this repo.
 - Run `npm install` to install dependencies.
 - Create a `.env` file to store your database credentials.
 - Create a local database using the supplied queries in [database.sql](database.sql).
 - Run `npm start` to to run the Node server with Nodemon.
-- Run `npm run dev` to create a development build React with webpack.
+- Run `npm run dev` to create a development build with webpack.
+
+- This app was built with mobile-use in mind, it is advised that browser dev tools are used to replicate this.
 
 **Tests**
 
 - Run `npm test` to execute the test suite.
+
+**Heroku**
+
+- http://team-open-tab.herokuapp.com/
+* Currently there are some issues with Heroku leading to H12 timeout errors, we are looking to correct this as soon as possible. If you want to see the app running live, but Heroku is giving an application error, please inform one of the team so we can reset the dynos.
 
 ## Features
 
