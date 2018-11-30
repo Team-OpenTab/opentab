@@ -6,6 +6,10 @@
   "keywords": [],
   "author": "Yetkin Ergun",
   "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Team-OpenTab/opentab.git"
+  },
   "scripts": {
     "demon": "nodemon server.js",
     "test": "jest",
@@ -43,7 +47,7 @@
     "event-stream": "3.3.4",
     "express": "^4.16.4",
     "hbs": "^4.0.1",
-    "node": "^11.0.0",
+    "node": "10.9.0",
     "pg-promise": "^8.5.1",
     "prettier-eslint": "^8.8.2",
     "prop-types": "^15.6.2",
